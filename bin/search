@@ -1,0 +1,4 @@
+#!/bin/bash
+
+find . \( -name "*.py" -o -name "*.html" -o -name "*.js" -o -name "*.css" \) |  xargs grep -En --color $2 "$1"
+

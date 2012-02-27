@@ -1,0 +1,13 @@
+[user]
+    name = Jonathan Camile
+    email = jonathan.camile+projects@gmail.com
+[color]
+    ui = auto
+[diff]
+    renamelimit = 0
+[push]
+    default = tracking
+[merge]
+    tool = vimdiff
+[core]
+	editor = vi
