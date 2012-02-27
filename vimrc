@@ -22,3 +22,10 @@ set nowrap
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [LEN=%L] 
 
 map Y y$
+
+inoremap jk <Esc>  " Esc is so far...
+nnoremap <leader>T :set expandtab<cr>:retab!<cr>
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
