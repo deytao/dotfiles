@@ -11,3 +11,5 @@
     tool = vimdiff
 [core]
 	editor = vi
+[rerere]
+	enabled = 1

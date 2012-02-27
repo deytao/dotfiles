@@ -34,15 +34,16 @@ plugins=(python git pip)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
+alias less='less -r'
+alias vi='vim'
+alias tmux='tmux -2'
+alias less='less -r'
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-alias less='less -r'
-alias vi='vim'
-alias tmux='tmux -2'
 
 export EDITOR=vi
 export PGHOST=localhost
@@ -56,4 +57,9 @@ then
     export WORKON_HOME=$HOME/.virtualenvs
     source /usr/local/bin/virtualenvwrapper.sh
     workon
+fi
+
+if [ -f ~/.localerc ]
+then
+    source ~/.localerc
 fi
