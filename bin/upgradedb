@@ -1,0 +1,66 @@
+#!/bin/bash
+
+SQL_USER=meilleursagents
+SQL_HOST=sql1.meilleursagents
+SQL_DEV_DB=meilleursagents_dev
+
+DUMP_FILE=meilleursagents.sql.gz
+TABLES=
+
+VERBOSE=0
+
+function update_file
+{
+	scp $SQL_USER@$SQL_HOST:/home/backup_pgsql/meilleursagents.sql.gz .
+}
+
+function list_tables
+{
+	TABLES=`psql -h localhost --tuples-only -c "SELECT tablename FROM pg_tables where tablename not like 'pg_%' and tablename not like 'geo%' and tablename not like 'sql%' and tablename <> 'spatial_ref_sys' order by tablename;"`
+}
+
+function restore_data
+{
+	list_tables
+	for TABLE in $TABLES
+       	do
+		if [ -z "$TABLE" ]
+		then
+			continue
+		fi
+		TABLE_PARAM="$TABLE_PARAM -t $TABLE"
+	done;
+	if [ -z "$TABLE_PARAM" ]
+	then
+		exit 1
+	fi
+	pg_restore -h localhost -d $SQL_DEV_DB $TABLE_PARAM --clean --no-owner $DUMP_FILE
+}
+
+# Parse command line arguments
+while [ $# -gt 0 ]
+do
+	case "$1" in
+		-v)
+			VERBOSE=on;;
+		-f)
+			DUMP_FILE="$2"; shift;;
+		update)
+			update_file
+			exit 0;;
+		list)
+			list_tables
+			echo $TABLES
+			exit 0;;
+		restore)
+			restore_data
+			exit 0;;
+
+		\?)
+			echo >&2 \
+			"usage: $0 [-v] [-f sql dump filename] [file ...]"
+			exit 1;;
+	esac
+	shift
+done
+

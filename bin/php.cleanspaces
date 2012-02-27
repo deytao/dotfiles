@@ -1,0 +1,138 @@
+#!/usr/bin/env python
+"""
+  Manage source file whitespacing
+"""
+
+from __future__ import with_statement
+
+import functools
+import os
+import re
+
+from optparse import OptionParser
+
+
+eol_pattern = re.compile('[ \t]*\n')
+indent_pattern = re.compile('^([ \t]+)')
+tabs_bol_pattern = re.compile('^([\t]+)')
+error_pattern = re.compile('(?:^\t+[ ]+|^[ ]+\t+)[^*]')
+strip_trailing_spaces = functools.partial(eol_pattern.sub, '\n')
+
+
+TAB_LENGTH = 4
+
+
+def search_errors(path, options):
+    """Search for indentation errors"""
+    with open(path, 'r') as fd_in:
+        for line in fd_in:
+            if error_pattern.match(line):
+                print 'Error: %s' % path
+                return
+
+
+def fix_spaces(path, options):
+    """Fix whitespaces in a file, line by line"""
+    if options.verbose:
+        print 'processing file: %s' % (os.path.basename(path))
+    new_path = path + '.new'
+    try:
+        with open(path, 'r') as fd_in:
+            with open(new_path, 'w') as fd_out:
+                indent_level = ''
+                for line in fd_in:
+                    line = strip_trailing_spaces(line)
+                    if options.indent_space:
+                        match = tabs_bol_pattern.match(line)
+                        if match:
+                            indent_space = ' ' * (len(match.group(0)) * TAB_LENGTH)
+                            line = tabs_bol_pattern.sub(indent_space, line)
+                    if options.indent_empty:
+                        if line == '\n':
+                            line = indent_level + '\n'
+                        match = indent_pattern.match(line)
+                        indent_level = match.group(0) if match else ''
+                    fd_out.write(line)
+    except Exception, e:
+        os.unlink(new_path)
+        raise e
+    else:
+        os.unlink(path)
+        os.rename(new_path, path)
+
+
+def process_file(path, options):
+    if options.search_errors:
+        search_errors(path, options)
+    else:
+        fix_spaces(path, options)
+        
+
+def is_hidden(path):
+    """Return True if the path contains a hidden directory, False otherwise."""
+    path = os.path.normpath(path)
+    is_hidden = '/.' in path
+    return is_hidden
+
+
+def process_dir(path, options):
+    """Traverse directory and process files"""
+    for rootdir, dirnames, filenames in os.walk(path):
+        for filename in filenames:
+            filepath = os.path.join(rootdir, filename)
+            if not os.path.exists(filepath):
+                continue
+            if is_hidden(filepath):
+                continue
+            process_file(filepath, options)
+
+
+def process_paths(paths, options):
+    """Process files or directory."""
+    for path in paths:
+        if not os.path.exists(path):
+            continue
+        if os.path.isfile(path):
+            process_file(path, options)
+        elif os.path.isdir(path):
+            process_dir(path, options)
+        elif options.verbose:
+            print "File not found: %s" % (path,)
+
+
+def parse_cli():
+    """Defines command lines interface and checks values."""
+    parser = OptionParser("usage: %prog [options] path [path]")
+    # parser.add_option("-e", "--extension",
+    #                 action="append", dest="extensions", default=('php', 'inc'),
+    #                 help="List of file extensions to process")
+    parser.add_option("-i", "--indent-empty",
+                    action="store_true", dest="indent_empty", default=False,
+                    help="Indent empty lines with previous indent level")
+    parser.add_option("-n", "--no-recurse",
+                    action="store_false", dest="recurse", default=True,
+                    help="Do not recurse into directories")
+    parser.add_option("-s", "--indent-with-spaces",
+                    action="store_true", dest="indent_space", default=False,
+                    help="Replace tab indentation with spaces.")
+    parser.add_option("-e", "--erroneous",
+                    action="store_true", dest="search_errors", default=False,
+                    help="Search for indent errors.")
+    parser.add_option("-v", "--verbose",
+                    action="store_true", dest="verbose", default=False,
+                    help="Be slightly more verbose")
+    (options, args) = parser.parse_args()            
+    if len(args) == 0:
+        parser.error('Missing file or directory to process')
+    return (options, args)
+
+
+def main():
+    (options, args) = parse_cli()
+    process_paths(args, options)
+
+
+if __name__ == '__main__':
+    main()
+
+

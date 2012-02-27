@@ -1,0 +1,37 @@
+#!/bin/bash
+
+GREP_DISCARD_PATTERNS="(No syntax errors)|(Parse error)|(Errors parsing)|(^$)"
+XARGS_FLAGS="-n1 -P10 -I %"
+
+getfiles=all
+while getopts m opt
+do
+    case "$opt" in
+      m) getfiles=gitstatus;;
+	  \?) # unknown flag
+      	  echo >&2 \
+            "usage: $0 [-m] [file ...]" \
+			"   -m: modified files using git status" \
+		    "   Default: check all files"
+          exit 1;;
+    esac
+done
+shift `expr $OPTIND - 1`
+
+
+if [[ $# -gt 0 ]]; then
+	while [ $# -gt 0 ]
+	do
+		php -l -f "$1" | grep -Ev "$GREP_DISCARD_PATTERNS"
+		shift
+	done
+else
+	case "$getfiles" in
+		all)
+			( find . -type f \( -name "*.php" -o -name "*.inc" \) | xargs $XARGS_FLAGS sh -c 'php -l -f % || true'; ) | grep -Ev "$GREP_DISCARD_PATTERNS"
+			;;
+		gitstatus)
+			( git status -s | grep -E '^\s*[MA]' | awk '{print $2}' | xargs $XARGS_FLAGS sh -c 'php -l -f % || true'; ) | grep -Ev "$GREP_DISCARD_PATTERNS"
+			;;
+	esac
+fi

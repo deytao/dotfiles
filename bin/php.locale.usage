@@ -1,0 +1,129 @@
+#!/usr/bin/env python
+"""
+  Find locales usage in a source tree
+"""
+
+from __future__ import with_statement
+
+import functools
+import os
+import re
+
+from optparse import OptionParser
+
+
+locale_pattern = re.compile('\$lang\[.(.*?).\]')
+file_locales = {}
+locale_files = {}
+
+
+def store_index(dict, key, value):
+    if key not in dict:
+        dict[key] = []
+    if value not in dict[key]:
+        dict[key].append(value)
+
+
+def extract_locales(path):
+    """Extract locales from a file"""
+    global locale_files, file_locales
+    for line in open(path, 'r'):
+        matches = locale_pattern.finditer(line)
+        for match in matches:
+            locale = match.groups(1)[0]
+            if not locale:
+                continue
+            store_index(locale_files, locale, path)
+            store_index(file_locales, path, locale)
+
+
+def create_locales_index(path, options):
+    """Compulse all locales index"""
+    for filepath in process_paths(path, options):
+        extract_locales(filepath)
+
+
+def find_locale_usage(args, options):
+    """Search for a locale keyword usage"""
+    for locale in args:
+        if locale not in locales:
+            if options.verbose:
+                print '%s not used.' % locale
+            return
+        print '%s (%d):' % (locale, len(locales[locale]))
+        for file in locales[locale]:
+            print '    ', file
+
+
+def find_file_usage(args, options):
+    """Search for a locale keyword usage"""
+    patterns = set(args)
+    for file in file_locales:
+        locales = set(file_locales[file])
+        union = locales.intersection(patterns)
+        if not union:
+            continue
+        print '%s (%d):' % (file, len(union))
+        for locale in sorted(union):
+            print '    ', locale
+
+
+def is_hidden(path):
+    """Return True if the path contains a hidden directory, False otherwise."""
+    path = os.path.normpath(path)
+    is_hidden = '/.' in path
+    return is_hidden
+
+
+def process_dir(path, options):
+    """Traverse directory and process files"""
+    for rootdir, dirnames, filenames in os.walk(path):
+        for filename in filenames:
+            filepath = os.path.join(rootdir, filename)
+            if not os.path.exists(filepath):
+                continue
+            if is_hidden(filepath):
+                continue
+            yield filepath
+
+
+def process_paths(paths, options):
+    """Process files or directory."""
+    for path in paths:
+        if not os.path.exists(path):
+            continue
+        if os.path.isfile(path):
+            yield path
+        elif os.path.isdir(path):
+            for file in process_dir(path, options):
+                yield file
+        elif options.verbose:
+            print "File not found: %s" % (path,)
+
+
+def parse_cli():
+    """Defines command lines interface and checks values."""
+    parser = OptionParser("usage: %prog [options] locale [locale]")
+    parser.add_option("-l",
+                    action="store_true", dest="group_by_locale", default=False,
+                    help="Output results grouped by locale")
+    parser.add_option("-v", "--verbose",
+                    action="store_true", dest="verbose", default=False,
+                    help="Be slightly more verbose")
+    (options, args) = parser.parse_args()            
+    if len(args) == 0:
+        parser.error('Missing locale keyword')
+    return (options, args)
+
+
+def main():
+    (options, args) = parse_cli()
+    create_locales_index('.', options)
+    if options.group_by_locale:
+        find_locale_usage(args, options)
+    else:
+        find_file_usage(args, options)
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -f $1 ]; then
+	echo "usage: $0 filename"
+	exit 1
+fi
+
+for i in 9 6 5 4 3 1
+do
+	gzip -$i -c $1 > $1.$i.gz
+done

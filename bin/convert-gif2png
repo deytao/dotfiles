@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ ! -d convert ]; then
+	mkdir convert
+fi
+
+for FILE in *.gif
+do
+        convert $FILE -quality 90 -depth 8 -colors 256 convert/$(basename $FILE .gif).png 
+done
+
+echo ""
+echo "Before: " "$(du -c -b *.gif | grep total -)"
+echo "After:  " "$(du -c -b convert/*.png | grep total -)"
+echo "Converting done."
+

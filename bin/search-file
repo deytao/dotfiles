@@ -1,0 +1,3 @@
+#!/bin/bash
+
+find . \( -name "*.php" -o -name "*.inc" -o -name "*.js" -o -name "*.css" \) | grep -v '/www/cms/' | xargs grep -Enl $2 "$1"
