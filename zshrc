@@ -37,19 +37,14 @@ source $ZSH/oh-my-zsh.sh
 alias less='less -r'
 alias vi='vim'
 alias tmux='tmux -2'
-alias less='less -r'
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-
 export EDITOR=vi
 export PGHOST=localhost
-
-# Applications
-export APP_ENV=development
 
 # Load virtualenvwrapper
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]
