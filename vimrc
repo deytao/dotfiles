@@ -7,6 +7,7 @@ let g:solarized_termcolors=256
 colorscheme solarized
 set nocompatible
 set ai
+set smartindent
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -18,3 +19,6 @@ set ruler
 set showcmd
 set backspace=indent,eol,start
 set nowrap
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [LEN=%L] 
+
+map Y y$
