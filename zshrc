@@ -33,6 +33,11 @@ plugins=(python git pip)
 
 source $ZSH/oh-my-zsh.sh
 
+export TERM='xterm-256color'
+export LC_CTYPE=en_US.utf-8
+export EDITOR=vi
+export PGHOST=localhost
+
 # Customize to your needs...
 alias less='less -r'
 alias vi='vim'
@@ -43,10 +48,6 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-export EDITOR=vi
-export TERM='xterm-256color'
-export PGHOST=localhost
-
 # Load virtualenvwrapper
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]
 then
@@ -55,7 +56,7 @@ then
     workon
 fi
 
-if [ -f ~/.localerc ]
+if [ -f ~/.localrc ]
 then
-    source ~/.localerc
+    source ~/.localrc
 fi
