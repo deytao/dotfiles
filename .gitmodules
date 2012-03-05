@@ -19,9 +19,6 @@
 [submodule "vim/bundle/markdown"]
 	path = vim/bundle/markdown
 	url = https://github.com/hallison/vim-markdown.git
-[submodule "vim/bundle/jinja"]
-	path = vim/bundle/jinja
-	url = https://github.com/Glench/Vim-Jinja2-Syntax.git
 [submodule "vim/bundle/html-indent"]
 	path = vim/bundle/html-indent
 	url = https://github.com/vim-scripts/html-improved-indentation.git
@@ -31,6 +28,3 @@
 [submodule "vim/bundle/pyflakes"]
 	path = vim/bundle/pyflakes
 	url = git://github.com/kevinw/pyflakes-vim.git
-[submodule "vim/bundle/htmljinja"]
-	path = vim/bundle/htmljinja
-	url = https://github.com/ocim/htmljinja.vim.git
