@@ -3,7 +3,10 @@ filetype on
 syntax on
 set background=dark
 set t_Co=256
+let g:solarized_termtrans=1
 let g:solarized_termcolors=256
+let g:solarized_contrast="high"
+let g:solarized_visibility="high"
 colorscheme solarized
 set nocompatible
 set ai
@@ -29,3 +32,6 @@ noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
+
+autocmd FileType html,jinjahtml let b:closetag_html_style=1
+autocmd FileType html,jinjahtml source ~/.vim/bundle/closetag/plugin/closetag.vim

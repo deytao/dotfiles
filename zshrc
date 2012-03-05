@@ -44,6 +44,7 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 export EDITOR=vi
+export TERM='xterm-256color'
 export PGHOST=localhost
 
 # Load virtualenvwrapper
