@@ -1,5 +1,6 @@
 call pathogen#infect()
 filetype on
+filetype plugin on
 syntax on
 set background=dark
 set t_Co=256
@@ -37,33 +38,34 @@ noremap <C-l> <C-w>l
 " ------------------------------------------
 " and disable taht stupid html rendering (like making stuff bold etc)
 
-fun! SelectHTML()
-    let n = 1
-    while n < 50 && n < line("$")
-        " check for jinja
-        if getline(n) =~ '{%\s*\(extends\|block\|macro\|set\|if\|for\|include\|trans\)\>'
-            set ft=htmljinja
-            return
-        endif
-        " check for mako
-        if getline(n) =~ '<%\(def\|inherit\)'
-            set ft=mako
-            return
-        endif
-        " check for genshi
-        if getline(n) =~ 'xmlns:py\|py:\(match\|for\|if\|def\|strip\|xmlns\)'
-            set ft=genshi
-            return
-        endif
-        let n = n + 1
-    endwhile
-    " go with html
-    set ft=html
-endfun
+"fun! SelectHTML()
+    "let n = 1
+    "while n < 50 && n < line("$")
+        "" check for jinja
+        "if getline(n) =~ '{%\s*\(extends\|block\|macro\|set\|if\|for\|include\|trans\)\>'
+            "set ft=htmljinja
+            "return
+        "endif
+        "" check for mako
+        "if getline(n) =~ '<%\(def\|inherit\)'
+            "set ft=mako
+            "return
+        "endif
+        "" check for genshi
+        "if getline(n) =~ 'xmlns:py\|py:\(match\|for\|if\|def\|strip\|xmlns\)'
+            "set ft=genshi
+            "return
+        "endif
+        "let n = n + 1
+    "endwhile
+    "" go with html
+    "set ft=html
+"endfun
 
-autocmd BufNewFile,BufRead *.py_tmpl setlocal ft=python
-autocmd BufNewFile,BufRead *.html,*.htm  call SelectHTML()
-let html_no_rendering=1
+"let g:jinja_syntax_html=0
+"autocmd BufNewFile,BufRead *.py_tmpl setlocal ft=python
+"autocmd BufNewFile,BufRead *.html,*.htm  call SelectHTML()
+"let html_no_rendering=1
 
 autocmd FileType html,jinjahtml let b:closetag_html_style=1
 autocmd FileType html,jinjahtml source ~/.vim/bundle/closetag/plugin/closetag.vim
