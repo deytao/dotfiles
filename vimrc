@@ -67,5 +67,5 @@ noremap <C-l> <C-w>l
 "autocmd BufNewFile,BufRead *.html,*.htm  call SelectHTML()
 "let html_no_rendering=1
 
-autocmd FileType html,jinjahtml let b:closetag_html_style=1
-autocmd FileType html,jinjahtml source ~/.vim/bundle/closetag/plugin/closetag.vim
+autocmd FileType html,jinjahtml,htmldjango let b:closetag_html_style=1
+autocmd FileType html,jinjahtml,htmldjango source ~/.vim/bundle/closetag/plugin/closetag.vim
