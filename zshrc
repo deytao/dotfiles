@@ -60,3 +60,6 @@ if [ -f ~/.localrc ]
 then
     source ~/.localrc
 fi
+
+PYTHONSTARTUP=~/.pythonrc.py
+export PYTHONSTARTUP
