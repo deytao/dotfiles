@@ -25,9 +25,6 @@
 [submodule "vim/bundle/closetag"]
 	path = vim/bundle/closetag
 	url = git://github.com/docunext/closetag.vim.git
-[submodule "vim/bundle/pyflakes"]
-	path = vim/bundle/pyflakes
-	url = git://github.com/kevinw/pyflakes-vim.git
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = git://github.com/deytao/oh-my-zsh.git
