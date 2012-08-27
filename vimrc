@@ -2,7 +2,7 @@ call pathogen#infect()
 filetype on
 filetype plugin on
 syntax on
-set background=dark
+set background=light
 set t_Co=256
 let g:solarized_termtrans=1
 let g:solarized_termcolors=256
