@@ -1,5 +1,26 @@
-call pathogen#infect()
-filetype on
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+
+" vim-scripts repos
+Bundle 'closetag.vim'
+Bundle 'ctrlp.vim'
+Bundle 'snipMate'
+Bundle 'vim-indent-object'
+
+" original repos
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'spf13/PIV'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-markdown'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-surround'
+
 filetype plugin on
 syntax on
 set background=light
@@ -9,7 +30,6 @@ let g:solarized_termcolors=256
 let g:solarized_contrast="high"
 let g:solarized_visibility="high"
 colorscheme solarized
-set nocompatible
 set ai
 set smartindent
 set tabstop=4

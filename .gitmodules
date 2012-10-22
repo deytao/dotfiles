@@ -1,39 +1,6 @@
-[submodule "vim/bundle/vim-colors-solarized"]
-	path = vim/bundle/vim-colors-solarized
-	url = https://github.com/altercation/vim-colors-solarized.git
-[submodule "vim/bundle/vim-fugitive"]
-	path = vim/bundle/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
-[submodule "vim/bundle/nerdcommenter"]
-	path = vim/bundle/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "vim/bundle/vim-repeat"]
-	path = vim/bundle/vim-repeat
-	url = https://github.com/tpope/vim-repeat.git
-[submodule "vim/bundle/vim-surround"]
-	path = vim/bundle/vim-surround
-	url = https://github.com/tpope/vim-surround.git
-[submodule "vim/bundle/snipmate"]
-	path = vim/bundle/snipmate
-	url = https://github.com/msanders/snipmate.vim.git
-[submodule "vim/bundle/markdown"]
-	path = vim/bundle/markdown
-	url = https://github.com/hallison/vim-markdown.git
-[submodule "vim/bundle/html-indent"]
-	path = vim/bundle/html-indent
-	url = https://github.com/vim-scripts/html-improved-indentation.git
-[submodule "vim/bundle/closetag"]
-	path = vim/bundle/closetag
-	url = git://github.com/docunext/closetag.vim.git
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = git://github.com/deytao/oh-my-zsh.git
-[submodule "vim/bundle/vim-indent-object"]
-	path = vim/bundle/vim-indent-object
-	url = https://github.com/michaeljsmith/vim-indent-object.git
-[submodule "vim/bundle/ctrlp.vim"]
-	path = vim/bundle/ctrlp.vim
-	url = https://github.com/kien/ctrlp.vim.git
-[submodule "vim/bundle/piv"]
-	path = vim/bundle/piv
-	url = https://github.com/spf13/PIV.git
+[submodule "vim/bundle/vundle"]
+	path = vim/bundle/vundle
+	url = https://github.com/gmarik/vundle.git
