@@ -9,13 +9,14 @@ Bundle 'gmarik/vundle'
 " vim-scripts repos
 Bundle 'closetag.vim'
 Bundle 'ctrlp.vim'
+Bundle 'phpfolding.vim'
 Bundle 'snipMate'
 Bundle 'vim-indent-object'
 
 " original repos
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'spf13/PIV'
+Bundle 'shawncplus/phpcomplete.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-repeat'
