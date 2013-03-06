@@ -16,7 +16,6 @@ Bundle 'vim-indent-object'
 " original repos
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'shawncplus/phpcomplete.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-repeat'
@@ -64,5 +63,6 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
-autocmd FileType html,jinjahtml,htmldjango let b:closetag_html_style=1
-autocmd FileType html,jinjahtml,htmldjango source ~/.vim/bundle/closetag/plugin/closetag.vim
+autocmd BufRead,BufNewFile *.twig set syntax=htmljinja
+autocmd FileType html,htmljinja,htmldjango let g:closetag_html_style=1
+autocmd FileType html,htmljinja,htmldjango source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
