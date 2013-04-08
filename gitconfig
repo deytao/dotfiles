@@ -13,3 +13,7 @@
 	editor = vi
 [rerere]
 	enabled = 1
+[alias]
+    purr = pull --rebase
+    st = status -sb
+    ready = rebase -i @{u}
