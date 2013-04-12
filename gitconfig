@@ -17,3 +17,4 @@
     purr = pull --rebase
     st = status -sb
     ready = rebase -i @{u}
+    wync = "!git stash && git purr && git stash pop && git push"
