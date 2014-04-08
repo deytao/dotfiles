@@ -20,17 +20,17 @@ command -v apt-get && sudo apt-get install $DEPENDENCIES
 
 # Get Python sources
 
-FILENAME=Python-$VERSION.tar.bz2
+FILENAME=Python-$VERSION.tgz
 if [ ! -f $FILENAME ]
 then
-    wget http://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.bz2
-    #echo 'aa27bc25725137ba155910bd8e5ddc4f  Python-$VERSION.tar.bz2' | md5sum --check -
+    curl https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tgz > $FILENAME
+    #echo 'aa27bc25725137ba155910bd8e5ddc4f  Python-$VERSION.tgz' | md5sum --check -
 fi
 
 DIRNAME=Python-$VERSION
 if [ ! -d $DIRNAME ]
 then
-    tar xvjf Python-$VERSION.tar.bz2
+    tar xvzf Python-$VERSION.tgz
 fi
 
 
@@ -58,7 +58,7 @@ sudo $PYTHON get-pip.py
 
 # Install virtualenv
 
-sudo /opt/python-$VERSION/bin/pip install virtualenv
+sudo /opt/python-$VERSION/bin/pip${VERSION::3} install virtualenv
 
 
 # Install system-wide virtualenvwrapper
