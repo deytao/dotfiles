@@ -21,6 +21,7 @@ Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-speeddating'
+Bundle 'jpalardy/vim-slime'
 
 filetype plugin on
 syntax on
