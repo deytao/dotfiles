@@ -1,5 +1,0 @@
-#!/bin/bash
-
-BRANCH=`git branch | grep '*' | awk '{print $2}'`
-git fetch origin
-git log -p $BRANCH..origin/$BRANCH

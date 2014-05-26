@@ -1,3 +1,0 @@
-#!/bin/bash
-
-diff <( pg_dump -h sql1.meilleursagents -d meilleursagents -U meilleursagents -s | grep 'CREATE INDEX' ) <( pg_dump -s | grep 'CREATE INDEX' )

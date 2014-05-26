@@ -1,2 +1,0 @@
-#!/bin/bash
-printf "flush_all\n" | nc -w 1 localhost 11211

@@ -1,4 +1,0 @@
-#!/bin/bash
-
-echo "<?php `printf '%q' $1` echo \"\n\"; ?>" | php
-
