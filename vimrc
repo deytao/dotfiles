@@ -1,6 +1,8 @@
 set nocompatible
 filetype off
 
+let mapleader='\'
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -69,3 +71,6 @@ noremap <C-l> <C-w>l
 autocmd BufRead,BufNewFile *.twig set syntax=htmljinja
 autocmd FileType html,htmljinja,htmldjango let g:closetag_html_style=1
 autocmd FileType html,htmljinja,htmldjango source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+
+" Lisp
+let g:lisp_rainbow=1
