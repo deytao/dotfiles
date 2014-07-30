@@ -32,6 +32,7 @@ let g:solarized_termcolors=256
 let g:solarized_contrast="high"
 let g:solarized_visibility="high"
 colorscheme solarized
+hi! CursorLineNr cterm=bold ctermfg=64
 set ai
 set smartindent
 set tabstop=4
