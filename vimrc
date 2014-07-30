@@ -25,7 +25,7 @@ Bundle 'kovisoft/slimv'
 
 filetype plugin on
 syntax on
-set background=light
+set background=dark
 set t_Co=256
 let g:solarized_termtrans=1
 let g:solarized_termcolors=256
@@ -38,6 +38,7 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+set relativenumber
 set nu
 set incsearch
 set hlsearch
