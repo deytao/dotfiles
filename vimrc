@@ -9,7 +9,6 @@ Bundle 'gmarik/vundle'
 " vim-scripts repos
 Bundle 'closetag.vim'
 Bundle 'ctrlp.vim'
-Bundle 'phpfolding.vim'
 Bundle 'snipMate'
 Bundle 'vim-indent-object'
 
