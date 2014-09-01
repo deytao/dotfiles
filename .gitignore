@@ -34,3 +34,5 @@ bin/trim
 bin/upgradedb
 vim/bundle/!vundle
 vim/bundle/
+tmux/plugins/!tpm
+tmux/plugins/

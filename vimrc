@@ -22,6 +22,7 @@ Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-speeddating'
+Bundle 'tpope/vim-obsession'
 Bundle 'kovisoft/slimv'
 
 filetype plugin on
