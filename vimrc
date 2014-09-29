@@ -24,6 +24,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-speeddating'
 Bundle 'tpope/vim-obsession'
 Bundle 'kovisoft/slimv'
+Bundle 'scrooloose/syntastic'
 
 filetype plugin on
 syntax on
