@@ -25,6 +25,7 @@ Bundle 'tpope/vim-speeddating'
 Bundle 'tpope/vim-obsession'
 Bundle 'kovisoft/slimv'
 Bundle 'scrooloose/syntastic'
+Bundle 'Yggdroot/indentLine'
 
 filetype plugin on
 syntax on
