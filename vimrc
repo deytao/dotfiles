@@ -6,26 +6,26 @@ let mapleader='\'
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 " vim-scripts repos
-Bundle 'closetag.vim'
-Bundle 'ctrlp.vim'
-Bundle 'snipMate'
-Bundle 'vim-indent-object'
+Plugin 'closetag.vim'
+Plugin 'ctrlp.vim'
+Plugin 'snipMate'
+Plugin 'vim-indent-object'
 
 " original repos
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-markdown'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-speeddating'
-Bundle 'tpope/vim-obsession'
-Bundle 'kovisoft/slimv'
-Bundle 'scrooloose/syntastic'
-Bundle 'Yggdroot/indentLine'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-speeddating'
+Plugin 'tpope/vim-obsession'
+Plugin 'kovisoft/slimv'
+Plugin 'scrooloose/syntastic'
+Plugin 'Yggdroot/indentLine'
 
 filetype plugin on
 syntax on
