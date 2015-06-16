@@ -77,3 +77,6 @@ autocmd FileType html,htmljinja,htmldjango source ~/.vim/bundle/closetag.vim/plu
 
 " Lisp
 let g:lisp_rainbow=1
+
+" Syntastic
+let g:syntastic_php_phpmd_post_args = 'design,unusedcode'
