@@ -14,11 +14,14 @@
 [rerere]
 	enabled = 1
 [alias]
-    purr = pull --rebase
-    st = status -sb
-    ready = rebase -i @{u}
-    wync = "!git stash && git purr && git stash pop && git push"
-    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    commend = commit --amend --no-edit
     edit-changes = "!vi $(git diff --name-only --diff-filter=M) -O"
+    grog = log --graph --abbrev-commit --decorate --all --format=format:"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)"
+    it = "!git init && git commit -m 'Initial commit' --allow-empty"
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    purr = pull --rebase
+    ready = rebase -i @{u}
+    shorty = status -sb
+    wync = "!git stash && git purr && git stash pop && git push"
 [http]
 	sslverify = false
