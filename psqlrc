@@ -1,5 +1,16 @@
+\set QUIET 1
 \timing on
 \x auto
 \pset null ¤
-\set PROMPT1 '%[%033[33;1m%]%x%[%033[0m%]%[%033[1m%]%/%[%033[0m%]%R%# '
 \set ON_ERROR_STOP true
+
+\set PROMPT1 '%[%033[1m%][%/] # '
+-- SELECT * FROM<enter>. %R shows what type of input it expects.
+\set PROMPT2 '... > '
+
+\set VERBOSITY verbose
+\set HISTFILE ~/.psql_history- :DBNAME
+\set HISTCONTROL ignoredups
+
+\set COMP_KEYWORD_CASE upper
+\unset QUIET

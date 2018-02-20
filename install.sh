@@ -15,3 +15,5 @@ ln -s ~/dotfiles/sbclrc ~/.sbclrc
 ln -s ~/dotfiles/vagrant-provisioning.sh ~/.vagrant-provisioning.sh
 
 pip install --user powerline-status
+
+~/dotfiles/fzf/install

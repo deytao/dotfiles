@@ -10,3 +10,6 @@
 [submodule "omz_custom/plugins/zsh-syntax-highlighting"]
 	path = omz_custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "fzf"]
+	path = fzf
+	url = https://github.com/junegunn/fzf.git

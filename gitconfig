@@ -11,6 +11,7 @@
     tool = vimdiff
 [core]
 	editor = vi
+	trustctime = false
 [rerere]
 	enabled = 1
 [alias]

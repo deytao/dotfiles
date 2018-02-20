@@ -64,3 +64,5 @@ fi
 
 PYTHONSTARTUP=~/.pythonrc.py
 export PYTHONSTARTUP
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
