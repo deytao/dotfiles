@@ -12,6 +12,7 @@ ln -s ~/dotfiles/vimrc ~/.vimrc
 ln -s ~/dotfiles/zshrc ~/.zshrc
 ln -s ~/dotfiles/psqlrc ~/.psqlrc
 ln -s ~/dotfiles/sbclrc ~/.sbclrc
+ln -s ~/dotfiles/localrc ~/.localrc
 ln -s ~/dotfiles/vagrant-provisioning.sh ~/.vagrant-provisioning.sh
 
 pip install --user powerline-status
