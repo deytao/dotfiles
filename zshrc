@@ -49,6 +49,8 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # Load virtualenvwrapper
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]
 then
@@ -65,4 +67,8 @@ fi
 PYTHONSTARTUP=~/.pythonrc.py
 export PYTHONSTARTUP
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PYENV_VERSION=system
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
