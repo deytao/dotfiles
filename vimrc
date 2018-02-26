@@ -18,7 +18,6 @@ Plugin 'vim-indent-object'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'kovisoft/slimv'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-obsession'
@@ -26,6 +25,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-speeddating'
 Plugin 'vim-scripts/argtextobj.vim'
+Plugin 'w0rp/ale'
 Plugin 'Yggdroot/indentLine'
 
 filetype plugin on
@@ -78,12 +78,6 @@ autocmd FileType html,htmljinja,htmldjango source ~/.vim/bundle/closetag.vim/plu
 
 " Lisp
 let g:lisp_rainbow=1
-
-" Syntastic
-let g:syntastic_php_phpmd_post_args = 'design,unusedcode'
-let g:syntastic_python_python_exec = '~/.pyenv/shims/python3'
-let g:syntastic_python_checkers=['flake8']
-let g:syntastic_python_flake8_args = '--ignore=E501,E225'
 
 let g:pymode_options_max_line_length = 180
 let g:pymode_lint_options_pep8 = {'max_line_length': 180}
