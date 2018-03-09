@@ -16,6 +16,7 @@ Plugin 'vim-indent-object'
 
 " original repos
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'itchyny/lightline.vim'
 Plugin 'kovisoft/slimv'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-fugitive'
@@ -52,7 +53,11 @@ set ruler
 set showcmd
 set backspace=indent,eol,start
 set nowrap
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [LEN=%L] 
+
+" Status line with lightline
+set laststatus=2
+set noshowmode
+let g:lightline={ 'colorscheme': 'solarized' }
 
 map Y y$
 
