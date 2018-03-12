@@ -17,9 +17,9 @@ Plugin 'vim-indent-object'
 
 " original repos
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'itchyny/lightline.vim'
 Plugin 'kovisoft/slimv'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-obsession'
@@ -27,6 +27,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-speeddating'
 Plugin 'vim-scripts/argtextobj.vim'
+Plugin 'w0rp/ale'
 Plugin 'Yggdroot/indentLine'
 
 filetype plugin on
@@ -53,7 +54,11 @@ set ruler
 set showcmd
 set backspace=indent,eol,start
 set nowrap
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [LEN=%L] 
+
+" Status line with lightline
+set laststatus=2
+set noshowmode
+let g:lightline={ 'colorscheme': 'solarized' }
 
 map Y y$
 
@@ -79,12 +84,6 @@ autocmd FileType html,htmljinja,htmldjango source ~/.vim/bundle/closetag.vim/plu
 
 " Lisp
 let g:lisp_rainbow=1
-
-" Syntastic
-let g:syntastic_php_phpmd_post_args = 'design,unusedcode'
-let g:syntastic_python_python_exec = '~/.pyenv/shims/python3'
-let g:syntastic_python_checkers=['flake8']
-let g:syntastic_python_flake8_args = '--ignore=E501,E225'
 
 let g:pymode_options_max_line_length = 180
 let g:pymode_lint_options_pep8 = {'max_line_length': 180}

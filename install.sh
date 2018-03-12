@@ -2,7 +2,10 @@
 
 cd ~/dotfiles/ && git submodule update --init
 
+# pyenv
+
 curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+git clone https://github.com/pyenv/pyenv-virtualenv.git $(PYENV_ROOT)/plugins/pyenv-virtualenv
 
 ~/dotfiles/fzf/install
 
