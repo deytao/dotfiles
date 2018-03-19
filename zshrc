@@ -34,6 +34,7 @@ plugins=(python git pip macports vagrant zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
+export LANG=en
 export TERM='xterm-256color'
 export LC_CTYPE=en_US.utf-8
 export EDITOR=vi
