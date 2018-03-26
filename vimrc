@@ -1,37 +1,36 @@
 set shell=/bin/bash
 set nocompatible
-filetype off
 
 let mapleader='\'
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-Plugin 'gmarik/vundle'
+call plug#begin('~/.vim/bundle')
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'Yggdroot/indentLine'
+Plug 'altercation/vim-colors-solarized'
+Plug 'alvan/vim-closetag'
+Plug 'garbas/vim-snipmate'
+Plug 'itchyny/lightline.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'kovisoft/slimv'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tomtom/tlib_vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
+Plug 'vim-scripts/argtextobj.vim'
+Plug 'w0rp/ale'
+call plug#end()
 
-" vim-scripts repos
-Plugin 'closetag.vim'
-Plugin 'ctrlp.vim'
-Plugin 'snipMate'
-Plugin 'vim-indent-object'
-
-" original repos
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'itchyny/lightline.vim'
-Plugin 'kovisoft/slimv'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-markdown'
-Plugin 'tpope/vim-obsession'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-speeddating'
-Plugin 'vim-scripts/argtextobj.vim'
-Plugin 'w0rp/ale'
-Plugin 'Yggdroot/indentLine'
-
-filetype plugin on
-syntax on
 set background=dark
 set t_Co=256
 let g:solarized_termtrans=1
