@@ -32,7 +32,7 @@ bin/test.256.pl
 bin/test.gzip
 bin/trim
 bin/upgradedb
-vim/bundle/!vundle
-vim/bundle/
 tmux/plugins/!tpm
 tmux/plugins/
+vim/autoload/plug.vim
+vim/bundle/
