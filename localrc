@@ -23,3 +23,6 @@ export NVM_DIR="/Users/tao/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+## Postgres
+export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
