@@ -25,5 +25,6 @@
     shorty = status -sb
     wync = "!git stash && git purr && git stash pop && git push"
     fco = "!git checkout $(git branch -a | fzf)"
+    co = checkout
 [http]
 	sslverify = false
