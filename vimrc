@@ -27,6 +27,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/argtextobj.vim'
+Plug 'wincent/ferret'
 Plug 'w0rp/ale'
 call plug#end()
 
