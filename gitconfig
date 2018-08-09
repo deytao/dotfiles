@@ -25,7 +25,16 @@
     purr = pull --rebase
     ready = rebase -i @{u}
     shorty = status -sb
-    sweep = "!git remote update -p && git purr && git branch -d $(git branch --merged | grep -v '*' | grep -v master)"
+    sweep = "!f() { \
+            git remote update -p;\
+            git purr;\
+            merged_branches=$(git branch --merged | grep -v '*' | grep -v master);\
+            if [ $merged_branches ]; then \
+                git branch -d $merged_branches; \
+            else \
+                echo 'No merged branches to delete'; \
+            fi; \
+        }; f"
     wync = "!git stash && git purr && git stash pop && git push"
 [http]
 	sslverify = false
