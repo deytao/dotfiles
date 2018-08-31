@@ -26,3 +26,7 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 ## Postgres
 export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
+
+## MA VirtualMachine
+export MA_REPOSITORY=~/projects/meilleursagents
+export MA_DEV_API_IP=35.205.113.23
