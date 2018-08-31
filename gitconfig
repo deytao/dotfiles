@@ -2,7 +2,7 @@
     name = Jonathan Camile
     email = jonathan.camile+github@gmail.com
 [color]
-    ui = auto
+    ui = true
 [diff]
     renamelimit = 0
 [push]
@@ -12,8 +12,10 @@
 [core]
 	editor = vi
 	trustctime = false
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [rerere]
 	enabled = 1
+
 [alias]
     co = checkout
     commend = commit --amend --no-edit
@@ -38,3 +40,18 @@
     wync = "!git stash && git purr && git stash pop && git push"
 [http]
 	sslverify = false
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[diff-so-fancy]
+	changeHunkIndicators = true
+	stripLeadingSymbols = true
