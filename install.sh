@@ -26,3 +26,9 @@ ln -s ~/dotfiles/vagrant-provisioning.sh ~/.vagrant-provisioning.sh
 ln -s ~/dotfiles/pgclirc ~/.config/pgcli/config
 
 pip install --user powerline-status
+
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    sudo apt-get install httpie
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    brew install httpie
+fi
