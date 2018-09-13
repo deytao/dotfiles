@@ -30,12 +30,7 @@
     sweep = "!f() { \
             git remote update -p;\
             git purr;\
-            merged_branches=$(git branch --merged | grep -v '*' | grep -v master | xargs);\
-            if [ $merged_branches ]; then \
-                git branch -d $merged_branches; \
-            else \
-                echo 'No merged branches to delete'; \
-            fi; \
+            git branch --merged | grep -v '*' | grep -v master | xargs -I{} git branch -d {};\
         }; f"
     wync = "!git stash && git purr && git stash pop && git push"
 [http]
