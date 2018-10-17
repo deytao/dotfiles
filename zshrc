@@ -79,12 +79,3 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-
-# SSH
-source ~/dotfiles/ssh-find-agent.sh
-ssh-find-agent -a
-if [ -z "$SSH_AUTH_SOCK" ]
-then
-	eval $(ssh-agent -s)
-	ssh-add ~/.ssh/id_rsa
-fi
