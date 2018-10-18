@@ -15,6 +15,7 @@ ln -s ~/dotfiles/omz_custom ~/.omz_custom
 ln -s ~/dotfiles/oh-my-zsh ~/.oh-my-zsh
 ln -s ~/dotfiles/pythonrc.py ~/.pythonrc.py
 ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
+ln -s ~/dotfiles/tmuxp ~/.tmuxp
 ln -s ~/dotfiles/vim ~/.vim
 ln -s ~/dotfiles/vimrc ~/.vimrc
 ln -s ~/dotfiles/zshrc ~/.zshrc
@@ -25,6 +26,7 @@ ln -s ~/dotfiles/vagrant-provisioning.sh ~/.vagrant-provisioning.sh
 ln -s ~/dotfiles/pgclirc ~/.config/pgcli/config
 
 pip install --user powerline-status
+pip install --user tmuxp
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     sudo apt-get install httpie
