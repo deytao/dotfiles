@@ -63,6 +63,8 @@ then
     export WORKON_HOME=$HOME/.virtualenvs
     source /usr/local/bin/virtualenvwrapper.sh
     workon
+else
+    export WORKON_HOME=$HOME/.pyenv/versions
 fi
 
 if [ -f ~/.localrc ]

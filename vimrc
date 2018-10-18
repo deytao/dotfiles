@@ -18,6 +18,7 @@ Plug 'garbas/vim-snipmate'
 Plug 'itchyny/lightline.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'kovisoft/slimv'
+Plug 'lepture/vim-jinja'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tomtom/tlib_vim'
@@ -80,7 +81,7 @@ noremap <C-l> <C-w>l
 
 autocmd BufRead,BufNewFile *.twig set syntax=htmljinja
 autocmd FileType html,htmljinja,htmldjango let g:closetag_html_style=1
-autocmd FileType html,htmljinja,htmldjango source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+autocmd FileType html,htmljinja,htmldjango source ~/.vim/bundle/vim-closetag/plugin/closetag.vim
 
 " Lisp
 let g:lisp_rainbow=1

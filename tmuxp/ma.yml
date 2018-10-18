@@ -1,0 +1,22 @@
+session_name: ma
+windows:
+  - window_name: repo1
+    start_directory: ~/ma1
+    panes:
+      - blank
+  - window_name: repo2
+    start_directory: ~/ma2
+    panes:
+      - blank
+  - window_name: psql
+    panes:
+      - pgcli -p 6543
+  - window_name: MA-Libs
+    start_directory: ~/Libs
+    panes:
+      - blank
+  - window_name: ansible
+    start_directory: ~/MA-Infra/ansible
+    panes:
+      - shell_command:
+        - pyenv activate py27-infra
