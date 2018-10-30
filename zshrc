@@ -79,3 +79,5 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
