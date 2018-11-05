@@ -58,9 +58,9 @@ export FZF_DEFAULT_OPTS='
 '
 
 # Load virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]
 then
-    export WORKON_HOME=$HOME/.virtualenvs
     source /usr/local/bin/virtualenvwrapper.sh
     workon
 else
@@ -81,3 +81,5 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
