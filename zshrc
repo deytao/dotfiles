@@ -57,16 +57,6 @@ export FZF_DEFAULT_OPTS='
   --color info:150,prompt:110,spinner:150,pointer:167,marker:174
 '
 
-# Load virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-if [ -f /usr/local/bin/virtualenvwrapper.sh ]
-then
-    source /usr/local/bin/virtualenvwrapper.sh
-    workon
-else
-    export WORKON_HOME=$HOME/.pyenv/versions
-fi
-
 if [ -f ~/.localrc ]
 then
     source ~/.localrc
