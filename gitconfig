@@ -1,6 +1,7 @@
 [user]
     name = Jonathan Camile
-    email = jonathan.camile+github@gmail.com
+    email = jonathan.camile@protonmail.com
+    signingKey = E318739A1E3E80E4
 [color]
     ui = true
 [diff]
@@ -50,3 +51,7 @@
 [diff-so-fancy]
 	changeHunkIndicators = true
 	stripLeadingSymbols = true
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg2
