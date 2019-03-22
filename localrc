@@ -1,13 +1,10 @@
+## OpenSSL
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+
 ## Android Studio
 export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/platform-tools
-
-## MacPort
-export PATH=/usr/local/sbin:/opt/local/bin:/opt/local/sbin:$PATH
-
-## YARN
-export PATH=$PATH:/opt/yarn-0.27.5/bin
 
 # MA Tools
 source ~/projects/MA-Infra/tools/gssh/gssh.sh
@@ -28,8 +25,12 @@ export NVM_DIR="/Users/tao/.nvm"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 ## Postgres
-export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
 ## MA VirtualMachine
 export MA_REPOSITORY=~/projects/meilleursagents
 export MA_DEV_API_IP=35.205.113.23
+
+# GO
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
