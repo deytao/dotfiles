@@ -8,6 +8,8 @@ cd ~/dotfiles/ && git submodule update --init
 curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
 git clone https://github.com/pyenv/pyenv-virtualenv.git $(PYENV_ROOT)/plugins/pyenv-virtualenv
 
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 ln -s ~/dotfiles/bin ~/bin
 ln -s ~/dotfiles/gitconfig ~/.gitconfig
 ln -s ~/dotfiles/omz_custom ~/.omz_custom
