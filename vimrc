@@ -10,6 +10,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/bundle')
+Plug 'dart-lang/dart-vim-plugin'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'Yggdroot/indentLine'
 Plug 'altercation/vim-colors-solarized'
@@ -29,6 +30,7 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
+Plug 'thosakwe/vim-flutter'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'wincent/ferret'
 Plug 'w0rp/ale'
@@ -89,3 +91,8 @@ let g:lisp_rainbow=1
 
 let g:pymode_options_max_line_length = 180
 let g:pymode_lint_options_pep8 = {'max_line_length': 180}
+
+nnoremap <leader>fa :FlutterRun<cr>
+nnoremap <leader>fq :FlutterQuit<cr>
+nnoremap <leader>fr :FlutterHotReload<cr>
+nnoremap <leader>fR :FlutterHotRestart<cr>

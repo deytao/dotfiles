@@ -34,3 +34,7 @@ export MA_DEV_API_IP=35.205.113.23
 # GO
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
+
+# Flutter
+export FLUTTER_PATH=$HOME/.local/flutter
+export PATH=$PATH:$FLUTTER_PATH/bin
