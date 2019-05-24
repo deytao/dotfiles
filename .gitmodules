@@ -10,3 +10,6 @@
 [submodule "fzf"]
 	path = fzf
 	url = https://github.com/junegunn/fzf.git
+[submodule "omz_custom/themes/spaceship-prompt"]
+	path = omz_custom/themes/spaceship-prompt
+	url = https://github.com/denysdovhan/spaceship-prompt.git
