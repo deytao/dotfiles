@@ -40,6 +40,7 @@ export LC_ALL=en_US.utf-8
 export LC_CTYPE=en_US.utf-8
 export EDITOR=vi
 export PGHOST=localhost
+export GPG_TTY=$(tty)
 
 # Customize to your needs...
 alias less='less -r'
