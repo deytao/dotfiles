@@ -1,6 +1,12 @@
 #!/bin/bash
 
-sudo apt -y install zsh
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    sudo apt -y install zsh
+    sudo apt-get install httpie
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    brew install zsh
+    brew install httpie
+fi
 
 cd ~/dotfiles/ && git submodule update --init
 
