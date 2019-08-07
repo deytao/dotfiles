@@ -13,3 +13,6 @@
 [submodule "omz_custom/themes/spaceship-prompt"]
 	path = omz_custom/themes/spaceship-prompt
 	url = https://github.com/denysdovhan/spaceship-prompt.git
+[submodule "omz_custom/plugins/k"]
+	path = omz_custom/plugins/k
+	url = https://github.com/supercrabtree/k
