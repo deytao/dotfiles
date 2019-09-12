@@ -11,9 +11,9 @@ endif
 
 call plug#begin('~/.vim/bundle')
 Plug 'dart-lang/dart-vim-plugin'
+Plug 'ayu-theme/ayu-vim'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'Yggdroot/indentLine'
-Plug 'altercation/vim-colors-solarized'
 Plug 'alvan/vim-closetag'
 Plug 'davidhalter/jedi-vim'
 Plug 'garbas/vim-snipmate'
@@ -38,11 +38,11 @@ call plug#end()
 
 set background=dark
 set t_Co=256
-let g:solarized_termtrans=1
-let g:solarized_termcolors=256
-let g:solarized_contrast="high"
-let g:solarized_visibility="high"
-colorscheme solarized
+set termguicolors     " enable true colors support
+"let ayucolor="light"  " for light version of theme
+"let ayucolor="mirage" " for mirage version of theme
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
 hi! CursorLineNr cterm=bold ctermfg=64
 set ai
 set smartindent
@@ -62,7 +62,7 @@ set nowrap
 " Status line with lightline
 set laststatus=2
 set noshowmode
-let g:lightline={ 'colorscheme': 'solarized' }
+let g:lightline={ 'colorscheme': 'ayu' }
 
 map Y y$
 
