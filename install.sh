@@ -2,10 +2,8 @@
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     sudo apt -y install zsh
-    sudo apt-get install httpie
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     brew install zsh
-    brew install httpie
 fi
 
 cd ~/dotfiles/ && git submodule update --init
@@ -30,6 +28,7 @@ ln -s ~/dotfiles/psqlrc ~/.psqlrc
 ln -s ~/dotfiles/sbclrc ~/.sbclrc
 ln -s ~/dotfiles/localrc ~/.localrc
 ln -s ~/dotfiles/vagrant-provisioning.sh ~/.vagrant-provisioning.sh
+ln -s ~/dotfiles/alacritty ~/.config/alacritty
 
 sudo chsh -s `which zsh` jonathanc
 
@@ -45,4 +44,5 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     brew install httpie
     brew install ripgrep
+    brew cask install alacritty
 fi
