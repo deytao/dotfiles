@@ -3,7 +3,7 @@ ZSH_DISABLE_COMPFIX=true
 
 ANTIGEN_PATH=$HOME/dotfiles
 source $ANTIGEN_PATH/antigen/antigen.zsh
-antigen init .antigenrc
+antigen init ${HOME}/.antigenrc
 
 export LANG=en_US.UTF-8
 export TERM='xterm-256color'

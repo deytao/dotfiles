@@ -1,5 +1,6 @@
 antigen use oh-my-zsh
 
+antigen bundle Czocher/gpg-crypt
 antigen bundle git
 antigen bundle macports
 antigen bundle pip
@@ -7,6 +8,7 @@ antigen bundle python
 antigen bundle raylee/tldr
 antigen bundle supercrabtree/k
 antigen bundle vagrant
+antigen bundle wfxr/forgit
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen theme denysdovhan/spaceship-prompt
