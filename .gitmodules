@@ -16,3 +16,6 @@
 [submodule "omz_custom/plugins/k"]
 	path = omz_custom/plugins/k
 	url = https://github.com/supercrabtree/k
+[submodule "antigen"]
+	path = antigen
+	url = https://github.com/zsh-users/antigen.git
