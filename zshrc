@@ -1,3 +1,6 @@
+CASE_SENSITIVE=true
+ZSH_DISABLE_COMPFIX=true
+
 ANTIGEN_PATH=$HOME/dotfiles
 source $ANTIGEN_PATH/antigen/antigen.zsh
 antigen init .antigenrc
