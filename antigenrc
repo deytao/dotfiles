@@ -8,6 +8,6 @@ antigen bundle vagrant
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle supercrabtree/k
 
-antigen theme spaceship
+antigen theme denysdovhan/spaceship-prompt
 
 antigen apply
