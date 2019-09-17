@@ -29,6 +29,7 @@ ln -s ~/dotfiles/sbclrc ~/.sbclrc
 ln -s ~/dotfiles/localrc ~/.localrc
 ln -s ~/dotfiles/vagrant-provisioning.sh ~/.vagrant-provisioning.sh
 ln -s ~/dotfiles/alacritty ~/.config/alacritty
+ln -s ~/dotfiles/antigenrc ~/.antigenrc
 
 sudo chsh -s `which zsh` jonathanc
 
