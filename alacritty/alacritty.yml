@@ -532,6 +532,7 @@ key_bindings:
   #- { key: Q,      mods: Command,         action: Quit             }
   #- { key: W,      mods: Command,         action: Quit             }
   #- { key: F,      mods: Command|Control, action: ToggleFullscreen }
+  - { key: T,      mods: Command,          chars: "\x01\x63" }
 
   - { key: Paste,                   action: Paste                            }
   - { key: Copy,                    action: Copy                             }
