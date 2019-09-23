@@ -9,16 +9,6 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 # MA Tools
 source ~/projects/MA-Infra/tools/gssh/gssh.sh
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f /Users/tao/Library/google-cloud-sdk/path.zsh.inc ]; then
-  source '/Users/tao/Library/google-cloud-sdk/path.zsh.inc'
-fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f /Users/tao/Library/google-cloud-sdk/completion.zsh.inc ]; then
-  source '/Users/tao/Library/google-cloud-sdk/completion.zsh.inc'
-fi
-
 export NVM_DIR="/Users/tao/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
@@ -38,3 +28,6 @@ export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
 # Flutter
 export FLUTTER_PATH=$HOME/.local/flutter
 export PATH=$PATH:$FLUTTER_PATH/bin
+
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
