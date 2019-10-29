@@ -33,6 +33,7 @@
             git purr;\
             git branch --merged | grep -v '*' | grep -v master | xargs -I{} git branch -d {};\
         }; f"
+    upush = "!git push -u origin `git rev-parse --abbrev-ref HEAD`"
     wync = "!git stash && git purr && git stash pop && git push"
 [http]
 	sslverify = false
