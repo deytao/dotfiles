@@ -1,7 +1,7 @@
 #!/bin/bash
 
 my_install () {
-    local sys = $1; shift
+    local sys=$1; shift
     for item in $@; do
         if [[ "$sys" == "debian" ]]; then
             sudo apt -y install $item
