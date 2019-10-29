@@ -1,12 +1,19 @@
 #!/bin/bash
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    sudo apt -y install zsh
-    sudo apt-get install httpie
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    brew install zsh
-    brew install httpie
-fi
+my_install () {
+    local sys = $1; shift
+    for item in $@; do
+        if [[ "$sys" == "debian" ]]; then
+            sudo apt -y install $item
+        elif [[ "$sys" == "osx" ]]; then
+            brew install $item
+        elif [[ "$sys" == "arch" ]]; then
+            sudo pacman -S $item
+        fi
+    done
+}
+
+my_install $1 zsh
 
 cd ~/dotfiles/ && git submodule update --init
 
@@ -39,11 +46,4 @@ sudo chsh -s `which zsh` jonathanc
 pip install --user powerline-status
 pip install --user tmuxp
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    sudo apt-get install httpie
-    curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb
-    sudo dpkg -i ripgrep_11.0.2_amd64.deb
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    brew install httpie
-    brew install ripgrep
-fi
+my_install $1 httpie ripgrep alacritty
