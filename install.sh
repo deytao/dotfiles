@@ -47,5 +47,4 @@ sudo chsh -s `which zsh` jonathanc
 pip install --user powerline-status
 pip install --user tmuxp
 
-my_install $1 httpie ripgrep
-brew cask install alacritty
+my_install $1 httpie ripgrep alacritty
