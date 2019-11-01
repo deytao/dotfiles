@@ -8,7 +8,7 @@ my_install () {
         elif [[ "$sys" == "osx" ]]; then
             brew install $item
         elif [[ "$sys" == "arch" ]]; then
-            sudo pacman -Sy $item
+            sudo pacman -S --noconfirm $item
         fi
     done
 }
@@ -47,5 +47,20 @@ sudo chsh -s `which zsh` deytao
 pip install --user powerline-status
 pip install --user tmuxp
 
-my_install $1 tmux httpie ripgrep alacritty bat otf-fira-code
+my_install $1 \
+    tmux \
+    httpie \
+    ripgrep \
+    alacritty \
+    bat \
+    otf-fira-code \
+    rofi \
+    xf86-input-synaptics \
+    snapd
 yay -S google-cloud-sdk
+
+sudo systemctl enable --now snapd.socket
+sudo ln -s /var/lib/snapd/snap /snap
+
+sudo snap install slack --classic
+sudo snap install plexmediaserver
