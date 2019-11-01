@@ -8,7 +8,7 @@ my_install () {
         elif [[ "$sys" == "osx" ]]; then
             brew install $item
         elif [[ "$sys" == "arch" ]]; then
-            sudo pacman -S $item
+            sudo pacman -Sy $item
         fi
     done
 }
@@ -40,11 +40,12 @@ ln -s ~/dotfiles/vagrant-provisioning.sh ~/.vagrant-provisioning.sh
 ln -s ~/dotfiles/alacritty ~/.config/alacritty
 ln -s ~/dotfiles/antigenrc ~/.antigenrc
 
-sudo chsh -s `which zsh` jonathanc
+sudo chsh -s `which zsh` deytao
 
 ~/dotfiles/fzf/install
 
 pip install --user powerline-status
 pip install --user tmuxp
 
-my_install $1 httpie ripgrep alacritty
+my_install $1 tmux httpie ripgrep alacritty bat otf-fira-code
+yay -S google-cloud-sdk

@@ -12,8 +12,6 @@ source ~/projects/MA-Infra/tools/gssh/gssh.sh
 export NVM_DIR="/Users/tao/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 ## Postgres
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
@@ -29,8 +27,8 @@ export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
 export FLUTTER_PATH=$HOME/.local/flutter
 export PATH=$PATH:$FLUTTER_PATH/bin
 
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+source "/opt/google-cloud-sdk/path.zsh.inc"
+source "/opt/google-cloud-sdk/completion.zsh.inc"
 
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
     tmux attach -t default || tmux new -s default
