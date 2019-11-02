@@ -48,15 +48,18 @@ pip install --user powerline-status
 pip install --user tmuxp
 
 my_install $1 \
-    tmux \
-    httpie \
-    ripgrep \
     alacritty \
     bat \
+    httpie \
     otf-fira-code \
+    pass \
+    plasma-desktop \
+    ripgrep \
     rofi \
+    snapd \
+    tmux \
     xf86-input-synaptics \
-    snapd
+    yay
 yay -S google-cloud-sdk
 
 sudo systemctl enable --now snapd.socket
