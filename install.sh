@@ -56,17 +56,17 @@ my_install $1 \
     plasma-desktop \
     ripgrep \
     rofi \
-    snapd \
     tmux \
     xf86-input-synaptics \
     yay
-yay -S google-cloud-sdk
 
-sudo systemctl enable --now snapd.socket
-sudo ln -s /var/lib/snapd/snap /snap
-
-sudo snap install slack --classic
-sudo snap install plexmediaserver
+yay -S --noconfirm \
+    google-cloud-sdk \
+    google-chrome-beta \
+    plex-media-server \
+    slack-desktop \
+    vim-nox \
+    vuze
 
 sudo systemctl enable sddm.service --force
 
