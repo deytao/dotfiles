@@ -74,3 +74,7 @@ sudo sed -i 's/EnableHiDPI=false$/EnableHiDPI=true/g' /etc/sddm.conf
 sudo sed -i 's/ServerArguments=-nolisten tcp$/ServerArguments=-nolisten tcp -dpi '$(xrdb -query | rg dpi | cut -f2)'/' /etc/sddm.conf
 
 echo 'setxkbmap -option caps:escape' >> ~/.xinitrc
+
+sudo sh -c 'echo options hid_apple fnmode=2 swap_opt_cmd=1 > /etc/modprobe.d/hid_apple.conf'
+sudo modprobe -r hid_apple
+sudo modprobe hid_apple
