@@ -50,7 +50,9 @@ pip install --user tmuxp
 my_install $1 \
     alacritty \
     bat \
+    discover \
     httpie \
+    kmix \
     networkmanager-openvpn \
     noto-fonts-emoji \
     otf-fira-code \
@@ -60,7 +62,8 @@ my_install $1 \
     rofi \
     tmux \
     xf86-input-synaptics \
-    yay
+    yay \
+&& true
 
 yay -S --noconfirm \
     google-cloud-sdk \
@@ -68,7 +71,8 @@ yay -S --noconfirm \
     plex-media-server \
     slack-desktop \
     vim-nox \
-    vuze
+    vuze \
+&& true
 
 sudo systemctl enable sddm.service --force
 sudo systemctl enable plexmediaserver
