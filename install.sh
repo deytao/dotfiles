@@ -69,9 +69,9 @@ yay -S --noconfirm \
     google-cloud-sdk \
     google-chrome-beta \
     plex-media-server \
+    qbittorrent \
     slack-desktop \
     vim-nox \
-    vuze \
 && true
 
 sudo systemctl enable sddm.service --force
