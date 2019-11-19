@@ -51,8 +51,10 @@ my_install $1 \
     alacritty \
     bat \
     discover \
+    ethtool \
     httpie \
     kmix \
+    linux53-acpi_call \
     networkmanager-openvpn \
     noto-fonts-emoji \
     otf-fira-code \
@@ -60,7 +62,10 @@ my_install $1 \
     plasma-desktop \
     ripgrep \
     rofi \
+    smartmontools \
     tmux \
+    tlp \
+    tlpui \
     xf86-input-synaptics \
     yay \
 && true
@@ -71,6 +76,7 @@ yay -S --noconfirm \
     plex-media-server \
     qbittorrent \
     slack-desktop \
+    tp_smapi \
     vim-nox \
 && true
 
