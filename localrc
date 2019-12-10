@@ -57,3 +57,5 @@ if [ -f "${SSH_ENV}" ]; then
 else
     start_agent;
 fi
+
+alias ma_vpn='pass MA/VPN && sudo openvpn --config ${HOME}/Downloads/jcamile/jcamile.ovpn --ca ${HOME}/Downloads/jcamile/ca.crt --cert ${HOME}/Downloads/jcamile/jcamile.crt --key ${HOME}/Downloads/jcamile/jcamile.key'
