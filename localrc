@@ -34,6 +34,12 @@ if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
     tmux attach -t default || tmux new -s default
 fi
 
+alias pbcopy='xclip'
+alias pbpaste='xclip -o'
+
+function copy_password {
+    pass $1 | head -n 1 | pbcopy
+}
 
 SSH_ENV="$HOME/.ssh/environment"
 
@@ -43,7 +49,7 @@ function start_agent {
     echo succeeded
     chmod 600 "${SSH_ENV}"
     . "${SSH_ENV}" > /dev/null
-    pass Home/RSAPassphrase
+    copy_password Home/RSAPassphrase
     /usr/bin/ssh-add;
 }
 
@@ -58,4 +64,4 @@ else
     start_agent;
 fi
 
-alias ma_vpn='pass MA/VPN && sudo openvpn --config ${HOME}/Downloads/jcamile/jcamile.ovpn --ca ${HOME}/Downloads/jcamile/ca.crt --cert ${HOME}/Downloads/jcamile/jcamile.crt --key ${HOME}/Downloads/jcamile/jcamile.key'
+alias ma_vpn='copy_password MA/VPN && sudo openvpn --config ${HOME}/Downloads/jcamile/jcamile.ovpn --ca ${HOME}/Downloads/jcamile/ca.crt --cert ${HOME}/Downloads/jcamile/jcamile.crt --key ${HOME}/Downloads/jcamile/jcamile.key'

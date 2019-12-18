@@ -66,6 +66,7 @@ my_install $1 \
     tmux \
     tlp \
     tlpui \
+    xclip \
     xf86-input-synaptics \
     yay \
 && true
