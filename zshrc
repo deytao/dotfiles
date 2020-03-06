@@ -6,6 +6,7 @@ source $ANTIGEN_PATH/antigen/antigen.zsh
 antigen init ${HOME}/.antigenrc
 
 export LANG=en_US.UTF-8
+export LANGUAGE=en_US:en_GB:en
 export TERM='xterm-256color'
 export LC_ALL=en_US.utf-8
 export LC_CTYPE=en_US.utf-8

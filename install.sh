@@ -54,7 +54,7 @@ my_install $1 \
     ethtool \
     httpie \
     kmix \
-    linux53-acpi_call \
+    linux54-acpi_call \
     networkmanager-openvpn \
     noto-fonts-emoji \
     otf-fira-code \
