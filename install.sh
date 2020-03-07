@@ -72,20 +72,17 @@ my_install $1 \
 && true
 
 yay -S --noconfirm \
+    brave \
     google-cloud-sdk \
     google-chrome-beta \
     plex-media-server \
     qbittorrent \
+    remarkable \
     slack-desktop \
-    tp_smapi \
     vim-nox \
 && true
 
-sudo systemctl enable sddm.service --force
 sudo systemctl enable plexmediaserver
-
-sudo sed -i 's/EnableHiDPI=false$/EnableHiDPI=true/g' /etc/sddm.conf
-sudo sed -i 's/ServerArguments=-nolisten tcp$/ServerArguments=-nolisten tcp -dpi '$(xrdb -query | rg dpi | cut -f2)'/' /etc/sddm.conf
 
 echo 'setxkbmap -option caps:escape' >> ~/.xinitrc
 
