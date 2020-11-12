@@ -7,7 +7,8 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 # MA Tools
-source ~/projects/MA-Infra/tools/gssh/gssh.sh
+export MA_FOLDER="${HOME}/projects"
+source ${MA_FOLDER}/MA-Infra/tools/gssh/gssh_aliases.sh
 
 export NVM_DIR="/Users/tao/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
