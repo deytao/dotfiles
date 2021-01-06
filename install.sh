@@ -50,16 +50,12 @@ pip install --user tmuxp
 my_install $1 \
     alacritty \
     bat \
-    discover \
     ethtool \
     httpie \
-    kmix \
     linux54-acpi_call \
     networkmanager-openvpn \
     noto-fonts-emoji \
-    otf-fira-code \
     pass \
-    plasma-desktop \
     ripgrep \
     rofi \
     smartmontools \
@@ -68,18 +64,21 @@ my_install $1 \
     tlpui \
     xclip \
     xf86-input-synaptics \
+    xfce4 \
     yay \
 && true
 
 yay -S --noconfirm \
-    brave \
-    google-cloud-sdk \
+    brave-bin \
+    fd \
+    git-delta-bin \
     google-chrome-beta \
     plex-media-server \
     qbittorrent \
     remarkable \
     slack-desktop \
-    vim-nox \
+    ttf-fira-code \
+    vim \
 && true
 
 sudo systemctl enable plexmediaserver
