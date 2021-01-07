@@ -10,7 +10,7 @@ windows:
     start_directory: ~/GeoAPI
     panes:
       - blank
-      - make run
+      - sudo systemctl stop geoapi && make run-debug
   - window_name: marketapi
     layout: d9b0,274x72,0,0{146x72,0,0,2,127x72,147,0,3}
     start_directory: ~/MarketAPI

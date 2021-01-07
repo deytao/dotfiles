@@ -1,6 +1,8 @@
 export DISABLE_AUTO_TITLE='true'
 
 export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass.txt
+export GEGEN_DIR=${HOME}/MA-Infra/gegen
+export GEGEN_ANSIBLE_DIR=${HOME}/MA-Infra/ansible
 export GPG_TTY=$(tty)
 export PGHOST=www-db-master.dev-internal.meilleursagents
 export PGPORT=6543
