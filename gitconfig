@@ -8,6 +8,8 @@
     renamelimit = 0
 [push]
     default = tracking
+[pull]
+    rebase = true
 [merge]
     tool = vimdiff
 [core]
@@ -47,3 +49,5 @@
 	gpgsign = true
 [gpg]
 	program = gpg
+[hub]
+	protocol = ssh

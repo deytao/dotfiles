@@ -28,8 +28,6 @@ curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv
 [[ ! -L "${HOME}/.config/alacritty" ]] && ln -s ~/dotfiles/alacritty ~/.config/alacritty
 [[ ! -L "${HOME}/.gitconfig" ]] && ln -s ~/dotfiles/gitconfig ~/.gitconfig
 [[ ! -L "${HOME}/.localrc" ]] && ln -s ~/dotfiles/localrc ~/.localrc
-[[ ! -L "${HOME}/.oh-my-zsh" ]] && ln -s ~/dotfiles/oh-my-zsh ~/.oh-my-zsh
-[[ ! -L "${HOME}/.omz_custom" ]] && ln -s ~/dotfiles/omz_custom ~/.omz_custom
 [[ ! -L "${HOME}/.psqlrc" ]] && ln -s ~/dotfiles/psqlrc ~/.psqlrc
 [[ ! -L "${HOME}/.pythonrc.py" ]] && ln -s ~/dotfiles/pythonrc.py ~/.pythonrc.py
 [[ ! -L "${HOME}/.sbclrc" ]] && ln -s ~/dotfiles/sbclrc ~/.sbclrc
@@ -71,7 +69,7 @@ my_install $1 \
 yay -S --noconfirm \
     brave-bin \
     fd \
-    git-delta-bin \
+    git-delta \
     google-chrome-beta \
     plex-media-server \
     qbittorrent \
