@@ -31,7 +31,6 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
-Plug 'thosakwe/vim-flutter'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'wincent/ferret'
 Plug 'w0rp/ale'
@@ -97,3 +96,6 @@ nnoremap <leader>fa :FlutterRun<cr>
 nnoremap <leader>fq :FlutterQuit<cr>
 nnoremap <leader>fr :FlutterHotReload<cr>
 nnoremap <leader>fR :FlutterHotRestart<cr>
+
+" ALE
+let g:ale_linters = {'python': ['flake8', 'mypy']}
