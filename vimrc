@@ -86,6 +86,9 @@ autocmd BufRead,BufNewFile *.twig set syntax=htmljinja
 autocmd FileType html,htmljinja,htmldjango let g:closetag_html_style=1
 autocmd FileType html,htmljinja,htmldjango source ~/.vim/bundle/vim-closetag/plugin/closetag.vim
 
+" Security
+au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup noundofile
+
 " Lisp
 let g:lisp_rainbow=1
 
@@ -97,5 +100,9 @@ nnoremap <leader>fq :FlutterQuit<cr>
 nnoremap <leader>fr :FlutterHotReload<cr>
 nnoremap <leader>fR :FlutterHotRestart<cr>
 
+" SnipMate
+let g:snipMate = { 'snippet_version' : 1 }
+
 " ALE
 let g:ale_linters = {'python': ['flake8', 'mypy']}
+let g:ale_list_window_size = 10

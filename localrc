@@ -71,8 +71,7 @@ export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.vault_pass.txt"
 export ANSIBLE_VAULT_IDENTITY_LIST="${HOME}/.dev_vault_pass.txt"
 export GEGEN_DIR="${HOME}/projects/MA-Infra/gegen"
 export GEGEN_ANSIBLE_DIR="${HOME}/projects/MA-Infra/ansible"
-export PACKAGECLOUD_TOKEN="5a437f5ec3db1d55e243644691ed21170b8befe2d1ed94a8"
-export KUBE_EDITOR="vim"
-alias ma_vpn='copy_password MA/VPN && sudo openvpn --config ${HOME}/Downloads/jcamile/jcamile.ovpn --ca ${HOME}/Downloads/jcamile/ca.crt --cert ${HOME}/Downloads/jcamile/jcamile.crt --key ${HOME}/Downloads/jcamile/jcamile.key'
+export KUBE_EDITOR="vi"
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
 eval "$(rbenv init -)"
