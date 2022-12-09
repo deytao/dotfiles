@@ -10,7 +10,7 @@ export LANGUAGE=en_US:en_GB:en
 export TERM='xterm-256color'
 export LC_ALL=en_US.utf-8
 export LC_CTYPE=en_US.utf-8
-export EDITOR=vi
+export EDITOR=vim
 export PGHOST=localhost
 export GPG_TTY=$(tty)
 

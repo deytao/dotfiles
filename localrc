@@ -12,8 +12,9 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 export MA_FOLDER="${HOME}/projects"
 source ${MA_FOLDER}/MA-Infra/tools/gssh/gssh_aliases.sh
 
-export NVM_DIR="/Users/tao/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 ## Postgres
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
