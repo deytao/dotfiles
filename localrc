@@ -40,10 +40,6 @@ fi
 alias pbcopy='xclip'
 alias pbpaste='xclip -o'
 
-function copy_password {
-    pass $1 | head -n 1 | pbcopy
-}
-
 SSH_ENV="$HOME/.ssh/environment"
 
 function start_agent {
@@ -52,7 +48,7 @@ function start_agent {
     echo succeeded
     chmod 600 "${SSH_ENV}"
     . "${SSH_ENV}" > /dev/null
-    copy_password Home/RSAPassphrase
+    gopass show -c Home/SSHPassphrase
     /usr/bin/ssh-add;
 }
 
