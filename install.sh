@@ -26,6 +26,7 @@ curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv
 [[ ! -L "${HOME}/.antigenrc" ]] && ln -s ~/dotfiles/antigenrc ~/.antigenrc
 [[ ! -L "${HOME}/bin" ]] && ln -s ~/dotfiles/bin ~/bin
 [[ ! -L "${HOME}/.config/alacritty" ]] && ln -s ~/dotfiles/alacritty ~/.config/alacritty
+[[ ! -L "${HOME}/.config/nvim/init.vim" ]] && ln -s ~/dotfiles/init.vim ~/.config/nvim/init.vim
 [[ ! -L "${HOME}/.gitconfig" ]] && ln -s ~/dotfiles/gitconfig ~/.gitconfig
 [[ ! -L "${HOME}/.localrc" ]] && ln -s ~/dotfiles/localrc ~/.localrc
 [[ ! -L "${HOME}/.psqlrc" ]] && ln -s ~/dotfiles/psqlrc ~/.psqlrc
@@ -71,6 +72,7 @@ yay -S --noconfirm \
     fd \
     git-delta \
     google-chrome-beta \
+    neovim \
     plex-media-server \
     qbittorrent \
     remarkable \
