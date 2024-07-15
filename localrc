@@ -8,20 +8,12 @@ export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-# MA Tools
-export MA_FOLDER="${HOME}/projects"
-source ${MA_FOLDER}/MA-Infra/tools/gssh/gssh_aliases.sh
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 ## Postgres
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
-
-## MA VirtualMachine
-export MA_REPOSITORY=~/projects/meilleursagents
-export MA_DEV_API_IP=35.205.113.23
 
 # GO
 export GOPATH=$HOME/go
@@ -30,9 +22,6 @@ export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
 # Flutter
 export FLUTTER_PATH=$HOME/.local/flutter
 export PATH=$PATH:$FLUTTER_PATH/bin
-
-source "/opt/google-cloud-sdk/path.zsh.inc"
-source "/opt/google-cloud-sdk/completion.zsh.inc"
 
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
     tmux attach -t default || tmux new -s default
@@ -63,12 +52,3 @@ if [ -f "${SSH_ENV}" ]; then
 else
     start_agent;
 fi
-
-export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.vault_pass.txt"
-export ANSIBLE_VAULT_IDENTITY_LIST="${HOME}/.dev_vault_pass.txt"
-export GEGEN_DIR="${HOME}/projects/MA-Infra/gegen"
-export GEGEN_ANSIBLE_DIR="${HOME}/projects/MA-Infra/ansible"
-export KUBE_EDITOR="vi"
-export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-
-eval "$(rbenv init -)"

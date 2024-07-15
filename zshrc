@@ -5,18 +5,20 @@ ANTIGEN_PATH=$HOME/dotfiles
 source $ANTIGEN_PATH/antigen/antigen.zsh
 antigen init ${HOME}/.antigenrc
 
+plugins=()
+
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US:en_GB:en
-export TERM='xterm-256color'
+export TERM='screen-256color'
 export LC_ALL=en_US.utf-8
 export LC_CTYPE=en_US.utf-8
-export EDITOR=vim
+export EDITOR=nvim
 export PGHOST=localhost
 export GPG_TTY=$(tty)
 
 # Customize to your needs...
 alias less='less -r'
-alias vi='vim'
+alias vi='nvim'
 alias tmux='tmux -2'
 
 # set PATH so it includes user's private bin if it exists
@@ -38,7 +40,7 @@ fi
 PYTHONSTARTUP=~/.pythonrc.py
 export PYTHONSTARTUP
 
-export PYENV_VERSION=3.6.5
+export PYENV_VERSION=3.11.4
 export PYENV_ROOT="$HOME/.pyenv"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PATH="$PYENV_ROOT/bin:$PATH"
@@ -46,3 +48,4 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
+. "/home/deytao/.acme.sh/acme.sh.env"

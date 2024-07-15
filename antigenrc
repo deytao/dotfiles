@@ -9,6 +9,7 @@ antigen bundle raylee/tldr
 antigen bundle supercrabtree/k
 antigen bundle vagrant
 antigen bundle wfxr/forgit
+antigen bundle zimfw/asdf
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen theme denysdovhan/spaceship-prompt

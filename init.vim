@@ -2,6 +2,7 @@ set shell=/bin/bash
 set nocompatible
 
 let mapleader='\'
+let g:loaded_python3_provider = 0
 
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
@@ -15,7 +16,7 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'Yggdroot/indentLine'
 Plug 'alvan/vim-closetag'
-Plug 'davidhalter/jedi-vim'
+"Plug 'davidhalter/jedi-vim'
 Plug 'garbas/vim-snipmate'
 Plug 'itchyny/lightline.vim'
 Plug 'jeetsukumaran/vim-pythonsense'
@@ -24,6 +25,7 @@ Plug 'kovisoft/slimv'
 Plug 'lepture/vim-jinja'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'scrooloose/nerdcommenter'
+Plug 'sisrfeng/jupytext'
 Plug 'tomtom/tlib_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown'

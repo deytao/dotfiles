@@ -43,22 +43,27 @@ sudo chsh -s $(which zsh) deytao
 
 ~/dotfiles/fzf/install
 
-pip install --user powerline-status
-pip install --user tmuxp
-
 my_install $1 \
     alacritty \
     bat \
+    bison \
     ethtool \
+    fakeroot \
+    gcc \
+    gopass \
     httpie \
     linux54-acpi_call \
+    make \
     networkmanager-openvpn \
     noto-fonts-emoji \
     pass \
+    patch \
+    python-powerline-git \
     ripgrep \
     rofi \
     smartmontools \
     tmux \
+    tmuxp \
     tlp \
     tlpui \
     xclip \
@@ -68,20 +73,18 @@ my_install $1 \
 && true
 
 yay -S --noconfirm \
-    brave-bin \
     fd \
     git-delta \
     google-chrome-beta \
     neovim \
-    plex-media-server \
     qbittorrent \
     remarkable \
+    signal-desktop \
     slack-desktop \
+    telegram-desktop \
     ttf-fira-code \
     vim \
 && true
-
-sudo systemctl enable plexmediaserver
 
 echo 'setxkbmap -option caps:escape' >> ~/.xinitrc
 
