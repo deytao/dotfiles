@@ -2,9 +2,9 @@
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 
 ## pyenv
-export PYENV_ROOT=$HOME/.pyenv
-export WORKON_HOME=$PYENV_ROOT/versions
-export PATH="$PYENV_ROOT/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 alias pbcopy='xclip'
 alias pbpaste='xclip -o'
