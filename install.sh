@@ -38,7 +38,7 @@ curl -L git.io/antigen > ~/dotfiles/antigen.zsh
 [[ ! -L "${HOME}/.vimrc" ]] && ln -s ~/dotfiles/vimrc ~/.vimrc
 [[ ! -L "${HOME}/.zshrc" ]] && ln -s ~/dotfiles/zshrc ~/.zshrc
 
-sudo chsh -s $(which zsh) deytao
+sudo chsh -s $(which zsh) jcamile
 
 ~/dotfiles/fzf/install
 
