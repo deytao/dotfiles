@@ -23,18 +23,17 @@ curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv
 
 [[ ! -d "${HOME}/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm $(HOME)/.tmux/plugins/tpm
 
+curl -L git.io/antigen > ~/dotfiles/antigen.zsh
 [[ ! -L "${HOME}/.antigenrc" ]] && ln -s ~/dotfiles/antigenrc ~/.antigenrc
 [[ ! -L "${HOME}/bin" ]] && ln -s ~/dotfiles/bin ~/bin
 [[ ! -L "${HOME}/.config/alacritty" ]] && ln -s ~/dotfiles/alacritty ~/.config/alacritty
-[[ ! -L "${HOME}/.config/nvim/init.vim" ]] && ln -s ~/dotfiles/init.vim ~/.config/nvim/init.vim
+[[ ! -L "${HOME}/.config/nvim" ]] && ln -s ~/dotfiles/nvim ~/.config/nvim
 [[ ! -L "${HOME}/.gitconfig" ]] && ln -s ~/dotfiles/gitconfig ~/.gitconfig
 [[ ! -L "${HOME}/.localrc" ]] && ln -s ~/dotfiles/localrc ~/.localrc
 [[ ! -L "${HOME}/.psqlrc" ]] && ln -s ~/dotfiles/psqlrc ~/.psqlrc
 [[ ! -L "${HOME}/.pythonrc.py" ]] && ln -s ~/dotfiles/pythonrc.py ~/.pythonrc.py
 [[ ! -L "${HOME}/.sbclrc" ]] && ln -s ~/dotfiles/sbclrc ~/.sbclrc
-[[ ! -L "${HOME}/.tmux.conf" ]] && ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
-[[ ! -L "${HOME}/.tmuxp" ]] && ln -s ~/dotfiles/tmuxp ~/.tmuxp
-[[ ! -L "${HOME}/.vagrant-provisioning.sh" ]] && ln -s ~/dotfiles/vagrant-provisioning.sh ~/.vagrant-provisioning.sh
+[[ ! -L "${HOME}/.config/tmux.conf" ]] && ln -s ~/dotfiles/tmux.conf ~/.config/tmux.conf
 [[ ! -L "${HOME}/.vim" ]] && ln -s ~/dotfiles/vim ~/.vim
 [[ ! -L "${HOME}/.vimrc" ]] && ln -s ~/dotfiles/vimrc ~/.vimrc
 [[ ! -L "${HOME}/.zshrc" ]] && ln -s ~/dotfiles/zshrc ~/.zshrc
@@ -86,7 +85,8 @@ yay -S --noconfirm \
     vim \
 && true
 
-echo 'setxkbmap -option caps:escape' >> ~/.xinitrc
+xdg-mime default firefox.desktop x-scheme-handler/https
+xdg-mime default firefox.desktop x-scheme-handler/http
 
 # Keychron K2
 sudo sh -c 'echo options hid_apple fnmode=2 swap_opt_cmd=1 > /etc/modprobe.d/hid_apple.conf'

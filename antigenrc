@@ -1,3 +1,5 @@
+source ~/dotfiles/antigen.zsh
+
 antigen use oh-my-zsh
 
 antigen bundle Czocher/gpg-crypt
