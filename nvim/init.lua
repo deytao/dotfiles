@@ -38,6 +38,13 @@ require('packer').startup(function(use)
   -- Treesitter for syntax highlighting
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
+  -- Treesitter textobjects
+  use({
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    after = "nvim-treesitter",
+    requires = "nvim-treesitter/nvim-treesitter",
+  })
+
   -- Telescope for fuzzy finding
   use 'nvim-telescope/telescope.nvim'
 
