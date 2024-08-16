@@ -81,6 +81,9 @@ vim.opt.termguicolors = true     -- Enable true color support
 vim.g.ayucolor = "dark"  -- Choose from 'dark', 'mirage', 'light'
 vim.cmd[[colorscheme ayu]]
 
+-- Surround setup
+require("nvim-surround").setup()
+
 -- Mason setup
 require("mason").setup()
 require("mason-lspconfig").setup {
