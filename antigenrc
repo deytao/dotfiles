@@ -7,7 +7,6 @@ antigen bundle git
 antigen bundle macports
 antigen bundle pip
 antigen bundle python
-antigen bundle raylee/tldr
 antigen bundle supercrabtree/k
 antigen bundle vagrant
 antigen bundle wfxr/forgit

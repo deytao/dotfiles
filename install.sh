@@ -75,7 +75,6 @@ yay -S --noconfirm \
     mattermost \
     neovim \
     qbittorrent \
-    remarkable \
     signal-desktop \
     slack-desktop \
     telegram-desktop \
