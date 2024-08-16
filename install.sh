@@ -34,8 +34,6 @@ curl -L git.io/antigen > ~/dotfiles/antigen.zsh
 [[ ! -L "${HOME}/.pythonrc.py" ]] && ln -s ~/dotfiles/pythonrc.py ~/.pythonrc.py
 [[ ! -L "${HOME}/.sbclrc" ]] && ln -s ~/dotfiles/sbclrc ~/.sbclrc
 [[ ! -L "${HOME}/.config/tmux.conf" ]] && ln -s ~/dotfiles/tmux.conf ~/.config/tmux.conf
-[[ ! -L "${HOME}/.vim" ]] && ln -s ~/dotfiles/vim ~/.vim
-[[ ! -L "${HOME}/.vimrc" ]] && ln -s ~/dotfiles/vimrc ~/.vimrc
 [[ ! -L "${HOME}/.zshrc" ]] && ln -s ~/dotfiles/zshrc ~/.zshrc
 
 sudo chsh -s $(which zsh) deytao
@@ -49,7 +47,6 @@ my_install $1 \
     ethtool \
     fakeroot \
     gcc \
-    gopass \
     httpie \
     linux54-acpi_call \
     make \
@@ -74,7 +71,8 @@ my_install $1 \
 yay -S --noconfirm \
     fd \
     git-delta \
-    google-chrome-beta \
+    glab \
+    mattermost \
     neovim \
     qbittorrent \
     remarkable \

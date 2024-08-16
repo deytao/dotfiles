@@ -1,7 +1,7 @@
 [user]
     name = Jonathan Camile
     signingKey = 7543348C134D7795
-    email = 492203+deytao@users.noreply.github.com
+    email = jonathan.camile@protonmail.com
 [color]
     ui = true
 [diff]
@@ -11,7 +11,7 @@
 [pull]
     rebase = true
 [merge]
-    tool = vimdiff
+    tool = nvimdiff
 [core]
 	editor = vim
 	trustctime = false
@@ -53,3 +53,5 @@
 	protocol = ssh
 [init]
 	defaultBranch = main
+[mergetool "nvimdiff"]
+  layout = "LOCAL,BASE,REMOTE / MERGED"

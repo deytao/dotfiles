@@ -33,6 +33,7 @@ bin/test.256.pl
 bin/test.gzip
 bin/trim
 bin/upgradedb
+nvim/plugin/
 tmux/plugins/!tpm
 tmux/plugins/
 vim/autoload/plug.vim
