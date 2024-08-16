@@ -84,7 +84,7 @@ vim.cmd[[colorscheme ayu]]
 -- Mason setup
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls" },  -- Ensure the Lua language server is installed
+  ensure_installed = { "lua_ls", "ruff_lsp" },  -- Ensure the LS servers are installed
 }
 
 -- Lua language server setup
@@ -107,6 +107,9 @@ require('lspconfig').lua_ls.setup{
     },
   },
 }
+
+-- Ruff linter setup
+require('lspconfig').ruff_lsp.setup{}
 
 -- Treesitter configuration
 require'nvim-treesitter.configs'.setup {
@@ -207,3 +210,7 @@ vim.api.nvim_set_hl(0, 'GitSignsDeleteNr', {link = 'GitGutterDelete'})
 vim.api.nvim_set_hl(0, 'GitSignsTopdelete', {link = 'GitGutterDeleteChange'})
 vim.api.nvim_set_hl(0, 'GitSignsTopdeleteLn', {link = 'GitGutterDeleteChange'})
 vim.api.nvim_set_hl(0, 'GitSignsTopdeleteNr', {link = 'GitGutterDeleteChange'})
+
+-- Telescope configuragion
+vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>Telescope diagnostics<CR>', { noremap = true, silent = true })
