@@ -1,0 +1,44 @@
+session_name: arcanite
+windows:
+  - window_name: jupyter
+    start_directory: ~/projects
+    panes:
+      - shell_command:
+        - cmd: pyenv activate jupyter
+          sleep_before: 1
+          sleep_after: 1
+        - cmd: jupyter notebook --no-browser
+  - window_name: servers
+    start_directory: ~/projects/wecancomply
+    panes:
+      - shell_command:
+          - "cd docker"
+          - "docker-compose up --build"
+      - shell_command:
+          - "cd platform/frontend-core/"
+          - "npm i"
+          - "npm run dev"
+      - shell_command:
+          - "cd platform/backend-core/src/"
+          - "pyenv activate wecancomply"
+          - "python manage.py runserver 0.0.0.0:8000"
+      - shell_command:
+          - "cd platform/backend-directory/src/"
+          - "pyenv activate wecancomply"
+          - "python manage.py runserver 0.0.0.0:8001"
+      - shell_command:
+          - "cd platform/backend-workspaces/src/"
+          - "pyenv activate wecancomply"
+          - "python manage.py runserver 0.0.0.0:8002"
+      - shell_command:
+          - "cd platform/backend-core/src/"
+          - "pyenv activate wecancomply"
+          - "celery -A app worker -l INFO"
+      - shell_command:
+          - "cd platform/backend-directory/src/"
+          - "pyenv activate wecancomply"
+          - "celery -A app worker -l INFO"
+      - shell_command:
+          - "cd platform/backend-workspaces/src/"
+          - "pyenv activate wecancomply"
+          - "celery -A app worker -l INFO"

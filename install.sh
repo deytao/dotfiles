@@ -49,7 +49,6 @@ my_install $1 \
     ethtool \
     fakeroot \
     gcc \
-    gopass \
     httpie \
     linux54-acpi_call \
     make \
@@ -74,12 +73,12 @@ my_install $1 \
 yay -S --noconfirm \
     fd \
     git-delta \
-    google-chrome-beta \
+    glab \
+    mattermost \
     neovim \
-    qbittorrent \
+    pgadmin4-desktop \
     remarkable \
     signal-desktop \
-    slack-desktop \
     telegram-desktop \
     ttf-fira-code \
     vim \

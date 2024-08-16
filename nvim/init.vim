@@ -11,38 +11,34 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.local/share/nvim/bundle')
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'ayu-theme/ayu-vim'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'Yggdroot/indentLine'
 Plug 'alvan/vim-closetag'
-"Plug 'davidhalter/jedi-vim'
-Plug 'garbas/vim-snipmate'
-Plug 'itchyny/lightline.vim'
-Plug 'jeetsukumaran/vim-pythonsense'
-Plug 'kien/ctrlp.vim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'kana/vim-textobj-user'
 Plug 'kovisoft/slimv'
+Plug 'kylechui/nvim-surround'
+Plug 'L3MON4D3/LuaSnip'
 Plug 'lepture/vim-jinja'
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'scrooloose/nerdcommenter'
 Plug 'sisrfeng/jupytext'
-Plug 'tomtom/tlib_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
-Plug 'tpope/vim-surround'
-Plug 'vim-scripts/argtextobj.vim'
 Plug 'wincent/ferret'
-Plug 'w0rp/ale'
 call plug#end()
 
 set background=dark
 set t_Co=256
 set termguicolors     " enable true colors support
-"let ayucolor="light"  " for light version of theme
-"let ayucolor="mirage" " for mirage version of theme
 let ayucolor="dark"   " for dark version of theme
 colorscheme ayu
 hi! CursorLineNr cterm=bold ctermfg=64
@@ -61,10 +57,28 @@ set showcmd
 set backspace=indent,eol,start
 set nowrap
 
-" Status line with lightline
-set laststatus=2
-set noshowmode
-let g:lightline={ 'colorscheme': 'ayu' }
+" Initialize nvim-surround
+lua require("nvim-surround").setup({})
+
+" Configure lualine to use Ayu theme
+lua << EOF
+require("lualine").setup {
+  options = {
+    theme = 'ayu',
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    icons_enabled = true,
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+}
+EOF
 
 map Y y$
 
@@ -88,23 +102,5 @@ autocmd BufRead,BufNewFile *.twig set syntax=htmljinja
 autocmd FileType html,htmljinja,htmldjango let g:closetag_html_style=1
 autocmd FileType html,htmljinja,htmldjango source ~/.local/share/nvim/bundle/vim-closetag/plugin/closetag.vim
 
-" Security
-au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup noundofile
-
-" Lisp
-let g:lisp_rainbow=1
-
 let g:pymode_options_max_line_length = 180
 let g:pymode_lint_options_pep8 = {'max_line_length': 180}
-
-nnoremap <leader>fa :FlutterRun<cr>
-nnoremap <leader>fq :FlutterQuit<cr>
-nnoremap <leader>fr :FlutterHotReload<cr>
-nnoremap <leader>fR :FlutterHotRestart<cr>
-
-" SnipMate
-let g:snipMate = { 'snippet_version' : 1 }
-
-" ALE
-let g:ale_linters = {'python': ['flake8', 'mypy']}
-let g:ale_list_window_size = 10
