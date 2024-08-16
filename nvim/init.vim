@@ -1,106 +1,186 @@
+" Set shell to bash
 set shell=/bin/bash
-set nocompatible
 
-let mapleader='\'
-let g:loaded_python3_provider = 0
+" Set leader key
+let mapleader = "\\"
 
-if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-call plug#begin('~/.local/share/nvim/bundle')
-Plug 'alvan/vim-closetag'
-Plug 'ayu-theme/ayu-vim'
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'kana/vim-textobj-user'
-Plug 'kovisoft/slimv'
-Plug 'kylechui/nvim-surround'
-Plug 'L3MON4D3/LuaSnip'
-Plug 'lepture/vim-jinja'
-Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'scrooloose/nerdcommenter'
-Plug 'sisrfeng/jupytext'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-obsession'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-speeddating'
-Plug 'wincent/ferret'
-call plug#end()
-
-set background=dark
-set t_Co=256
-set termguicolors     " enable true colors support
-let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
-hi! CursorLineNr cterm=bold ctermfg=64
-set ai
-set smartindent
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-set relativenumber
-set nu
-set incsearch
-set hlsearch
-set ruler
-set showcmd
-set backspace=indent,eol,start
-set nowrap
-
-" Initialize nvim-surround
-lua require("nvim-surround").setup({})
-
-" Configure lualine to use Ayu theme
+" Ensure that packer.nvim is installed
 lua << EOF
-require("lualine").setup {
-  options = {
-    theme = 'ayu',
-    section_separators = { left = '', right = '' },
-    component_separators = { left = '', right = '' },
-    icons_enabled = true,
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
+local packer_bootstrap = ensure_packer()
+EOF
+
+" Packer startup configuration
+lua << EOF
+require('packer').startup(function(use)
+  use 'wbthomason/packer.nvim'  -- Packer manages itself
+
+  -- Essential plugins
+  use 'nvim-lua/plenary.nvim'  -- Common utilities
+  use 'nvim-lua/popup.nvim'    -- Popup API
+  use 'kyazdani42/nvim-web-devicons'  -- File icons
+
+  -- Lua language server setup
+  use {
+    'neovim/nvim-lspconfig',
+    config = function()
+      require('lspconfig').lua_ls.setup{
+        settings = {
+          Lua = {
+            runtime = {
+              version = 'LuaJIT',
+              path = vim.split(package.path, ';'),
+            },
+            diagnostics = {
+              globals = {'vim'},
+            },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+      }
+    end
+  }
+
+  -- Autocompletion
+  use 'hrsh7th/nvim-cmp'  -- Autocompletion plugin
+  use 'hrsh7th/cmp-nvim-lsp'  -- LSP source for nvim-cmp
+  use 'L3MON4D3/LuaSnip'  -- Snippet engine
+  use 'saadparwaiz1/cmp_luasnip'  -- Snippet completions
+
+  -- Treesitter for syntax highlighting
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  
+  -- Telescope for fuzzy finding
+  use 'nvim-telescope/telescope.nvim'
+
+  -- Lualine for status line
+  use 'nvim-lualine/lualine.nvim'
+
+  -- File explorer
+  use 'kyazdani42/nvim-tree.lua'
+
+  -- Git integration
+  use 'lewis6991/gitsigns.nvim'
+
+  -- Misc plugins
+  use 'alvan/vim-closetag'  -- Auto-close HTML tags
+  use 'ayu-theme/ayu-vim'  -- Ayu color scheme
+  use 'lukas-reineke/indent-blankline.nvim'  -- Show indent guides
+  use 'tpope/vim-fugitive'  -- Git commands in nvim
+  use 'kylechui/nvim-surround'  -- Surround plugin rewritten for Neovim
+
+  -- Automatically set up your configuration after cloning packer.nvim
+  -- Put this at the end after all plugins
+  if packer_bootstrap then
+    require('packer').sync()
+  end
+end)
+EOF
+
+" Set colorscheme to ayu
+let ayucolor="dark"  " Choose from 'dark', 'mirage', 'light'
+colorscheme ayu
+
+" Treesitter configuration
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "all",  -- Install all maintained parsers
+  highlight = {
+    enable = true,  -- false will disable the whole extension
   },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
+  indent = {
+    enable = true,  -- Enable Treesitter-based indentation
   },
 }
 EOF
 
-map Y y$
+" Lualine configuration
+lua << EOF
+require('lualine').setup {
+  options = {
+    theme = 'ayu',  -- Use the ayu theme for lualine
+    section_separators = {'', ''},
+    component_separators = {'', ''},
+  },
+}
+EOF
 
-" disable arrow keys
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
+" Nvim-tree configuration
+lua << EOF
+require('nvim-tree').setup {
+  hijack_netrw = true,
+  auto_reload_on_write = true,
+  open_on_tab = false,
+  hijack_cursor = false,
+  update_cwd = true,
+  diagnostics = {
+    enable = true,
+    show_on_dirs = true,
+    icons = {
+      hint = "",
+      info = "",
+      warning = "",
+      error = "",
+    },
+  },
+  update_focused_file = {
+    enable = true,
+    update_cwd = true,
+    ignore_list = {},
+  },
+  view = {
+    width = 30,
+    side = "left",
+    preserve_window_proportions = true,
+    number = false,
+    relativenumber = false,
+  },
+}
+EOF
 
-nnoremap <leader>T :set expandtab<cr>:retab!<cr>
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
+" Gitsigns configuration
+lua << EOF
+-- Set up gitsigns.nvim with updated highlights
+require('gitsigns').setup {
+  signs = {
+    add          = {text = '+'},
+    change       = {text = '~'},
+    delete       = {text = '_'},
+    topdelete    = {text = '‾'},
+    changedelete = {text = '~'},
+  },
+  -- other gitsigns configurations...
+}
 
-autocmd BufRead,BufNewFile *.twig set syntax=htmljinja
-autocmd FileType html,htmljinja,htmldjango let g:closetag_html_style=1
-autocmd FileType html,htmljinja,htmldjango source ~/.local/share/nvim/bundle/vim-closetag/plugin/closetag.vim
-
-let g:pymode_options_max_line_length = 180
-let g:pymode_lint_options_pep8 = {'max_line_length': 180}
+-- Set the highlights for gitsigns
+vim.api.nvim_set_hl(0, 'GitSignsAdd', {link = 'GitGutterAdd'})
+vim.api.nvim_set_hl(0, 'GitSignsAddLn', {link = 'GitGutterAdd'})
+vim.api.nvim_set_hl(0, 'GitSignsAddNr', {link = 'GitGutterAdd'})
+vim.api.nvim_set_hl(0, 'GitSignsChange', {link = 'GitGutterChange'})
+vim.api.nvim_set_hl(0, 'GitSignsChangeLn', {link = 'GitGutterChange'})
+vim.api.nvim_set_hl(0, 'GitSignsChangeNr', {link = 'GitGutterChange'})
+vim.api.nvim_set_hl(0, 'GitSignsChangedelete', {link = 'GitGutterChange'})
+vim.api.nvim_set_hl(0, 'GitSignsChangedeleteLn', {link = 'GitGutterChange'})
+vim.api.nvim_set_hl(0, 'GitSignsChangedeleteNr', {link = 'GitGutterChange'})
+vim.api.nvim_set_hl(0, 'GitSignsDelete', {link = 'GitGutterDelete'})
+vim.api.nvim_set_hl(0, 'GitSignsDeleteLn', {link = 'GitGutterDelete'})
+vim.api.nvim_set_hl(0, 'GitSignsDeleteNr', {link = 'GitGutterDelete'})
+vim.api.nvim_set_hl(0, 'GitSignsTopdelete', {link = 'GitGutterDeleteChange'})
+vim.api.nvim_set_hl(0, 'GitSignsTopdeleteLn', {link = 'GitGutterDeleteChange'})
+vim.api.nvim_set_hl(0, 'GitSignsTopdeleteNr', {link = 'GitGutterDeleteChange'})
+EOF
