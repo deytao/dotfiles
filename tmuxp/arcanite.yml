@@ -8,37 +8,41 @@ windows:
           sleep_before: 1
           sleep_after: 1
         - cmd: jupyter notebook --no-browser
-  - window_name: servers
-    start_directory: ~/projects/wecancomply
+  - window_name: docker
+    start_directory: ~/projects/wecancomply/docker
+    panes:
+      - "docker-compose up --build"
+  - window_name: frontend
+    start_directory: ~/projects/wecancomply/platform/frontend-core
     panes:
       - shell_command:
-          - "cd docker"
-          - "docker-compose up --build"
+        - "npm i"
+        - "npm run dev"
+  - window_name: apps
+    start_directory: ~/projects/wecancomply/platform
+    layout: even-horizontal
+    shell_command_before: pyenv activate wecancomply
+    panes:
       - shell_command:
-          - "cd platform/frontend-core/"
-          - "npm i"
-          - "npm run dev"
-      - shell_command:
-          - "cd platform/backend-core/src/"
-          - "pyenv activate wecancomply"
+          - "cd backend-core/src/"
           - "python manage.py runserver 0.0.0.0:8000"
       - shell_command:
-          - "cd platform/backend-directory/src/"
-          - "pyenv activate wecancomply"
+          - "cd backend-directory/src/"
           - "python manage.py runserver 0.0.0.0:8001"
       - shell_command:
-          - "cd platform/backend-workspaces/src/"
-          - "pyenv activate wecancomply"
+          - "cd backend-workspaces/src/"
           - "python manage.py runserver 0.0.0.0:8002"
+  - window_name: taskers
+    start_directory: ~/projects/wecancomply/platform
+    layout: even-horizontal
+    shell_command_before: pyenv activate wecancomply
+    panes:
       - shell_command:
-          - "cd platform/backend-core/src/"
-          - "pyenv activate wecancomply"
+          - "cd backend-core/src/"
           - "celery -A app worker -l INFO"
       - shell_command:
-          - "cd platform/backend-directory/src/"
-          - "pyenv activate wecancomply"
+          - "cd backend-directory/src/"
           - "celery -A app worker -l INFO"
       - shell_command:
-          - "cd platform/backend-workspaces/src/"
-          - "pyenv activate wecancomply"
+          - "cd backend-workspaces/src/"
           - "celery -A app worker -l INFO"
