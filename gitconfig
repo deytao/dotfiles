@@ -11,7 +11,7 @@
 [pull]
     rebase = true
 [merge]
-    tool = vimdiff
+    tool = nvimdiff
 [core]
 	editor = vim
 	trustctime = false
@@ -53,3 +53,5 @@
 	protocol = ssh
 [init]
 	defaultBranch = main
+[mergetool "nvimdiff"]
+  layout = "LOCAL,BASE,REMOTE / MERGED"
