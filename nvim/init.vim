@@ -30,6 +30,13 @@ require('packer').startup(function(use)
   use 'nvim-lua/popup.nvim'    -- Popup API
   use 'kyazdani42/nvim-web-devicons'  -- File icons
 
+  -- Mason and LSP
+  use {
+    'williamboman/mason.nvim',
+    run = ":MasonUpdate"  -- Ensure Mason is up to date
+  }
+  use 'williamboman/mason-lspconfig.nvim'
+
   -- Lua language server setup
   use {
     'neovim/nvim-lspconfig',
@@ -95,6 +102,35 @@ EOF
 " Set colorscheme to ayu
 let ayucolor="dark"  " Choose from 'dark', 'mirage', 'light'
 colorscheme ayu
+
+" Mason setup
+lua << EOF
+require("mason").setup()
+require("mason-lspconfig").setup {
+  ensure_installed = { "lua_ls" },  -- Ensures Lua language server is installed
+}
+
+-- Configure the Lua language server
+require('lspconfig').lua_ls.setup{
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+        path = vim.split(package.path, ';'),
+      },
+      diagnostics = {
+        globals = {'vim'},
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
+EOF
 
 " Treesitter configuration
 lua << EOF
