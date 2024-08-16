@@ -1,11 +1,4 @@
-" Set shell to bash
-set shell=/bin/bash
-
-" Set leader key
-let mapleader = "\\"
-
-" Ensure that packer.nvim is installed
-lua << EOF
+-- Ensure that packer.nvim is installed
 local ensure_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -18,10 +11,8 @@ local ensure_packer = function()
 end
 
 local packer_bootstrap = ensure_packer()
-EOF
 
-" Packer startup configuration
-lua << EOF
+-- Packer startup configuration
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'  -- Packer manages itself
 
@@ -30,38 +21,13 @@ require('packer').startup(function(use)
   use 'nvim-lua/popup.nvim'    -- Popup API
   use 'kyazdani42/nvim-web-devicons'  -- File icons
 
-  -- Mason and LSP
+  -- Mason and LSP setup
   use {
     'williamboman/mason.nvim',
     run = ":MasonUpdate"  -- Ensure Mason is up to date
   }
   use 'williamboman/mason-lspconfig.nvim'
-
-  -- Lua language server setup
-  use {
-    'neovim/nvim-lspconfig',
-    config = function()
-      require('lspconfig').lua_ls.setup{
-        settings = {
-          Lua = {
-            runtime = {
-              version = 'LuaJIT',
-              path = vim.split(package.path, ';'),
-            },
-            diagnostics = {
-              globals = {'vim'},
-            },
-            workspace = {
-              library = vim.api.nvim_get_runtime_file("", true),
-            },
-            telemetry = {
-              enable = false,
-            },
-          },
-        },
-      }
-    end
-  }
+  use 'neovim/nvim-lspconfig'  -- Configurations for Nvim LSP
 
   -- Autocompletion
   use 'hrsh7th/nvim-cmp'  -- Autocompletion plugin
@@ -71,7 +37,7 @@ require('packer').startup(function(use)
 
   -- Treesitter for syntax highlighting
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-  
+
   -- Telescope for fuzzy finding
   use 'nvim-telescope/telescope.nvim'
 
@@ -91,26 +57,37 @@ require('packer').startup(function(use)
   use 'tpope/vim-fugitive'  -- Git commands in nvim
   use 'kylechui/nvim-surround'  -- Surround plugin rewritten for Neovim
 
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
   if packer_bootstrap then
     require('packer').sync()
   end
 end)
-EOF
 
-" Set colorscheme to ayu
-let ayucolor="dark"  " Choose from 'dark', 'mirage', 'light'
-colorscheme ayu
+-- Basic Vim settings (original settings from init.vim)
+vim.opt.number = true            -- Show line numbers
+vim.opt.relativenumber = true    -- Show relative line numbers
+vim.opt.wrap = false             -- Disable line wrapping
+vim.opt.expandtab = true         -- Use spaces instead of tabs
+vim.opt.shiftwidth = 4           -- Number of spaces to use for each step of (auto)indent
+vim.opt.tabstop = 4              -- Number of spaces tabs count for
+vim.opt.smartindent = true       -- Enable smart indentation
+vim.opt.mouse = 'a'              -- Enable mouse support
+vim.opt.clipboard = 'unnamedplus'-- Use system clipboard
+vim.opt.swapfile = false         -- Disable swap file creation
+vim.opt.backup = false           -- Disable backup file creation
+vim.opt.undofile = true          -- Enable persistent undo
+vim.opt.termguicolors = true     -- Enable true color support
 
-" Mason setup
-lua << EOF
+-- Set colorscheme to ayu
+vim.g.ayucolor = "dark"  -- Choose from 'dark', 'mirage', 'light'
+vim.cmd[[colorscheme ayu]]
+
+-- Mason setup
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls" },  -- Ensures Lua language server is installed
+  ensure_installed = { "lua_ls" },  -- Ensure the Lua language server is installed
 }
 
--- Configure the Lua language server
+-- Lua language server setup
 require('lspconfig').lua_ls.setup{
   settings = {
     Lua = {
@@ -130,23 +107,40 @@ require('lspconfig').lua_ls.setup{
     },
   },
 }
-EOF
 
-" Treesitter configuration
-lua << EOF
+-- Treesitter configuration
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",  -- Install all maintained parsers
   highlight = {
-    enable = true,  -- false will disable the whole extension
+    enable = true,  -- Enable syntax highlighting
   },
   indent = {
     enable = true,  -- Enable Treesitter-based indentation
   },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+  },
 }
-EOF
 
-" Lualine configuration
-lua << EOF
+-- Lualine configuration
 require('lualine').setup {
   options = {
     theme = 'ayu',  -- Use the ayu theme for lualine
@@ -154,10 +148,8 @@ require('lualine').setup {
     component_separators = {'', ''},
   },
 }
-EOF
 
-" Nvim-tree configuration
-lua << EOF
+-- Nvim-tree configuration
 require('nvim-tree').setup {
   hijack_netrw = true,
   auto_reload_on_write = true,
@@ -187,11 +179,8 @@ require('nvim-tree').setup {
     relativenumber = false,
   },
 }
-EOF
 
-" Gitsigns configuration
-lua << EOF
--- Set up gitsigns.nvim with updated highlights
+-- Gitsigns configuration
 require('gitsigns').setup {
   signs = {
     add          = {text = '+'},
@@ -200,7 +189,6 @@ require('gitsigns').setup {
     topdelete    = {text = '‾'},
     changedelete = {text = '~'},
   },
-  -- other gitsigns configurations...
 }
 
 -- Set the highlights for gitsigns
@@ -219,4 +207,3 @@ vim.api.nvim_set_hl(0, 'GitSignsDeleteNr', {link = 'GitGutterDelete'})
 vim.api.nvim_set_hl(0, 'GitSignsTopdelete', {link = 'GitGutterDeleteChange'})
 vim.api.nvim_set_hl(0, 'GitSignsTopdeleteLn', {link = 'GitGutterDeleteChange'})
 vim.api.nvim_set_hl(0, 'GitSignsTopdeleteNr', {link = 'GitGutterDeleteChange'})
-EOF
