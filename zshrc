@@ -2,7 +2,7 @@ CASE_SENSITIVE=true
 ZSH_DISABLE_COMPFIX=true
 
 ANTIGEN_PATH=$HOME/dotfiles
-source $ANTIGEN_PATH/antigen/antigen.zsh
+source $ANTIGEN_PATH/antigen.zsh
 antigen init ${HOME}/.antigenrc
 
 plugins=()
@@ -46,6 +46,3 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-
-alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
-. "/home/deytao/.acme.sh/acme.sh.env"
