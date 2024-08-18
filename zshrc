@@ -1,6 +1,7 @@
 CASE_SENSITIVE=true
 ZSH_DISABLE_COMPFIX=true
 
+ANTIGEN_MUTEX=false
 ANTIGEN_PATH=$HOME/dotfiles
 source $ANTIGEN_PATH/antigen.zsh
 antigen init ${HOME}/.antigenrc
@@ -32,8 +33,7 @@ export FZF_DEFAULT_OPTS='
   --color info:150,prompt:110,spinner:150,pointer:167,marker:174
 '
 
-if [ -f ~/.localrc ]
-then
+if [ -f ~/.localrc ] ; then
     source ~/.localrc
 fi
 

@@ -1,5 +1,7 @@
 source ~/dotfiles/antigen.zsh
 
+autoload -Uz compinit && compinit
+
 antigen use oh-my-zsh
 
 antigen bundle Czocher/gpg-crypt
@@ -11,6 +13,7 @@ antigen bundle supercrabtree/k
 antigen bundle vagrant
 antigen bundle wfxr/forgit
 antigen bundle zimfw/asdf
+antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen theme denysdovhan/spaceship-prompt
