@@ -94,7 +94,7 @@ require("nvim-surround").setup()
 -- Mason setup
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls", "ruff_lsp" },  -- Ensure the LS servers are installed
+  ensure_installed = { "lua_ls", "pyright", "ruff_lsp" },  -- Ensure the LS servers are installed
 }
 
 -- Lua language server setup
@@ -117,6 +117,40 @@ require('lspconfig').lua_ls.setup{
     },
   },
 }
+
+-- PyRights
+require('lspconfig').pyright.setup({
+  on_attach = function(client, bufnr)
+    -- LSP key mappings
+    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+    vim.keymap.set('n', '<space>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, bufopts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+    vim.keymap.set('n', '<space>f', function()
+      vim.lsp.buf.format { async = true }
+    end, bufopts)
+  end,
+
+  -- Disable Pyright's built-in linting if you only want to use Ruff
+  settings = {
+    python = {
+      analysis = {
+        typeCheckingMode = "off",  -- Disable type checking if not needed
+        diagnosticMode = "workspace",  -- Change to "openFilesOnly" if preferred
+      }
+    }
+  }
+})
 
 -- Ruff linter setup
 require('lspconfig').ruff_lsp.setup{}
@@ -185,7 +219,7 @@ require('nvim-tree').setup {
     ignore_list = {},
   },
   view = {
-    width = 30,
+    width = 20,
     side = "left",
     preserve_window_proportions = true,
     number = false,
