@@ -34,9 +34,10 @@ curl -L git.io/antigen > ~/dotfiles/antigen.zsh
 [[ ! -L "${HOME}/.pythonrc.py" ]] && ln -s ~/dotfiles/pythonrc.py ~/.pythonrc.py
 [[ ! -L "${HOME}/.sbclrc" ]] && ln -s ~/dotfiles/sbclrc ~/.sbclrc
 [[ ! -L "${HOME}/.config/tmux.conf" ]] && ln -s ~/dotfiles/tmux.conf ~/.config/tmux.conf
+[[ ! -L "${HOME}/.tmuxp" ]] && ln -s ~/dotfiles/tmuxp ~/.tmuxp
 [[ ! -L "${HOME}/.zshrc" ]] && ln -s ~/dotfiles/zshrc ~/.zshrc
 
-sudo chsh -s $(which zsh) deytao
+sudo chsh -s $(which zsh) jcamile
 
 ~/dotfiles/fzf/install
 
@@ -48,7 +49,6 @@ my_install $1 \
     fakeroot \
     gcc \
     httpie \
-    linux54-acpi_call \
     make \
     networkmanager-openvpn \
     noto-fonts-emoji \
@@ -74,9 +74,8 @@ yay -S --noconfirm \
     glab \
     mattermost \
     neovim \
-    qbittorrent \
+    pgadmin4-desktop \
     signal-desktop \
-    slack-desktop \
     telegram-desktop \
     ttf-fira-code \
     vim \
@@ -84,8 +83,3 @@ yay -S --noconfirm \
 
 xdg-mime default firefox.desktop x-scheme-handler/https
 xdg-mime default firefox.desktop x-scheme-handler/http
-
-# Keychron K2
-sudo sh -c 'echo options hid_apple fnmode=2 swap_opt_cmd=1 > /etc/modprobe.d/hid_apple.conf'
-sudo modprobe -r hid_apple
-sudo modprobe hid_apple
