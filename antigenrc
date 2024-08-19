@@ -13,6 +13,6 @@ antigen bundle wfxr/forgit
 antigen bundle zimfw/asdf
 antigen bundle zsh-users/zsh-syntax-highlighting
 
-antigen theme denysdovhan/spaceship-prompt
+antigen theme xiong-chiamiov-plus
 
 antigen apply
