@@ -28,6 +28,7 @@ curl -L git.io/antigen > ~/dotfiles/antigen.zsh
 [[ ! -L "${HOME}/bin" ]] && ln -s ~/dotfiles/bin ~/bin
 [[ ! -L "${HOME}/.config/alacritty" ]] && ln -s ~/dotfiles/alacritty ~/.config/alacritty
 [[ ! -L "${HOME}/.config/nvim" ]] && ln -s ~/dotfiles/nvim ~/.config/nvim
+[[ ! -L "${HOME}/.config/spaceship.zsh" ]] && ln -s ~/dotfiles/spaceship.zsh ~/.config/spaceship.zsh
 [[ ! -L "${HOME}/.gitconfig" ]] && ln -s ~/dotfiles/gitconfig ~/.gitconfig
 [[ ! -L "${HOME}/.localrc" ]] && ln -s ~/dotfiles/localrc ~/.localrc
 [[ ! -L "${HOME}/.psqlrc" ]] && ln -s ~/dotfiles/psqlrc ~/.psqlrc
