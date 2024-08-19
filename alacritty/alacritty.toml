@@ -45,7 +45,7 @@ print_events = false
 render_timer = false
 
 [font]
-size = 10
+size = 8
 
 [font.bold]
 family = "Fira Code"
