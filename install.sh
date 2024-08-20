@@ -70,6 +70,7 @@ my_install $1 \
 && true
 
 yay -S --noconfirm \
+    balena-etcher \
     fd \
     git-delta \
     glab \
