@@ -63,6 +63,8 @@ require('packer').startup(function(use)
   use 'lukas-reineke/indent-blankline.nvim'  -- Show indent guides
   use 'tpope/vim-fugitive'  -- Git commands in nvim
   use 'kylechui/nvim-surround'  -- Surround plugin rewritten for Neovim
+  use 'numToStr/Comment.nvim'  -- Equivalent of NERD Commenter
+
 
   if packer_bootstrap then
     require('packer').sync()
@@ -90,6 +92,9 @@ vim.cmd[[colorscheme ayu]]
 
 -- Surround setup
 require("nvim-surround").setup()
+
+-- Commenter
+require("Comment").setup()
 
 -- Mason setup
 require("mason").setup()
@@ -120,6 +125,10 @@ require('lspconfig').lua_ls.setup{
 
 -- PyRights
 require('lspconfig').pyright.setup({
+  root_dir = function(fname)
+    -- Use the nearest git project or the current dir to determine the root
+    return require('lspconfig.util').find_git_ancestor(fname) or vim.fn.getcwd()
+  end,
   on_attach = function(client, bufnr)
     -- LSP key mappings
     local bufopts = { noremap=true, silent=true, buffer=bufnr }
