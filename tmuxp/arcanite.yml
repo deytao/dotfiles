@@ -25,13 +25,13 @@ windows:
     panes:
       - shell_command:
           - "cd backend-core/src/"
-          - "python manage.py runserver 0.0.0.0:8000"
+          - "python manage.py runserver 127.0.0.1:8000"
       - shell_command:
           - "cd backend-directory/src/"
-          - "python manage.py runserver 0.0.0.0:8001"
+          - "python manage.py runserver 127.0.0.1:8001"
       - shell_command:
           - "cd backend-workspaces/src/"
-          - "python manage.py runserver 0.0.0.0:8002"
+          - "python manage.py runserver 127.0.0.1:8002"
   - window_name: taskers
     start_directory: ~/projects/wecancomply/platform
     layout: even-horizontal
