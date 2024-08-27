@@ -30,10 +30,16 @@
     ready = rebase -i @{u}
     shorty = status -sb
     sweep = "!f() { \
-            git remote update -p;\
-            git purr;\
-            git branch --merged | grep -v '*' | grep -v master | xargs -I{} git branch -d {};\
-        }; f"
+        git remote update -p; \
+        git purr; \
+        default_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'); \
+        branches=$(git for-each-ref refs/heads/ --format='%(refname:short)' --merged origin/$default_branch | grep -v '^$default_branch$'); \
+        for branch in $branches; do \
+            if [ \"$branch\" != \"$default_branch\" ]; then \
+                git branch -d $branch; \
+            fi; \
+        done; \
+    }; f"
     upush = "!git push -u origin `git rev-parse --abbrev-ref HEAD`"
     wync = "!git stash && git purr && git stash pop && git push"
 [http]
