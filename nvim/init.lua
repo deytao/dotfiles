@@ -45,14 +45,12 @@ require('packer').startup(function(use)
     requires = "nvim-treesitter/nvim-treesitter",
   })
 
-  -- Telescope for fuzzy finding
-  use 'nvim-telescope/telescope.nvim'
+  use 'nvim-telescope/telescope.nvim'  -- Telescope for fuzzy finding
+  use 'kyazdani42/nvim-tree.lua'  -- File explorer
+  use 'nvim-pack/nvim-spectre'  -- Search and replace
 
   -- Lualine for status line
   use 'nvim-lualine/lualine.nvim'
-
-  -- File explorer
-  use 'kyazdani42/nvim-tree.lua'
 
   -- Git integration
   use 'lewis6991/gitsigns.nvim'
@@ -61,7 +59,6 @@ require('packer').startup(function(use)
   use 'alvan/vim-closetag'  -- Auto-close HTML tags
   use 'ayu-theme/ayu-vim'  -- Ayu color scheme
   use 'lukas-reineke/indent-blankline.nvim'  -- Show indent guides
-  use 'tpope/vim-fugitive'  -- Git commands in nvim
   use 'kylechui/nvim-surround'  -- Surround plugin rewritten for Neovim
   use 'numToStr/Comment.nvim'  -- Equivalent of NERD Commenter
 
@@ -136,16 +133,16 @@ require('lspconfig').pyright.setup({
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>wl', function()
+    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+    vim.keymap.set('n', '<leader>wl', function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, bufopts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', '<space>f', function()
+    vim.keymap.set('n', '<leader>f', function()
       vim.lsp.buf.format { async = true }
     end, bufopts)
   end,
@@ -267,3 +264,36 @@ vim.api.nvim_set_hl(0, 'GitSignsTopdeleteNr', {link = 'GitGutterDeleteChange'})
 -- Telescope configuragion
 vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>Telescope diagnostics<CR>', { noremap = true, silent = true })
+
+-- Spectre configuration
+require('spectre').setup({
+    default = {
+        find = {
+            is_case_sensitive = true,
+        },
+    },
+    mapping = {
+        ['toggle_line'] = {
+            map = "x",
+            cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
+            desc = "toggle current item"
+        },
+        ['replace_cmd'] = {
+            map = "<leader>r",
+            cmd = "<cmd>lua require('spectre.actions').replace_cmd()<CR>",
+            desc = "replace all"
+        }
+    },
+})
+vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
+    desc = "Toggle Spectre"
+})
+vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+    desc = "Search current word"
+})
+vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+    desc = "Search current word"
+})
+vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+    desc = "Search on current file"
+})
