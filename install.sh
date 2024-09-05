@@ -79,6 +79,7 @@ yay -S --noconfirm \
     pgadmin4-desktop \
     signal-desktop \
     telegram-desktop \
+    thunderbird \
     ttf-fira-code \
     vim \
 && true
