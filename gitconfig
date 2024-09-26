@@ -32,10 +32,11 @@
     sweep = "!f() { \
         git remote update -p; \
         git purr; \
+        current_branch=$(git rev-parse --abbrev-ref HEAD); \
         default_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'); \
-        branches=$(git for-each-ref refs/heads/ --format='%(refname:short)' --merged origin/$default_branch | grep -v '^$default_branch$'); \
+        branches=$(git for-each-ref refs/heads/ --format='%(refname:short)' --merged origin/$current_branch | grep -v "^$default_branch$" | grep -v "^$current_branch$"); \
         for branch in $branches; do \
-            if [ \"$branch\" != \"$default_branch\" ]; then \
+            if [ -z "$(git diff $current_branch...$branch)" ]; then \
                 git branch -d $branch; \
             fi; \
         done; \
