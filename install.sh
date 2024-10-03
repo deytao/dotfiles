@@ -52,11 +52,11 @@ my_install $1 \
     httpie \
     make \
     networkmanager-openvpn \
-    noto-fonts-emoji \
     pass \
     patch \
     python-powerline-git \
     ripgrep \
+    rust-analyzer \
     rofi \
     smartmontools \
     tmux \
