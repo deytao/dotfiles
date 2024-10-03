@@ -1,5 +1,10 @@
-session_name: arcanite
+session_name: wcc
 windows:
+  - window_name: code
+    start_directory: ~/projects/wecancomply
+    panes:
+      - shell_command:
+        - cmd: pyenv activate wecancomply
   - window_name: jupyter
     start_directory: ~/projects
     panes:
