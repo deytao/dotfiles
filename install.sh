@@ -52,11 +52,11 @@ my_install $1 \
     linux54-acpi_call \
     make \
     networkmanager-openvpn \
-    noto-fonts-emoji \
     pass \
     patch \
     python-powerline-git \
     ripgrep \
+    rust-analyzer \
     rofi \
     smartmontools \
     tmux \

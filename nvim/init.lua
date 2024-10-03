@@ -161,6 +161,33 @@ require('lspconfig').pyright.setup({
 -- Ruff linter setup
 require('lspconfig').ruff_lsp.setup{}
 
+-- Rust
+require('lspconfig').rust_analyzer.setup({
+  on_attach = function(client, bufnr)
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end,
+
+  settings = {
+    ["rust-analyzer"] = {
+      imports = {
+        granularity = {
+            group = "module",
+        },
+        prefix = "self",
+      },
+      cargo = {
+        buildScripts = {
+            enable = true,
+        },
+      },
+      procMacro = {
+        enable = true
+      },
+    }
+  }
+})
+
+
 -- Treesitter configuration
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",  -- Install all maintained parsers
