@@ -84,5 +84,9 @@ yay -S --noconfirm \
     vim \
 && true
 
+cargo install --locked \
+    rip2 \
+&& true
+
 xdg-mime default firefox.desktop x-scheme-handler/https
 xdg-mime default firefox.desktop x-scheme-handler/http

@@ -96,7 +96,7 @@ require("Comment").setup()
 -- Mason setup
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls", "pyright", "ruff_lsp" },  -- Ensure the LS servers are installed
+  ensure_installed = { "lua_ls", "pyright", "ruff" },  -- Ensure the LS servers are installed
 }
 
 -- Lua language server setup
@@ -159,7 +159,7 @@ require('lspconfig').pyright.setup({
 })
 
 -- Ruff linter setup
-require('lspconfig').ruff_lsp.setup{}
+require('lspconfig').ruff.setup{}
 
 -- Rust
 require('lspconfig').rust_analyzer.setup({
