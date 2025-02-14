@@ -5,14 +5,6 @@ windows:
     panes:
       - shell_command:
         - cmd: pyenv activate wecancomply
-  - window_name: jupyter
-    start_directory: ~/projects
-    panes:
-      - shell_command:
-        - cmd: pyenv activate jupyter
-          sleep_before: 1
-          sleep_after: 1
-        - cmd: jupyter notebook --no-browser
   - window_name: docker
     start_directory: ~/projects/wecancomply/docker
     panes:

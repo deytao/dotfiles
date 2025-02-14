@@ -1,0 +1,21 @@
+session_name: syncai
+windows:
+  - window_name: code
+    start_directory: ~/projects/galaxie_crawler
+    panes:
+      - shell_command:
+        - cmd: pyenv activate athena
+  - window_name: athena
+    start_directory: ~/projects/galaxie_crawler/docker
+    panes:
+      - docker compose up --build db backend frontend proxy mq tasker
+  - window_name: airflow
+    start_directory: ~/projects/galaxie_crawler/airflow
+    panes:
+      - docker compose up --build --no-attach airflow-triggerer --no-attach airflow-scheduler
+  # - window_name: frontend
+  #   start_directory: ~/projects/wecancomply/platform/frontend-core
+  #   panes:
+  #     - shell_command:
+  #       - "npm i"
+  #       - "npm run dev"

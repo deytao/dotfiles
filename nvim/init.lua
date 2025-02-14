@@ -29,6 +29,13 @@ require('packer').startup(function(use)
   use 'williamboman/mason-lspconfig.nvim'
   use 'neovim/nvim-lspconfig'  -- Configurations for Nvim LSP
 
+  use({
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      config = function()
+      require("lsp_lines").setup()
+    end,
+  })
+
   -- Autocompletion
   use 'hrsh7th/nvim-cmp'  -- Autocompletion plugin
   use 'hrsh7th/cmp-nvim-lsp'  -- LSP source for nvim-cmp
@@ -61,18 +68,6 @@ require('packer').startup(function(use)
   use 'lukas-reineke/indent-blankline.nvim'  -- Show indent guides
   use 'kylechui/nvim-surround'  -- Surround plugin rewritten for Neovim
   use 'numToStr/Comment.nvim'  -- Equivalent of NERD Commenter
-
-  -- CodeCompanion
-  use({
-    "olimorris/codecompanion.nvim",
-      config = function()
-        require("codecompanion").setup()
-      end,
-      requires = {
-        "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
-      }
-  })
 
   if packer_bootstrap then
     require('packer').sync()
@@ -196,6 +191,12 @@ require('lspconfig').rust_analyzer.setup({
       },
     }
   }
+})
+
+-- Disable virtual_text since it's redundant due to lsp_lines.
+vim.diagnostic.config({
+  virtual_text = false,
+  virtual_lines = true,
 })
 
 
@@ -334,27 +335,4 @@ vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual(
 })
 vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
     desc = "Search on current file"
-})
-
--- CodeCompanion
-require("codecompanion").setup({
-    strategies = {
-        chat = {
-            adapter = "openai",
-        },
-        inline = {
-            adapter = "openai",
-        },
-    },
-    adapters = {
-        openai = function()
-            return require("codecompanion.adapters").extend("openai", {
-                schema = {
-                    model = {
-                        default = "gpt-4o-mini",
-                    },
-                },
-            })
-        end,
-    },
 })
