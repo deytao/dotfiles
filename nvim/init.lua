@@ -16,6 +16,9 @@ local packer_bootstrap = ensure_packer()
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'  -- Packer manages itself
 
+  -- Copilot
+  use 'github/copilot.vim'
+
   -- Essential plugins
   use 'nvim-lua/plenary.nvim'  -- Common utilities
   use 'nvim-lua/popup.nvim'    -- Popup API
@@ -27,7 +30,7 @@ require('packer').startup(function(use)
     run = ":MasonUpdate"  -- Ensure Mason is up to date
   }
   use 'williamboman/mason-lspconfig.nvim'
-  use 'neovim/nvim-lspconfig'  -- Configurations for Nvim LSP
+  use { 'neovim/nvim-lspconfig', ft = 'python' }  -- Configurations for Nvim LSP
 
   -- Autocompletion
   use 'hrsh7th/nvim-cmp'  -- Autocompletion plugin
@@ -153,6 +156,7 @@ require('lspconfig').pyright.setup({
       analysis = {
         typeCheckingMode = "off",  -- Disable type checking if not needed
         diagnosticMode = "workspace",  -- Change to "openFilesOnly" if preferred
+        disableUnusedVariableDiagnostics = true,
       }
     }
   }
