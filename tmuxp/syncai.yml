@@ -8,7 +8,8 @@ windows:
   - window_name: athena
     start_directory: ~/projects/galaxie_crawler/docker
     panes:
-      - docker compose up --build db backend frontend proxy mq tasker
+      - docker compose up --build db backend frontend proxy mq
+      - docker compose up --build tasker
   - window_name: airflow
     start_directory: ~/projects/galaxie_crawler/airflow
     panes:

@@ -20,7 +20,8 @@ export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 export POETRY_HTTP_BASIC_USERNAME=dependencies
 export POETRY_HTTP_BASIC_PASSWORD=$(vault kv get -format=json -mount="secrets-arcanite" "Outils/Dev/pip.arcanite.ch/dependencies" | jq -r .data.data.password)
 
-export KUBE_EDITOR=nvim
+export EDITOR=nvim
+export KUBE_EDITOR=$EDITOR
 
 function start_agent {
     echo "Initialising new SSH agent..."
