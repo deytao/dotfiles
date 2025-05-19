@@ -30,7 +30,7 @@ require('packer').startup(function(use)
     run = ":MasonUpdate"  -- Ensure Mason is up to date
   }
   use 'williamboman/mason-lspconfig.nvim'
-  use { 'neovim/nvim-lspconfig', ft = 'python' }  -- Configurations for Nvim LSP
+  use 'neovim/nvim-lspconfig'
 
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -205,7 +205,7 @@ vim.diagnostic.config({
 
 
 -- Treesitter configuration
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup({
   ensure_installed = "all",  -- Install all maintained parsers
   highlight = {
     enable = true,  -- Enable syntax highlighting
@@ -234,7 +234,7 @@ require'nvim-treesitter.configs'.setup {
       },
     },
   },
-}
+})
 
 -- Lualine configuration
 require('lualine').setup {
