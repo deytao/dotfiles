@@ -16,54 +16,257 @@ local packer_bootstrap = ensure_packer()
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'  -- Packer manages itself
 
-  -- Copilot
-  use 'github/copilot.vim'
+  -- Copilot (load on InsertEnter)
+  use {
+    'github/copilot.vim',
+    event = 'InsertEnter',
+  }
 
-  -- Essential plugins
+  -- Essential utilities (loaded on demand by dependent plugins)
   use 'nvim-lua/plenary.nvim'  -- Common utilities
   use 'nvim-lua/popup.nvim'    -- Popup API
-  use 'kyazdani42/nvim-web-devicons'  -- File icons
 
-  -- Mason and LSP setup
+  -- Icons (loaded with first plugin that needs them)
+  use 'kyazdani42/nvim-web-devicons'
+
+  -- LSP ecosystem
   use {
     'williamboman/mason.nvim',
-    run = ":MasonUpdate"  -- Ensure Mason is up to date
+    run = "MasonUpdate",
+    cmd = { "Mason", "MasonInstall", "MasonUpdate" },
+    config = function()
+      require("mason").setup()
+    end
   }
-  use 'williamboman/mason-lspconfig.nvim'
-  use 'neovim/nvim-lspconfig'
 
-  -- Autocompletion
-  use 'hrsh7th/nvim-cmp'  -- Autocompletion plugin
-  use 'hrsh7th/cmp-nvim-lsp'  -- LSP source for nvim-cmp
-  use 'L3MON4D3/LuaSnip'  -- Snippet engine
-  use 'saadparwaiz1/cmp_luasnip'  -- Snippet completions
+  use {
+    'williamboman/mason-lspconfig.nvim',
+    after = 'mason.nvim',
+    config = function()
+      require("mason-lspconfig").setup {
+        ensure_installed = { "lua_ls", "pyright", "ruff" },
+      }
+    end
+  }
 
-  -- Treesitter for syntax highlighting
-  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  use {
+    'neovim/nvim-lspconfig',
+    after = 'mason-lspconfig.nvim',
+    config = function()
+      -- Lua LSP setup
+      require('lspconfig').lua_ls.setup{
+        settings = {
+          Lua = {
+            runtime = { version = 'LuaJIT' },
+            diagnostics = { globals = {'vim'} },
+            workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+            telemetry = { enable = false },
+          },
+        },
+      }
 
-  -- Treesitter textobjects
-  use({
+      -- Python LSP setup
+      require('lspconfig').pyright.setup{
+        settings = {
+          python = {
+            analysis = {
+              typeCheckingMode = "off",
+              diagnosticMode = "workspace",
+              disableUnusedVariableDiagnostics = true,
+            }
+          }
+        }
+      }
+
+      -- Ruff setup
+      require('lspconfig').ruff.setup{}
+
+      -- Rust setup
+      require('lspconfig').rust_analyzer.setup{
+        settings = {
+          ["rust-analyzer"] = {
+            imports = { granularity = { group = "module" }, prefix = "self" },
+            cargo = { buildScripts = { enable = true } },
+            procMacro = { enable = true },
+          }
+        }
+      }
+    end
+  }
+
+  use {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    after = "nvim-lspconfig",
+    config = function()
+      require("lsp_lines").setup()
+      vim.diagnostic.config({
+        virtual_text = false,
+        virtual_lines = true,
+      })
+    end,
+  }
+
+  -- Autocompletion (load on InsertEnter)
+  use {
+    'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
+    requires = {
+      'hrsh7th/cmp-nvim-lsp',
+      { 'L3MON4D3/LuaSnip', event = 'InsertEnter' },
+      { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+    },
+    config = function()
+      local cmp = require('cmp')
+      cmp.setup({
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+        }),
+        snippet = {
+          expand = function(args)
+            require('luasnip').lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        }),
+      })
+    end
+  }
+
+  -- Treesitter (load on BufRead)
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
+    event = 'BufRead',
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        ensure_installed = { "lua", "python", "rust", "bash", "json", "yaml", "markdown", "html", "css", "javascript", "typescript" },
+        highlight = { enable = true },
+        indent = { enable = true },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "gnn",
+            node_incremental = "grn",
+            scope_incremental = "grc",
+            node_decremental = "grm",
+          },
+        },
+      })
+    end
+  }
+
+  use {
     "nvim-treesitter/nvim-treesitter-textobjects",
     after = "nvim-treesitter",
-    requires = "nvim-treesitter/nvim-treesitter",
-  })
+    keys = { "af", "if", "ac", "ic" },
+  }
 
-  use 'nvim-telescope/telescope.nvim'  -- Telescope for fuzzy finding
-  use 'kyazdani42/nvim-tree.lua'  -- File explorer
-  use 'nvim-pack/nvim-spectre'  -- Search and replace
+  -- Telescope (load on first use)
+  use {
+    'nvim-telescope/telescope.nvim',
+    cmd = 'Telescope',
+    requires = { 'nvim-lua/plenary.nvim' },
+  }
 
-  -- Lualine for status line
-  use 'nvim-lualine/lualine.nvim'
+  -- File tree (load on command)
+  use {
+    'kyazdani42/nvim-tree.lua',
+    cmd = { "NvimTreeToggle", "NvimTreeFindFile" },
+    config = function()
+      require('nvim-tree').setup {
+        hijack_netrw = true,
+        diagnostics = {
+          enable = true,
+          icons = { hint = "", info = "", warning = "", error = "" },
+        },
+        view = { width = 20, preserve_window_proportions = true },
+      }
+    end
+  }
 
-  -- Git integration
-  use 'lewis6991/gitsigns.nvim'
+  -- Search/replace (load on keypress)
+  use {
+    'nvim-pack/nvim-spectre',
+    keys = { '<leader>S', '<leader>sw', '<leader>sp' },
+    config = function()
+      require('spectre').setup()
+    end
+  }
 
-  -- Misc plugins
-  use 'alvan/vim-closetag'  -- Auto-close HTML tags
-  use 'ayu-theme/ayu-vim'  -- Ayu color scheme
-  use 'lukas-reineke/indent-blankline.nvim'  -- Show indent guides
-  use 'kylechui/nvim-surround'  -- Surround plugin rewritten for Neovim
-  use 'numToStr/Comment.nvim'  -- Equivalent of NERD Commenter
+  -- Status line (loaded immediately)
+  use {
+    'nvim-lualine/lualine.nvim',
+    config = function()
+      require('lualine').setup {
+        options = { theme = 'ayu', section_separators = {'', ''}, component_separators = {'', ''} }
+      }
+    end
+  }
+
+  -- Git integration (load on BufRead)
+  use {
+    'lewis6991/gitsigns.nvim',
+    event = 'BufRead',
+    config = function()
+      require('gitsigns').setup {
+        signs = {
+          add          = {text = '+'},
+          change       = {text = '~'},
+          delete       = {text = '_'},
+          topdelete    = {text = '‾'},
+          changedelete = {text = '~'},
+        }
+      }
+    end
+  }
+
+  -- HTML tag closing (load on HTML-related filetypes)
+  use {
+    'alvan/vim-closetag',
+    ft = { 'html', 'xml', 'jsx', 'javascriptreact', 'typescriptreact' },
+  }
+
+  -- Colorscheme (loaded immediately)
+  use {
+    'ayu-theme/ayu-vim',
+    config = function()
+      vim.g.ayucolor = "dark"
+      vim.cmd[[colorscheme ayu]]
+    end
+  }
+
+  -- Indent guides (load on BufRead)
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    event = 'BufRead',
+    config = function()
+        require("ibl").setup {}
+    end
+  }
+
+  -- Surround actions (load on first use)
+  use {
+    'kylechui/nvim-surround',
+    keys = { 'ys', 'ds', 'cs', 'S' },
+    config = function()
+      require("nvim-surround").setup()
+    end
+  }
+
+  -- Commenting (load on first use)
+  use {
+    'numToStr/Comment.nvim',
+    keys = { 'gc', 'gb', 'gcc', 'gbc' },
+    config = function()
+      require("Comment").setup()
+    end
+  }
 
 
   if packer_bootstrap then
@@ -71,260 +274,46 @@ require('packer').startup(function(use)
   end
 end)
 
--- Basic Vim settings (original settings from init.vim)
-vim.opt.number = true            -- Show line numbers
-vim.opt.relativenumber = true    -- Show relative line numbers
-vim.opt.wrap = false             -- Disable line wrapping
-vim.opt.expandtab = true         -- Use spaces instead of tabs
-vim.opt.shiftwidth = 4           -- Number of spaces to use for each step of (auto)indent
-vim.opt.tabstop = 4              -- Number of spaces tabs count for
-vim.opt.smartindent = true       -- Enable smart indentation
-vim.opt.mouse = 'a'              -- Enable mouse support
-vim.opt.clipboard = 'unnamedplus'-- Use system clipboard
-vim.opt.swapfile = false         -- Disable swap file creation
-vim.opt.backup = false           -- Disable backup file creation
-vim.opt.undofile = true          -- Enable persistent undo
-vim.opt.termguicolors = true     -- Enable true color support
+-- Basic Vim settings
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.wrap = false
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
+vim.opt.smartindent = true
+vim.opt.mouse = 'a'
+vim.opt.clipboard = 'unnamedplus'
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undofile = true
+vim.opt.termguicolors = true
 
--- Set colorscheme to ayu
-vim.g.ayucolor = "dark"  -- Choose from 'dark', 'mirage', 'light'
-vim.cmd[[colorscheme ayu]]
-
--- Surround setup
-require("nvim-surround").setup()
-
--- Commenter
-require("Comment").setup()
-
--- Mason setup
-require("mason").setup()
-require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls", "pyright", "ruff" },  -- Ensure the LS servers are installed
-}
-
--- Lua language server setup
-require('lspconfig').lua_ls.setup{
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'LuaJIT',
-        path = vim.split(package.path, ';'),
-      },
-      diagnostics = {
-        globals = {'vim'},
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-}
-
--- PyRights
-require('lspconfig').pyright.setup({
-  root_dir = function(fname)
-    -- Use the nearest git project or the current dir to determine the root
-    return require('lspconfig.util').find_git_ancestor(fname) or vim.fn.getcwd()
-  end,
-  on_attach = function(client, bufnr)
-    -- LSP key mappings
-    local bufopts = { noremap=true, silent=true, buffer=bufnr }
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-    vim.keymap.set('n', '<leader>wl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, bufopts)
-    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', '<leader>f', function()
-      vim.lsp.buf.format { async = true }
-    end, bufopts)
-  end,
-
-  -- Disable Pyright's built-in linting if you only want to use Ruff
-  settings = {
-    python = {
-      analysis = {
-        typeCheckingMode = "off",  -- Disable type checking if not needed
-        diagnosticMode = "workspace",  -- Change to "openFilesOnly" if preferred
-        disableUnusedVariableDiagnostics = true,
-      }
-    }
-  }
-})
-
--- Ruff linter setup
-require('lspconfig').ruff.setup{}
-
--- Rust
-require('lspconfig').rust_analyzer.setup({
-  on_attach = function(client, bufnr)
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-  end,
-
-  settings = {
-    ["rust-analyzer"] = {
-      imports = {
-        granularity = {
-            group = "module",
-        },
-        prefix = "self",
-      },
-      cargo = {
-        buildScripts = {
-            enable = true,
-        },
-      },
-      procMacro = {
-        enable = true
-      },
-    }
-  }
-})
-
-
--- Treesitter configuration
-require('nvim-treesitter.configs').setup({
-  ensure_installed = "all",  -- Install all maintained parsers
-  highlight = {
-    enable = true,  -- Enable syntax highlighting
-  },
-  indent = {
-    enable = true,  -- Enable Treesitter-based indentation
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-    },
-  },
-})
-
--- Lualine configuration
-require('lualine').setup {
-  options = {
-    theme = 'ayu',  -- Use the ayu theme for lualine
-    section_separators = {'', ''},
-    component_separators = {'', ''},
-  },
-}
-
--- Nvim-tree configuration
-require('nvim-tree').setup {
-  hijack_netrw = true,
-  auto_reload_on_write = true,
-  open_on_tab = false,
-  hijack_cursor = false,
-  update_cwd = true,
-  diagnostics = {
-    enable = true,
-    show_on_dirs = true,
-    icons = {
-      hint = "",
-      info = "",
-      warning = "",
-      error = "",
-    },
-  },
-  update_focused_file = {
-    enable = true,
-    update_cwd = true,
-    ignore_list = {},
-  },
-  view = {
-    width = 20,
-    side = "left",
-    preserve_window_proportions = true,
-    number = false,
-    relativenumber = false,
-  },
-}
-
--- Gitsigns configuration
-require('gitsigns').setup {
-  signs = {
-    add          = {text = '+'},
-    change       = {text = '~'},
-    delete       = {text = '_'},
-    topdelete    = {text = '‾'},
-    changedelete = {text = '~'},
-  },
-}
-
--- Set the highlights for gitsigns
-vim.api.nvim_set_hl(0, 'GitSignsAdd', {link = 'GitGutterAdd'})
-vim.api.nvim_set_hl(0, 'GitSignsAddLn', {link = 'GitGutterAdd'})
-vim.api.nvim_set_hl(0, 'GitSignsAddNr', {link = 'GitGutterAdd'})
-vim.api.nvim_set_hl(0, 'GitSignsChange', {link = 'GitGutterChange'})
-vim.api.nvim_set_hl(0, 'GitSignsChangeLn', {link = 'GitGutterChange'})
-vim.api.nvim_set_hl(0, 'GitSignsChangeNr', {link = 'GitGutterChange'})
-vim.api.nvim_set_hl(0, 'GitSignsChangedelete', {link = 'GitGutterChange'})
-vim.api.nvim_set_hl(0, 'GitSignsChangedeleteLn', {link = 'GitGutterChange'})
-vim.api.nvim_set_hl(0, 'GitSignsChangedeleteNr', {link = 'GitGutterChange'})
-vim.api.nvim_set_hl(0, 'GitSignsDelete', {link = 'GitGutterDelete'})
-vim.api.nvim_set_hl(0, 'GitSignsDeleteLn', {link = 'GitGutterDelete'})
-vim.api.nvim_set_hl(0, 'GitSignsDeleteNr', {link = 'GitGutterDelete'})
-vim.api.nvim_set_hl(0, 'GitSignsTopdelete', {link = 'GitGutterDeleteChange'})
-vim.api.nvim_set_hl(0, 'GitSignsTopdeleteLn', {link = 'GitGutterDeleteChange'})
-vim.api.nvim_set_hl(0, 'GitSignsTopdeleteNr', {link = 'GitGutterDeleteChange'})
-
--- Telescope configuragion
+-- Key mappings
 vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>Telescope diagnostics<CR>', { noremap = true, silent = true })
 
--- Spectre configuration
-require('spectre').setup({
-    default = {
-        find = {
-            is_case_sensitive = true,
-        },
-    },
-    mapping = {
-        ['toggle_line'] = {
-            map = "x",
-            cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
-            desc = "toggle current item"
-        },
-        ['replace_cmd'] = {
-            map = "<leader>r",
-            cmd = "<cmd>lua require('spectre.actions').replace_cmd()<CR>",
-            desc = "replace all"
-        }
-    },
-})
-vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
-    desc = "Toggle Spectre"
-})
-vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-    desc = "Search current word"
-})
-vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-    desc = "Search current word"
-})
-vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-    desc = "Search on current file"
+-- LSP key mappings
+local on_attach = function(client, bufnr)
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, bufopts)
+  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+end
+
+-- Attach LSP key mappings when LSP connects
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    on_attach(client, args.buf)
+  end
 })
