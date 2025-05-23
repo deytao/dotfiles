@@ -29,83 +29,6 @@ require('packer').startup(function(use)
   -- Icons (loaded with first plugin that needs them)
   use 'kyazdani42/nvim-web-devicons'
 
-  -- LSP ecosystem
-  use {
-    'williamboman/mason.nvim',
-    run = "MasonUpdate",
-    cmd = { "Mason", "MasonInstall", "MasonUpdate" },
-    config = function()
-      require("mason").setup()
-    end
-  }
-
-  use {
-    'williamboman/mason-lspconfig.nvim',
-    after = 'mason.nvim',
-    config = function()
-      require("mason-lspconfig").setup {
-        ensure_installed = { "lua_ls", "pyright", "ruff" },
-      }
-    end
-  }
-
-  use {
-    'neovim/nvim-lspconfig',
-    after = 'mason-lspconfig.nvim',
-    config = function()
-      -- Lua LSP setup
-      require('lspconfig').lua_ls.setup{
-        settings = {
-          Lua = {
-            runtime = { version = 'LuaJIT' },
-            diagnostics = { globals = {'vim'} },
-            workspace = { library = vim.api.nvim_get_runtime_file("", true) },
-            telemetry = { enable = false },
-          },
-        },
-      }
-
-      -- Python LSP setup
-      require('lspconfig').pyright.setup{
-        settings = {
-          python = {
-            analysis = {
-              typeCheckingMode = "off",
-              diagnosticMode = "workspace",
-              disableUnusedVariableDiagnostics = true,
-            }
-          }
-        }
-      }
-
-      -- Ruff setup
-      require('lspconfig').ruff.setup{}
-
-      -- Rust setup
-      require('lspconfig').rust_analyzer.setup{
-        settings = {
-          ["rust-analyzer"] = {
-            imports = { granularity = { group = "module" }, prefix = "self" },
-            cargo = { buildScripts = { enable = true } },
-            procMacro = { enable = true },
-          }
-        }
-      }
-    end
-  }
-
-  use {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    after = "nvim-lspconfig",
-    config = function()
-      require("lsp_lines").setup()
-      vim.diagnostic.config({
-        virtual_text = false,
-        virtual_lines = true,
-      })
-    end,
-  }
-
   -- Autocompletion (load on InsertEnter)
   use {
     'hrsh7th/nvim-cmp',
@@ -138,6 +61,103 @@ require('packer').startup(function(use)
     end
   }
 
+-- LSP ecosystem
+  use {
+    'williamboman/mason.nvim',
+    event = 'BufRead',
+    run = "MasonUpdate",
+    cmd = { "Mason", "MasonInstall", "MasonUpdate" },
+    config = function()
+      require("mason").setup()
+    end
+  }
+
+  use {
+    'williamboman/mason-lspconfig.nvim',
+    event = 'BufRead',
+    after = 'mason.nvim',
+    config = function()
+      require("mason-lspconfig").setup {
+        ensure_installed = { "lua_ls", "ruff" },
+      }
+      require("mason-lspconfig").setup_handlers {
+        function(server_name)
+          if server_name ~= "pyright" then
+            require("lspconfig")[server_name].setup {}
+          end
+        end,
+        ["lua_ls"] = function()
+          require('lspconfig').lua_ls.setup {
+            settings = {
+              Lua = {
+                runtime = { version = 'LuaJIT' },
+                diagnostics = { globals = {'vim'} },
+                workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+                telemetry = { enable = false },
+              },
+            },
+          }
+        end,
+        ["pyright"] = function()
+          -- Only enable Pyright if a pyrightconfig file is found
+          local util = require("lspconfig.util")
+          local pyright_config_files = {
+            ".pyrightconfig.json", "pyrightconfig.json"
+          }
+          local function has_pyright_config(root_dir)
+            for _, fname in ipairs(pyright_config_files) do
+              if util.path.exists(util.path.join(root_dir, fname)) then
+                return true
+              end
+            end
+            return false
+          end
+          require('lspconfig').pyright.setup {
+            on_new_config = function(new_config, root_dir)
+              if not has_pyright_config(root_dir) then
+                new_config.enabled = false
+              end
+            end,
+            capabilities = vim.lsp.protocol.make_client_capabilities(),
+            settings = {
+              python = {
+                analysis = {
+                  typeCheckingMode = "off",
+                  diagnosticMode = "workspace",
+                  disableUnusedVariableDiagnostics = true,
+                }
+              }
+            }
+          }
+        end,
+        ["ruff"] = function()
+          require('lspconfig').ruff.setup {
+            root_dir = require('lspconfig.util').root_pattern("pyproject.toml", ".git"),
+            capabilities = vim.lsp.protocol.make_client_capabilities(),
+          }
+        end,
+      }
+    end
+  }
+
+  use {
+    'neovim/nvim-lspconfig',
+    event = 'BufRead',
+    after = 'mason-lspconfig.nvim',
+  }
+
+  use {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    after = "nvim-lspconfig",
+    config = function()
+      require("lsp_lines").setup()
+      vim.diagnostic.config({
+        virtual_text = false,
+        virtual_lines = true,
+      })
+    end,
+  }
+
   -- Treesitter (load on BufRead)
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -145,7 +165,7 @@ require('packer').startup(function(use)
     event = 'BufRead',
     config = function()
       require('nvim-treesitter.configs').setup({
-        ensure_installed = { "lua", "python", "rust", "bash", "json", "yaml", "markdown", "html", "css", "javascript", "typescript" },
+        ensure_installed = { "lua", "python", "bash", "json", "yaml", "markdown", "html", "css", "javascript", "typescript" },
         highlight = { enable = true },
         indent = { enable = true },
         incremental_selection = {
