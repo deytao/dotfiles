@@ -63,7 +63,7 @@ require('packer').startup(function(use)
 
 -- LSP ecosystem
   use {
-    'williamboman/mason.nvim',
+    'mason-org/mason.nvim',
     event = 'BufRead',
     run = "MasonUpdate",
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
@@ -73,7 +73,7 @@ require('packer').startup(function(use)
   }
 
   use {
-    'williamboman/mason-lspconfig.nvim',
+    'mason-org/mason-lspconfig.nvim',
     event = 'BufRead',
     after = 'mason.nvim',
     config = function()
