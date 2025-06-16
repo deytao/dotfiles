@@ -655,7 +655,7 @@ key = "NumpadEnter"
 hide_when_typing = false
 
 [[mouse.bindings]]
-action = "PasteSelection"
+action = "Paste"
 mouse = "Middle"
 
 [scrolling]
