@@ -253,10 +253,19 @@ require("lazy").setup({
 
   -- Colorscheme
   {
-    "ayu-theme/ayu-vim",
+    "folke/tokyonight.nvim",
     config = function()
-      vim.g.ayucolor = "dark"
-      vim.cmd([[colorscheme ayu]])
+      require("tokyonight").setup({
+        style = "moon",  -- Options: storm, night, or day
+        transparent = false,
+        terminal_colors = true,
+        styles = {
+          comments = { italic = true },
+          keywords = { italic = false },
+          functions = { bold = true },
+        },
+      })
+      vim.cmd([[colorscheme tokyonight]])
     end,
   },
 
