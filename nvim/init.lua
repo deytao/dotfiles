@@ -20,7 +20,6 @@ require("lazy").setup({
   -- Copilot
   {
     "github/copilot.vim",
-    event = "InsertEnter",
   },
 
   -- Essential utilities
