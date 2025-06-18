@@ -4,33 +4,53 @@ animation = "EaseOutExpo"
 color = "0xffffff"
 duration = 0
 
-[colors]
-draw_bold_text_with_bright_colors = true
-indexed_colors = []
+# -----------------------------------------------------------------------------
+# TokyoNight Alacritty Colors
+# Theme: Tokyo Night Moon
+# Upstream: https://github.com/folke/tokyonight.nvim/raw/main/extras/alacritty/tokyonight_moon.toml
+# -----------------------------------------------------------------------------
 
-[colors.bright]
-black = "0x686868"
-blue = "0x59C2FF"
-cyan = "0x95E6CB"
-green = "0xC2D94C"
-magenta = "0xFFEE99"
-red = "0xF07178"
-white = "0xFFFFFF"
-yellow = "0xFFB454"
-
-[colors.normal]
-black = "0x01060E"
-blue = "0x53BDFA"
-cyan = "0x90E1C6"
-green = "0x91B362"
-magenta = "0xFAE994"
-red = "0xEA6C73"
-white = "0xC7C7C7"
-yellow = "0xF9AF4F"
-
+# Default colors
 [colors.primary]
-background = "0x0A0E14"
-foreground = "0xB3B1AD"
+background = '#222436'
+foreground = '#c8d3f5'
+
+#[colors.cursor]
+#cursor = '#c8d3f5'
+#text = '#222436'
+
+# Normal colors
+[colors.normal]
+black = '#1b1d2b'
+red = '#ff757f'
+green = '#c3e88d'
+yellow = '#ffc777'
+blue = '#82aaff'
+magenta = '#c099ff'
+cyan = '#86e1fc'
+white = '#828bb8'
+
+# Bright colors
+[colors.bright]
+black = '#444a73'
+red = '#ff8d94'
+green = '#c7fb6d'
+yellow = '#ffd8ab'
+blue = '#9ab8ff'
+magenta = '#caabff'
+cyan = '#b2ebff'
+white = '#c8d3f5'
+
+# Indexed Colors
+[[colors.indexed_colors]]
+index = 16
+color = '#ff966c'
+
+[[colors.indexed_colors]]
+index = 17
+color = '#c53b53'
+
+# END COLORSCHEME
 
 [cursor]
 style = "Block"
