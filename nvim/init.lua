@@ -75,13 +75,8 @@ require("lazy").setup({
         dependencies = { "mason-org/mason.nvim" },
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "ruff" },
+                ensure_installed = { "lua_ls", "ruff", "pyright" },
                 handlers = {
-                    function(server_name)
-                        if server_name ~= "pyright" then
-                            require("lspconfig")[server_name].setup({})
-                        end
-                    end,
                     lua_ls = function()
                         require("lspconfig").lua_ls.setup({
                             settings = {
@@ -95,35 +90,11 @@ require("lazy").setup({
                         })
                     end,
                     pyright = function()
-                        local util = require("lspconfig.util")
-                        local pyright_config_files = {
-                            ".pyrightconfig.json",
-                            "pyrightconfig.json",
-                        }
-                        local function has_pyright_config(root_dir)
-                            for _, fname in ipairs(pyright_config_files) do
-                                if util.path.exists(util.path.join(root_dir, fname)) then
-                                    return true
-                                end
-                            end
-                            return false
-                        end
                         require("lspconfig").pyright.setup({
-                            on_new_config = function(new_config, root_dir)
-                                if not has_pyright_config(root_dir) then
-                                    new_config.enabled = false
-                                end
-                            end,
-                            capabilities = vim.lsp.protocol.make_client_capabilities(),
-                            settings = {
-                                python = {
-                                    analysis = {
-                                        typeCheckingMode = "off",
-                                        diagnosticMode = "workspace",
-                                        disableUnusedVariableDiagnostics = true,
-                                    },
-                                },
-                            },
+                            root_dir = require("lspconfig.util").root_pattern("pyproject.toml", ".git"),
+                            capabilities = vim.lsp.protocol.make_client_capabilities({
+                                offsetEncoding = { "utf-8" },
+                            }),
                         })
                     end,
                     ruff = function()
