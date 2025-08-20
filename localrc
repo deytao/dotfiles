@@ -23,6 +23,10 @@ export POETRY_HTTP_BASIC_PASSWORD=$(vault kv get -format=json -mount="secrets-ar
 export EDITOR=nvim
 export KUBE_EDITOR=$EDITOR
 
+export AUTOENV_ENABLE_LEAVE=yes
+export AUTOENV_VIEWER=bat
+source "${HOME}/.nvm/versions/node/v23.3.0/lib/node_modules/@hyperupcall/autoenv/activate.sh"
+
 function start_agent {
     echo "Initialising new SSH agent..."
     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
