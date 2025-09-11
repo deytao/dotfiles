@@ -19,6 +19,8 @@ export VAULT_ADDR=https://vault.arcanite.ch:8282/
 export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 export POETRY_HTTP_BASIC_USERNAME=dependencies
 export POETRY_HTTP_BASIC_PASSWORD=$(vault kv get -format=json -mount="secrets-arcanite" "Outils/Dev/pip.arcanite.ch/dependencies" | jq -r .data.data.password)
+export UV_INDEX_INTERNAL_PROXY_USERNAME=dependencies
+export UV_INDEX_INTERNAL_PROXY_PASSWORD=$(vault kv get -format=json -mount="secrets-arcanite" "Outils/Dev/pip.arcanite.ch/dependencies" | jq -r .data.data.password)
 
 export EDITOR=nvim
 export KUBE_EDITOR=$EDITOR
