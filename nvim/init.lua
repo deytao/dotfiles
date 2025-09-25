@@ -42,6 +42,28 @@ require("lazy").setup({
     {
         "github/copilot.vim",
     },
+    -- Add this to your lazy.nvim setup
+    {
+        "CopilotC-Nvim/CopilotChat.nvim",
+        dependencies = {
+            { "github/copilot.vim" }, -- Uses your existing auth
+            { "nvim-lua/plenary.nvim" },
+        },
+        config = function()
+            require("CopilotChat").setup({
+                model = 'gpt-4o', -- Your preferred default model
+                debug = false,
+            })
+        end,
+        keys = {
+            { "<leader>cc", ":CopilotChat<CR>", desc = "Open Copilot Chat" },
+            { "<leader>cm", ":CopilotChatModels<CR>", desc = "Select Copilot Model" },
+            { "<leader>cs", ":CopilotChatExplain<CR>", mode = "v", desc = "Explain selection" },
+            { "<leader>cf", ":CopilotChatFix<CR>", desc = "Fix code" },
+            { "<leader>co", ":CopilotChatOptimize<CR>", desc = "Optimize code" },
+            { "<leader>ct", ":CopilotChatTests<CR>", desc = "Generate tests" },
+        },
+    },
 
     -- Essential utilities
     { "nvim-lua/plenary.nvim" },
