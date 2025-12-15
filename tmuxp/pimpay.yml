@@ -1,0 +1,7 @@
+session_name: pimpay
+windows:
+  - window_name: backend
+    start_directory: ~/projects/pimpay_backend
+    panes:
+      - make up ARGS="--build db redis mailpit api"
+      - []
