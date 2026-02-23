@@ -51,7 +51,7 @@ require("lazy").setup({
         },
         config = function()
             require("CopilotChat").setup({
-                model = 'gpt-4o', -- Your preferred default model
+                model = 'claude-sonnet-4-6', -- Your preferred default model
                 debug = false,
             })
         end,
