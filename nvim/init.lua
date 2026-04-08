@@ -38,39 +38,41 @@ require("lazy").setup({
     -- Lazy.nvim manages itself
     { "folke/lazy.nvim" },
 
-    -- Copilot
+    -- ClaudeCode
     {
-        "github/copilot.vim",
-    },
-    -- Add this to your lazy.nvim setup
-    {
-        "CopilotC-Nvim/CopilotChat.nvim",
-        dependencies = {
-            { "github/copilot.vim" }, -- Uses your existing auth
-            { "nvim-lua/plenary.nvim" },
-        },
+        "greggh/claude-code.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
-            require("CopilotChat").setup({
-                model = 'claude-sonnet-4-6', -- Your preferred default model
-                debug = false,
-            })
+            require("claude-code").setup()
         end,
-        keys = {
-            { "<leader>cc", ":CopilotChat<CR>", desc = "Open Copilot Chat" },
-            { "<leader>cm", ":CopilotChatModels<CR>", desc = "Select Copilot Model" },
-            { "<leader>cs", ":CopilotChatExplain<CR>", mode = "v", desc = "Explain selection" },
-            { "<leader>cf", ":CopilotChatFix<CR>", desc = "Fix code" },
-            { "<leader>co", ":CopilotChatOptimize<CR>", desc = "Optimize code" },
-            { "<leader>ct", ":CopilotChatTests<CR>", desc = "Generate tests" },
-        },
     },
-
     -- Essential utilities
     { "nvim-lua/plenary.nvim" },
     { "nvim-lua/popup.nvim" },
 
     -- Icons
     { "kyazdani42/nvim-web-devicons" },
+
+    -- Copilot
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({
+                suggestion = { enabled = false },
+                panel = { enabled = false },
+                copilot_model = "claude-sonnet-4-6",
+            })
+        end,
+    },
+    {
+        "zbirenbaum/copilot-cmp",
+        dependencies = { "zbirenbaum/copilot.lua" },
+        config = function()
+            require("copilot_cmp").setup()
+        end,
+    },
 
     -- Autocompletion
     {
@@ -80,11 +82,13 @@ require("lazy").setup({
             "hrsh7th/cmp-nvim-lsp",
             { "L3MON4D3/LuaSnip", event = "InsertEnter" },
             { "saadparwaiz1/cmp_luasnip" },
+            "zbirenbaum/copilot-cmp",
         },
         config = function()
             local cmp = require("cmp")
             cmp.setup({
                 sources = cmp.config.sources({
+                    { name = "copilot" },
                     { name = "nvim_lsp" },
                     { name = "luasnip" },
                 }),
