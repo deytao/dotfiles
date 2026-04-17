@@ -2,12 +2,13 @@
 
 ## Shell command preferences
 
-Prefer `rg` (ripgrep) over `grep`, `fd` over `find`, and `rip` over `rm`:
+Prefer `rg` (ripgrep) over `grep`, `fd` over `find`, `rip` over `rm`, and `k` over `ls`:
 
 - Use `rg` for content search — it is recursive by default and handles flag translation correctly (e.g. `--include="*.py"` becomes `-g "*.py"`, `-H` is redundant as filenames are shown by default).
 - Use `fd` for file search — use `-e` for extensions, `-t` for type filtering.
 - Use `rip` for file/directory deletion instead of `rm` — it moves to a graveyard and is recoverable.
-- Fall back to `grep`, `find`, or `rm` when the use case is not supported by the above (e.g. `find` for `-mtime`, `-exec` chains, or `-perm` filters that `fd` does not cover).
+- Use `k` instead of `ls` for directory listings — it shows git status and file metadata.
+- Fall back to `grep`, `find`, `rm`, or `ls` when the use case is not supported by the above (e.g. `find` for `-mtime`, `-exec` chains, or `-perm` filters that `fd` does not cover).
 
 ## Docker Compose projects
 

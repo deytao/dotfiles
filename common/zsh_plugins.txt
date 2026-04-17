@@ -1,11 +1,6 @@
-ohmyzsh/ohmyzsh path:plugins/git
-ohmyzsh/ohmyzsh path:plugins/pip
-ohmyzsh/ohmyzsh path:plugins/python
-ohmyzsh/ohmyzsh path:plugins/vagrant
-supercrabtree/k
 Czocher/gpg-crypt
+supercrabtree/k
 wfxr/forgit
-zimfw/asdf
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-syntax-highlighting
 spaceship-prompt/spaceship-prompt kind:fpath path:

@@ -1,6 +1,16 @@
 CASE_SENSITIVE=true
 ZSH_DISABLE_COMPFIX=true
 
+# completions — generate once to ~/.zfunc, picked up by compinit
+fpath=("$HOME/.zfunc" $fpath)
+() {
+    local zfunc="$HOME/.zfunc"
+    mkdir -p "$zfunc"
+    command -v rustup  &>/dev/null && [[ ! -f "$zfunc/_rustup" ]] && rustup completions zsh        > "$zfunc/_rustup"
+    command -v rustup  &>/dev/null && [[ ! -f "$zfunc/_cargo"  ]] && rustup completions zsh cargo  > "$zfunc/_cargo"
+    command -v kubectl &>/dev/null && [[ ! -f "$zfunc/_kubectl" ]] && kubectl completion zsh        > "$zfunc/_kubectl"
+}
+
 # antidote
 autoload -Uz compinit && compinit
 [[ -d "$HOME/.antidote" ]] || git clone --depth=1 https://github.com/mattmc3/antidote.git "$HOME/.antidote"
