@@ -60,8 +60,8 @@ echo "==> Setting up dotfiles for machine: $MACHINE (OS: $OS)"
 # --- Git submodules ---
 cd "$DOTFILES" && git submodule update --init
 
-# --- Download antigen ---
-curl -sL git.io/antigen > "$DOTFILES/antigen.zsh"
+# --- antidote ---
+[[ -d "$HOME/.antidote" ]] || git clone --depth=1 https://github.com/mattmc3/antidote.git "$HOME/.antidote"
 
 # --- pyenv ---
 if [[ ! -d "$HOME/.pyenv" ]]; then
@@ -77,7 +77,7 @@ fi
 # --- Common symlinks ---
 link "$DOTFILES/common/zshrc"        "$HOME/.zshrc"
 link "$DOTFILES/common/gitconfig"    "$HOME/.gitconfig"
-link "$DOTFILES/common/antigenrc"    "$HOME/.antigenrc"
+link "$DOTFILES/common/zsh_plugins.txt" "$HOME/.zsh_plugins.txt"
 link "$DOTFILES/common/psqlrc"       "$HOME/.psqlrc"
 link "$DOTFILES/common/pythonrc.py"  "$HOME/.pythonrc.py"
 link "$DOTFILES/common/sbclrc"       "$HOME/.sbclrc"

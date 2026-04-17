@@ -1,12 +1,13 @@
 CASE_SENSITIVE=true
 ZSH_DISABLE_COMPFIX=true
 
-ANTIGEN_MUTEX=false
-ANTIGEN_PATH=$HOME/dotfiles
-source $ANTIGEN_PATH/antigen.zsh
-antigen init ${HOME}/.antigenrc
+# antidote
+[[ -d "$HOME/.antidote" ]] || git clone --depth=1 https://github.com/mattmc3/antidote.git "$HOME/.antidote"
+source "$HOME/.antidote/antidote.zsh"
+antidote load
 
-plugins=()
+autoload -U promptinit; promptinit
+prompt spaceship
 
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US:en_GB:en

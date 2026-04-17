@@ -1,4 +1,3 @@
-antigen.zsh
 *.swp
 common/nvim/plugin/
 vim/

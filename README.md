@@ -12,7 +12,7 @@ dotfiles/
 │   ├── nvim/
 │   ├── alacritty/
 │   ├── tmux.conf
-│   ├── antigenrc
+│   ├── zsh_plugins.txt
 │   ├── spaceship.zsh
 │   └── ...
 ├── machines/
@@ -51,7 +51,7 @@ cd ~/dotfiles
 
 ## Stack
 
-- **Shell**: zsh + [Antigen](https://github.com/zsh-users/antigen) + [Spaceship prompt](https://spaceship-prompt.sh)
+- **Shell**: zsh + [Antidote](https://github.com/mattmc3/antidote) + [Spaceship prompt](https://spaceship-prompt.sh)
 - **Terminal**: [Alacritty](https://alacritty.org) with tmux auto-attach
 - **Editor**: [Neovim](https://neovim.io) (lazy.nvim, LSP, Copilot, Claude Code)
 - **Multiplexer**: [tmux](https://github.com/tmux/tmux) with [tmuxp](https://github.com/tmux-python/tmuxp) session layouts
