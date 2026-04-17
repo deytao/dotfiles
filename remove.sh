@@ -1,13 +1,18 @@
 #!/bin/bash
 
-rm ~/bin
-rm ~/.gitconfig
-rm ~/.oh-my-zsh
-rm ~/.pythonrc.py
-rm ~/.tmux
-rm ~/.tmux.conf
-rm ~/.vim
-rm ~/.vimrc
-rm ~/.zshrc
-rm ~/.psqlrc
-rm ~/.sbclrc
+DOTFILES="$HOME/dotfiles"
+
+rm -f \
+    "$HOME/.zshrc" \
+    "$HOME/.gitconfig" \
+    "$HOME/.gitconfig.local" \
+    "$HOME/.antigenrc" \
+    "$HOME/.localrc" \
+    "$HOME/.psqlrc" \
+    "$HOME/.pythonrc.py" \
+    "$HOME/.sbclrc" \
+    "$HOME/.config/tmux.conf" \
+    "$HOME/.config/alacritty" \
+    "$HOME/.config/nvim" \
+    "$HOME/.config/spaceship.zsh" \
+    "$HOME/.tmuxp"

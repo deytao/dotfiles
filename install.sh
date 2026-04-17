@@ -1,95 +1,137 @@
 #!/bin/bash
 
-my_install () {
-    local sys=$1; shift
-    for item in $@; do
-        if [[ "$sys" == "debian" ]]; then
-            sudo apt -y install $item
-        elif [[ "$sys" == "osx" ]]; then
-            brew install $item
-        elif [[ "$sys" == "arch" ]]; then
-            sudo pacman -S --noconfirm $item
-        fi
+set -e
+
+DOTFILES="$HOME/dotfiles"
+MACHINE=""
+
+for arg in "$@"; do
+    case $arg in
+        --machine=*) MACHINE="${arg#*=}" ;;
+    esac
+done
+
+if [[ -z "$MACHINE" ]]; then
+    echo "Usage: $0 --machine=<name>"
+    echo "Available machines: $(ls "$DOTFILES/machines/")"
+    exit 1
+fi
+
+if [[ ! -d "$DOTFILES/machines/$MACHINE" ]]; then
+    echo "Machine '$MACHINE' not found in $DOTFILES/machines/"
+    exit 1
+fi
+
+# Detect OS
+if [[ -f /etc/arch-release ]]; then
+    OS="arch"
+elif [[ -f /etc/debian_version ]]; then
+    OS="debian"
+elif [[ "$(uname)" == "Darwin" ]]; then
+    OS="osx"
+else
+    echo "Unsupported OS"
+    exit 1
+fi
+
+pkg_install() {
+    for item in "$@"; do
+        case "$OS" in
+            debian) sudo apt -y install "$item" ;;
+            osx)    brew install "$item" ;;
+            arch)   sudo pacman -S --noconfirm "$item" ;;
+        esac
     done
 }
 
-my_install $1 zsh
+yay_install() {
+    for item in "$@"; do
+        yay -S --noconfirm "$item"
+    done
+}
 
-cd ~/dotfiles/ && git submodule update --init
+link() {
+    local src=$1 dst=$2
+    [[ ! -L "$dst" ]] && ln -s "$src" "$dst"
+}
 
-# pyenv
-curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
-[[ ! -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]] && git clone https://github.com/pyenv/pyenv-virtualenv.git $(PYENV_ROOT)/plugins/pyenv-virtualenv
+echo "==> Setting up dotfiles for machine: $MACHINE (OS: $OS)"
 
-[[ ! -d "${HOME}/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm $(HOME)/.tmux/plugins/tpm
+# --- Git submodules ---
+cd "$DOTFILES" && git submodule update --init
 
-curl -L git.io/antigen > ~/dotfiles/antigen.zsh
-[[ ! -L "${HOME}/.antigenrc" ]] && ln -s ~/dotfiles/antigenrc ~/.antigenrc
-[[ ! -L "${HOME}/.config/alacritty" ]] && ln -s ~/dotfiles/alacritty ~/.config/alacritty
-[[ ! -L "${HOME}/.config/nvim" ]] && ln -s ~/dotfiles/nvim ~/.config/nvim
-[[ ! -L "${HOME}/.config/spaceship.zsh" ]] && ln -s ~/dotfiles/spaceship.zsh ~/.config/spaceship.zsh
-[[ ! -L "${HOME}/.gitconfig" ]] && ln -s ~/dotfiles/gitconfig ~/.gitconfig
-[[ ! -L "${HOME}/.localrc" ]] && ln -s ~/dotfiles/localrc ~/.localrc
-[[ ! -L "${HOME}/.psqlrc" ]] && ln -s ~/dotfiles/psqlrc ~/.psqlrc
-[[ ! -L "${HOME}/.pythonrc.py" ]] && ln -s ~/dotfiles/pythonrc.py ~/.pythonrc.py
-[[ ! -L "${HOME}/.sbclrc" ]] && ln -s ~/dotfiles/sbclrc ~/.sbclrc
-[[ ! -L "${HOME}/.config/tmux.conf" ]] && ln -s ~/dotfiles/tmux.conf ~/.config/tmux.conf
-[[ ! -L "${HOME}/.tmuxp" ]] && ln -s ~/dotfiles/tmuxp ~/.tmuxp
-[[ ! -L "${HOME}/.zshrc" ]] && ln -s ~/dotfiles/zshrc ~/.zshrc
+# --- Download antigen ---
+curl -sL git.io/antigen > "$DOTFILES/antigen.zsh"
 
-sudo chsh -s $(which zsh) jcamile
+# --- pyenv ---
+if [[ ! -d "$HOME/.pyenv" ]]; then
+    curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+fi
+if [[ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]]; then
+    git clone https://github.com/pyenv/pyenv-virtualenv.git "$HOME/.pyenv/plugins/pyenv-virtualenv"
+fi
 
-~/dotfiles/fzf/install
+# --- tmux plugin manager ---
+[[ ! -d "$HOME/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 
-my_install $1 \
+# --- Common symlinks ---
+link "$DOTFILES/common/zshrc"        "$HOME/.zshrc"
+link "$DOTFILES/common/gitconfig"    "$HOME/.gitconfig"
+link "$DOTFILES/common/antigenrc"    "$HOME/.antigenrc"
+link "$DOTFILES/common/psqlrc"       "$HOME/.psqlrc"
+link "$DOTFILES/common/pythonrc.py"  "$HOME/.pythonrc.py"
+link "$DOTFILES/common/sbclrc"       "$HOME/.sbclrc"
+link "$DOTFILES/common/tmux.conf"    "$HOME/.config/tmux.conf"
+link "$DOTFILES/common/alacritty"    "$HOME/.config/alacritty"
+link "$DOTFILES/common/nvim"         "$HOME/.config/nvim"
+link "$DOTFILES/common/spaceship.zsh" "$HOME/.config/spaceship.zsh"
+
+# --- Machine-specific symlinks ---
+link "$DOTFILES/machines/$MACHINE/localrc"       "$HOME/.localrc"
+link "$DOTFILES/machines/$MACHINE/gitconfig.local" "$HOME/.gitconfig.local"
+[[ -d "$DOTFILES/machines/$MACHINE/tmuxp" ]] && \
+    link "$DOTFILES/machines/$MACHINE/tmuxp" "$HOME/.tmuxp"
+
+# --- fzf ---
+"$DOTFILES/fzf/install" --all
+
+# --- Common packages ---
+pkg_install \
     alacritty \
     bat \
     bison \
-    ethtool \
     fakeroot \
     gcc \
     httpie \
     make \
-    networkmanager-openvpn \
-    pass \
     patch \
-    python-powerline-git \
     ripgrep \
-    rust-analyzer \
-    rofi \
-    smartmontools \
     tmux \
     tmuxp \
-    tlp \
-    tlpui \
-    xclip \
-    xf86-input-synaptics \
-    xfce4 \
     wl-clipboard \
-    yay \
-&& true
+    neovim
 
-yay -S --noconfirm \
-    balena-etcher \
+yay_install \
     fd \
     git-absorb \
     git-delta \
-    glab \
-    mattermost \
-    neovim \
-    pgadmin4-desktop \
-    signal-desktop \
-    telegram-desktop \
-    thunderbird \
-    ttf-fira-code \
-    vim \
-&& true
+    ttf-fira-code
 
-cargo install --locked \
-    rip2 \
-&& true
+# --- Machine-specific packages ---
+if [[ "$MACHINE" == "arcanite" ]]; then
+    pkg_install \
+        networkmanager-openvpn \
+        smartmontools \
+        tlp \
+        tlpui
 
-wget --show-progress -o /dev/null -O- 'https://raw.githubusercontent.com/hyperupcall/autoenv/main/scripts/install.sh' | sh
+    yay_install \
+        glab \
+        mattermost \
+        pgadmin4-desktop
+fi
 
-xdg-mime default firefox.desktop x-scheme-handler/https
-xdg-mime default firefox.desktop x-scheme-handler/http
+# --- Shell ---
+sudo chsh -s "$(which zsh)" "$USER"
+
+echo "==> Done. Open a new shell to apply changes."
