@@ -10,6 +10,19 @@ antidote load
 autoload -U promptinit; promptinit
 prompt spaceship
 
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt HIST_IGNORE_DUPS HIST_FIND_NO_DUPS SHARE_HISTORY INC_APPEND_HISTORY
+
+autoload -U up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search   # standard
+bindkey "^[OA" up-line-or-beginning-search   # application cursor (tmux)
+bindkey "^[[B" down-line-or-beginning-search
+bindkey "^[OB" down-line-or-beginning-search
+
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US:en_GB:en
 export TERM='screen-256color'
