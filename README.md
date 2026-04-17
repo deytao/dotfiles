@@ -56,4 +56,4 @@ cd ~/dotfiles
 - **Editor**: [Neovim](https://neovim.io) (lazy.nvim, LSP, Copilot, Claude Code)
 - **Multiplexer**: [tmux](https://github.com/tmux/tmux) with [tmuxp](https://github.com/tmux-python/tmuxp) session layouts
 - **Git**: delta pager, GPG signing, fzf-powered aliases
-- **Python**: pyenv + pyenv-virtualenv
+- **Python**: [uv](https://docs.astral.sh/uv/) for project management and tooling

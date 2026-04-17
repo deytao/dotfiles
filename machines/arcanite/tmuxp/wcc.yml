@@ -3,8 +3,7 @@ windows:
   - window_name: code
     start_directory: ~/projects/wecancomply
     panes:
-      - shell_command:
-        - cmd: pyenv activate wecancomply
+      - uv sync
   - window_name: docker
     start_directory: ~/projects/wecancomply/docker
     panes:
@@ -18,28 +17,26 @@ windows:
   - window_name: apps
     start_directory: ~/projects/wecancomply/platform
     layout: even-horizontal
-    shell_command_before: pyenv activate wecancomply
     panes:
       - shell_command:
           - "cd backend-core/src/"
-          - "python manage.py runserver 127.0.0.1:8000"
+          - "uv run python manage.py runserver 127.0.0.1:8000"
       - shell_command:
           - "cd backend-directory/src/"
-          - "python manage.py runserver 127.0.0.1:8001"
+          - "uv run python manage.py runserver 127.0.0.1:8001"
       - shell_command:
           - "cd backend-workspaces/src/"
-          - "python manage.py runserver 127.0.0.1:8002"
+          - "uv run python manage.py runserver 127.0.0.1:8002"
   - window_name: taskers
     start_directory: ~/projects/wecancomply/platform
     layout: even-horizontal
-    shell_command_before: pyenv activate wecancomply
     panes:
       - shell_command:
           - "cd backend-core/src/"
-          - "celery -A app worker -l INFO"
+          - "uv run celery -A app worker -l INFO"
       - shell_command:
           - "cd backend-directory/src/"
-          - "celery -A app worker -l INFO"
+          - "uv run celery -A app worker -l INFO"
       - shell_command:
           - "cd backend-workspaces/src/"
-          - "celery -A app worker -l INFO"
+          - "uv run celery -A app worker -l INFO"

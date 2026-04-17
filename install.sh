@@ -63,12 +63,9 @@ cd "$DOTFILES" && git submodule update --init
 # --- antidote ---
 [[ -d "$HOME/.antidote" ]] || git clone --depth=1 https://github.com/mattmc3/antidote.git "$HOME/.antidote"
 
-# --- pyenv ---
-if [[ ! -d "$HOME/.pyenv" ]]; then
-    curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
-fi
-if [[ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]]; then
-    git clone https://github.com/pyenv/pyenv-virtualenv.git "$HOME/.pyenv/plugins/pyenv-virtualenv"
+# --- uv ---
+if ! command -v uv &>/dev/null; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
 # --- tmux plugin manager ---
