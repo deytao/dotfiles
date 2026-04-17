@@ -324,17 +324,18 @@ vim.opt.backup = false
 vim.opt.undofile = true
 vim.opt.termguicolors = true
 
--- Explicit clipboard configuration
+-- Explicit clipboard configuration (wl-clipboard for Wayland)
 vim.g.clipboard = {
-    name = "xclip",
+    name = "wl-clipboard",
     copy = {
-        ["+"] = "xclip -selection clipboard",
-        ["*"] = "xclip -selection clipboard",
+        ["+"] = "wl-copy",
+        ["*"] = "wl-copy --primary",
     },
     paste = {
-        ["+"] = "xclip -selection clipboard -o",
-        ["*"] = "xclip -selection clipboard -o",
+        ["+"] = "wl-paste --no-newline",
+        ["*"] = "wl-paste --no-newline --primary",
     },
+    cache_enabled = 0,
 }
 
 -- Key mappings

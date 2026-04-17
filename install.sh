@@ -65,6 +65,7 @@ my_install $1 \
     xclip \
     xf86-input-synaptics \
     xfce4 \
+    wl-clipboard \
     yay \
 && true
 
