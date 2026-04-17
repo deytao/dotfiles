@@ -1,0 +1,42 @@
+session_name: wcc
+windows:
+  - window_name: code
+    start_directory: ~/projects/wecancomply
+    panes:
+      - uv sync
+  - window_name: docker
+    start_directory: ~/projects/wecancomply/docker
+    panes:
+      - "docker-compose up --build"
+  - window_name: frontend
+    start_directory: ~/projects/wecancomply/platform/frontend-core
+    panes:
+      - shell_command:
+        - "npm i"
+        - "npm run dev"
+  - window_name: apps
+    start_directory: ~/projects/wecancomply/platform
+    layout: even-horizontal
+    panes:
+      - shell_command:
+          - "cd backend-core/src/"
+          - "uv run python manage.py runserver 127.0.0.1:8000"
+      - shell_command:
+          - "cd backend-directory/src/"
+          - "uv run python manage.py runserver 127.0.0.1:8001"
+      - shell_command:
+          - "cd backend-workspaces/src/"
+          - "uv run python manage.py runserver 127.0.0.1:8002"
+  - window_name: taskers
+    start_directory: ~/projects/wecancomply/platform
+    layout: even-horizontal
+    panes:
+      - shell_command:
+          - "cd backend-core/src/"
+          - "uv run celery -A app worker -l INFO"
+      - shell_command:
+          - "cd backend-directory/src/"
+          - "uv run celery -A app worker -l INFO"
+      - shell_command:
+          - "cd backend-workspaces/src/"
+          - "uv run celery -A app worker -l INFO"

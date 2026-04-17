@@ -1,0 +1,4 @@
+[user]
+    name = Your Name
+    email = you@example.com
+    # signingKey = YOUR_GPG_KEY_ID  # optional, remove if not signing commits

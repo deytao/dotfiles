@@ -1,0 +1,55 @@
+[color]
+    ui = true
+[diff]
+    renamelimit = 0
+[push]
+    default = tracking
+[pull]
+    rebase = true
+[merge]
+    tool = nvimdiff
+[core]
+	editor = vim
+	trustctime = false
+	pager = delta --dark
+[rerere]
+	enabled = 1
+[alias]
+    co = checkout
+    commend = commit --amend --no-edit
+    edit-changes = "!nvim $(git diff --name-only --diff-filter=M) -O"
+    fco = "!git checkout $(git branch -a | fzf)"
+    grog = log --graph --abbrev-commit --decorate --all --format=format:"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)"
+    it = "!git init && git commit -m 'Initial commit' --allow-empty"
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    purr = pull --rebase
+    ready = rebase -i @{u}
+    shorty = status -sb
+    sweep = "!f() { \
+        git remote update -p; \
+        git purr; \
+        git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D; \
+    }; f"
+    upush = "!git push -u origin `git rev-parse --abbrev-ref HEAD`"
+    wync = "!git stash && git purr && git stash pop && git push"
+[http]
+	sslverify = false
+[delta]
+    features = line-numbers side-by-side
+    plus-style = "syntax #228B22"
+    minus-style = "normal #B22222"
+    syntax-theme = Sublime Snazzy
+[interactive]
+    diffFilter = delta --color-only
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg
+[hub]
+	protocol = ssh
+[init]
+	defaultBranch = main
+[mergetool "nvimdiff"]
+  layout = "LOCAL,BASE,REMOTE / MERGED"
+[include]
+    path = ~/.gitconfig.local

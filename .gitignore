@@ -1,0 +1,4 @@
+*.swp
+machines/*/gitconfig.local
+common/nvim/plugin/
+fzf/

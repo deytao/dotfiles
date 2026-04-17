@@ -1,0 +1,40 @@
+## Cargo
+export PATH="${HOME}/.cargo/bin:${PATH}"
+
+SSH_ENV="${HOME}/.ssh/environment"
+
+export VAULT_ADDR=https://vault.arcanite.ch:8282/
+export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+export POETRY_HTTP_BASIC_USERNAME=dependencies
+export POETRY_HTTP_BASIC_PASSWORD=$(vault kv get -format=json -mount="secrets-arcanite" "Outils/Dev/pip.arcanite.ch/dependencies" | jq -r .data.data.password)
+export UV_INDEX_INTERNAL_PROXY_USERNAME=dependencies
+export UV_INDEX_INTERNAL_PROXY_PASSWORD=$(vault kv get -format=json -mount="secrets-arcanite" "Outils/Dev/pip.arcanite.ch/dependencies" | jq -r .data.data.password)
+
+export KUBE_EDITOR=$EDITOR
+
+export AUTOENV_ENABLE_LEAVE=yes
+export AUTOENV_VIEWER=bat
+source "${HOME}/.nvm/versions/node/v23.3.0/lib/node_modules/@hyperupcall/autoenv/activate.sh"
+
+function start_agent {
+    echo "Initialising new SSH agent..."
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add ~/.ssh/id_ed25519
+    /usr/bin/ssh-add ~/.ssh/id_ed25519_eoss
+    ;
+}
+
+# Source SSH settings, if applicable
+if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+fi
+

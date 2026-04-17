@@ -1,0 +1,19 @@
+{
+  "enabledPlugins": {
+    "lua-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "common@arcanite": true,
+    "django@arcanite": true,
+    "python@arcanite": true,
+    "airflow@arcanite": true
+  },
+  "extraKnownMarketplaces": {
+    "arcanite": {
+      "source": {
+        "source": "git",
+        "url": "git@git.arcanite.ch:arcanite/common/llm-agents.git"
+      },
+      "autoUpdate": true
+    }
+  }
+}
