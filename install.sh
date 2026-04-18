@@ -4,15 +4,36 @@ set -e
 
 DOTFILES="$HOME/dotfiles"
 MACHINE=""
+REMOVE=false
+FORCE=false
 
 for arg in "$@"; do
     case $arg in
         --machine=*) MACHINE="${arg#*=}" ;;
+        --remove) REMOVE=true ;;
+        --force) FORCE=true ;;
     esac
 done
 
+# --- Remove mode ---
+if [[ "$REMOVE" == true ]]; then
+    echo "==> Removing dotfile symlinks..."
+    for path in \
+        "$HOME/.zshrc" "$HOME/.gitconfig" "$HOME/.gitconfig.local" \
+        "$HOME/.zsh_plugins.txt" "$HOME/.localrc" "$HOME/.psqlrc" \
+        "$HOME/.pythonrc.py" "$HOME/.sbclrc" "$HOME/.tmux.conf" \
+        "$HOME/.config/alacritty" "$HOME/.config/nvim" \
+        "$HOME/.config/spaceship.zsh" "$HOME/.tmuxp" \
+        "$HOME/.claude/CLAUDE.md" "$HOME/.claude/settings.json"; do
+        [[ -L "$path" ]] && rip "$path" && echo "  removed $path"
+    done
+    echo "==> Done."
+    exit 0
+fi
+
 if [[ -z "$MACHINE" ]]; then
-    echo "Usage: $0 --machine=<name>"
+    echo "Usage: $0 --machine=<name> [--force]"
+    echo "       $0 --remove"
     echo "Available machines: $(ls "$DOTFILES/machines/")"
     exit 1
 fi
@@ -52,6 +73,9 @@ yay_install() {
 
 link() {
     local src=$1 dst=$2
+    if [[ "$FORCE" == true ]] && [[ -e "$dst" ]] && [[ ! -L "$dst" ]]; then
+        rip "$dst"
+    fi
     [[ -L "$dst" ]] || ln -s "$src" "$dst"
 }
 
@@ -77,20 +101,20 @@ fi
 [[ ! -d "$HOME/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 
 # --- Common symlinks ---
-link "$DOTFILES/common/zshrc"        "$HOME/.zshrc"
-link "$DOTFILES/common/gitconfig"    "$HOME/.gitconfig"
-link "$DOTFILES/common/zsh_plugins.txt" "$HOME/.zsh_plugins.txt"
-link "$DOTFILES/common/psqlrc"       "$HOME/.psqlrc"
-link "$DOTFILES/common/pythonrc.py"  "$HOME/.pythonrc.py"
-link "$DOTFILES/common/sbclrc"       "$HOME/.sbclrc"
-link "$DOTFILES/common/tmux.conf"    "$HOME/.tmux.conf"
-link "$DOTFILES/common/alacritty"    "$HOME/.config/alacritty"
-link "$DOTFILES/common/nvim"         "$HOME/.config/nvim"
+link "$DOTFILES/common/zshrc"              "$HOME/.zshrc"
+link "$DOTFILES/common/gitconfig"          "$HOME/.gitconfig"
+link "$DOTFILES/common/zsh_plugins.txt"    "$HOME/.zsh_plugins.txt"
+link "$DOTFILES/common/psqlrc"             "$HOME/.psqlrc"
+link "$DOTFILES/common/pythonrc.py"        "$HOME/.pythonrc.py"
+link "$DOTFILES/common/sbclrc"             "$HOME/.sbclrc"
+link "$DOTFILES/common/tmux.conf"          "$HOME/.tmux.conf"
+link "$DOTFILES/common/alacritty"          "$HOME/.config/alacritty"
+link "$DOTFILES/common/nvim"               "$HOME/.config/nvim"
 link "$DOTFILES/common/spaceship.zsh"      "$HOME/.config/spaceship.zsh"
 link "$DOTFILES/common/claude/CLAUDE.md"   "$HOME/.claude/CLAUDE.md"
 
 # --- Machine-specific symlinks ---
-link "$DOTFILES/machines/$MACHINE/localrc"       "$HOME/.localrc"
+link "$DOTFILES/machines/$MACHINE/localrc" "$HOME/.localrc"
 local_gitconfig="$DOTFILES/machines/$MACHINE/gitconfig.local"
 if [[ ! -f "$local_gitconfig" ]]; then
     echo "==> Git identity not found for machine '$MACHINE'. Please fill in the following:"
