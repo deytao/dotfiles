@@ -52,7 +52,7 @@ yay_install() {
 
 link() {
     local src=$1 dst=$2
-    [[ ! -L "$dst" ]] && ln -s "$src" "$dst"
+    [[ -L "$dst" ]] || ln -s "$src" "$dst"
 }
 
 echo "==> Setting up dotfiles for machine: $MACHINE (OS: $OS)"
@@ -66,6 +66,11 @@ echo "==> Setting up dotfiles for machine: $MACHINE (OS: $OS)"
 # --- uv ---
 if ! command -v uv &>/dev/null; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
+
+# --- claude code ---
+if ! command -v claude &>/dev/null; then
+    curl -fsSL https://claude.ai/install.sh | bash
 fi
 
 # --- tmux plugin manager ---
@@ -88,8 +93,34 @@ link "$DOTFILES/common/claude/CLAUDE.md"   "$HOME/.claude/CLAUDE.md"
 link "$DOTFILES/machines/$MACHINE/localrc"       "$HOME/.localrc"
 local_gitconfig="$DOTFILES/machines/$MACHINE/gitconfig.local"
 if [[ ! -f "$local_gitconfig" ]]; then
-    cp "$DOTFILES/gitconfig.local.example" "$local_gitconfig"
-    echo "==> Created $local_gitconfig — edit it to set your git identity before committing."
+    echo "==> Git identity not found for machine '$MACHINE'. Please fill in the following:"
+    read -rp "    Git name:  " git_name
+    read -rp "    Git email: " git_email
+
+    git_signingkey=""
+    if command -v gpg &>/dev/null; then
+        mapfile -t gpg_key_ids < <(gpg --list-secret-keys --keyid-format LONG 2>/dev/null | grep "^sec" | awk '{print $2}' | cut -d'/' -f2)
+        if [[ ${#gpg_key_ids[@]} -gt 0 ]]; then
+            echo "    Available GPG keys:"
+            for i in "${!gpg_key_ids[@]}"; do
+                uid=$(gpg --list-secret-keys "${gpg_key_ids[$i]}" 2>/dev/null | grep "^uid" | head -1 | sed 's/uid[[:space:]]*\[.*\][[:space:]]*//')
+                echo "      $((i+1))) ${gpg_key_ids[$i]}  $uid"
+            done
+            echo "      0) Skip"
+            read -rp "    Pick a key [0-${#gpg_key_ids[@]}]: " key_choice
+            if [[ "$key_choice" =~ ^[1-9][0-9]*$ ]] && (( key_choice <= ${#gpg_key_ids[@]} )); then
+                git_signingkey="${gpg_key_ids[$((key_choice-1))]}"
+            fi
+        fi
+    fi
+
+    {
+        echo "[user]"
+        echo "    name = $git_name"
+        echo "    email = $git_email"
+        [[ -n "$git_signingkey" ]] && echo "    signingKey = $git_signingkey"
+    } > "$local_gitconfig"
+    echo "==> Created $local_gitconfig"
 fi
 link "$local_gitconfig" "$HOME/.gitconfig.local"
 [[ -d "$DOTFILES/machines/$MACHINE/tmuxp" ]] && \

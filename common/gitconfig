@@ -9,7 +9,7 @@
 [merge]
     tool = nvimdiff
 [core]
-	editor = vim
+	editor = nvim
 	trustctime = false
 	pager = delta --dark
 [rerere]
