@@ -81,6 +81,8 @@ link() {
 
 echo "==> Setting up dotfiles for machine: $MACHINE (OS: $OS)"
 
+chmod +x "$DOTFILES/common/update.zsh"
+
 # --- fzf ---
 [[ ! -d "$DOTFILES/fzf" ]] && git clone --depth=1 https://github.com/junegunn/fzf.git "$DOTFILES/fzf"
 

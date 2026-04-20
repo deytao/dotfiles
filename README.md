@@ -6,26 +6,27 @@ Personal dotfiles for Arch/Manjaro Linux. Organized into shared config and per-m
 
 ```
 dotfiles/
-├── common/          # Applied on every machine
+├── common/                  # Applied on every machine
 │   ├── zshrc
-│   ├── gitconfig    # No identity — loaded from ~/.gitconfig.local
+│   ├── gitconfig            # No identity — loaded from ~/.gitconfig.local
 │   ├── nvim/
 │   ├── alacritty/
 │   ├── tmux.conf
 │   ├── zsh_plugins.txt
 │   ├── spaceship.zsh
+│   ├── claude/              # Claude Code config
+│   ├── update.zsh           # Update script (auto-run weekly)
 │   └── ...
 ├── machines/
-│   ├── arcanite/    # Work laptop
+│   ├── arcanite/            # Work laptop
 │   │   ├── localrc
-│   │   ├── gitconfig.local
+│   │   ├── claude/
 │   │   └── tmuxp/
-│   └── personal/    # Personal laptop
-│       ├── localrc
-│       └── gitconfig.local
-├── fzf/             # Submodule
+│   └── personal/            # Personal laptop
+│       └── localrc
+├── gitconfig.local.example  # Template for git identity (copy, don't track)
 ├── install.sh
-└── remove.sh
+└── fzf/                     # Cloned by install.sh, gitignored
 ```
 
 ## Setup
@@ -33,7 +34,7 @@ dotfiles/
 ```bash
 git clone git@github.com:deytao/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-./install.sh --machine=personal   # or --machine=my-env
+./install.sh --machine=arcanite   # or --machine=personal
 ```
 
 `install.sh` will:
@@ -41,13 +42,25 @@ cd ~/dotfiles
 2. Symlink `common/` configs to `~/.*`
 3. Symlink the machine profile's `localrc`, `gitconfig.local`, and `tmuxp/`
 4. Install common and machine-specific packages
-5. Set up pyenv, tmux plugin manager, and fzf
+5. Set up uv, antidote, tmux plugin manager, and fzf
+
+To remove all symlinks: `./install.sh --remove`
 
 ## Adding a new machine
 
 1. Create `machines/<name>/localrc` with machine-specific env vars and paths
-2. Create `machines/<name>/gitconfig.local` with your git identity
+2. Copy `gitconfig.local.example` to `machines/<name>/gitconfig.local` and fill in your identity
 3. Run `./install.sh --machine=<name>`
+
+## Updating
+
+Auto-updates run weekly in the background at shell startup. To update manually:
+
+```bash
+dotfiles-update
+```
+
+This pulls the latest dotfiles, updates antidote and neovim plugins, and refreshes completions.
 
 ## Stack
 

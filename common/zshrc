@@ -25,6 +25,8 @@ HISTSIZE=50000
 SAVEHIST=50000
 setopt HIST_IGNORE_DUPS HIST_FIND_NO_DUPS SHARE_HISTORY INC_APPEND_HISTORY
 
+alias dotfiles-update="$HOME/dotfiles/common/update.zsh"
+
 autoload -U up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
@@ -61,6 +63,16 @@ export FZF_DEFAULT_OPTS='
 if [ -f ~/.localrc ] ; then
     source ~/.localrc
 fi
+
+# Auto-update dotfiles weekly — after localrc so SSH agent is running
+() {
+    local ts_file="$HOME/.dotfiles_last_update"
+    local last=0
+    [[ -f "$ts_file" ]] && last=$(< "$ts_file")
+    if (( $(date +%s) - last > 7 * 24 * 60 * 60 )); then
+        "$HOME/dotfiles/common/update.zsh" &>/dev/null &!
+    fi
+}
 
 PYTHONSTARTUP=~/.pythonrc.py
 export PYTHONSTARTUP
