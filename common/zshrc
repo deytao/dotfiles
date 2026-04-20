@@ -11,7 +11,15 @@ fpath=("$HOME/.zfunc" $fpath)
     command -v kubectl &>/dev/null && [[ ! -f "$zfunc/_kubectl" ]] && kubectl completion zsh        > "$zfunc/_kubectl"
 }
 
-# antidote
+# completion
+setopt COMPLETE_IN_WORD   # complete from both ends of a word
+setopt ALWAYS_TO_END      # move cursor to end after completion
+setopt AUTO_MENU          # show menu on second tab
+setopt AUTO_LIST          # list choices on ambiguous completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
 autoload -Uz compinit && compinit
 [[ -d "$HOME/.antidote" ]] || git clone --depth=1 https://github.com/mattmc3/antidote.git "$HOME/.antidote"
 source "$HOME/.antidote/antidote.zsh"
