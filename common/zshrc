@@ -43,6 +43,11 @@ bindkey "^[OA" up-line-or-beginning-search   # application cursor (tmux)
 bindkey "^[[B" down-line-or-beginning-search
 bindkey "^[OB" down-line-or-beginning-search
 
+bindkey "^[[1;5D" backward-word   # Ctrl+Left
+bindkey "^[[1;5C" forward-word    # Ctrl+Right
+bindkey "^[[1;3D" backward-word   # Alt+Left
+bindkey "^[[1;3C" forward-word    # Alt+Right
+
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US:en_GB:en
 export TERM='screen-256color'
