@@ -31,8 +31,9 @@ try "antidote" git -C "$HOME/.antidote" pull --rebase
 source "$HOME/.antidote/antidote.zsh"
 try "antidote plugins" antidote update
 
-# fzf
-try "fzf" git -C "$DOTFILES/fzf" pull --rebase
+# fzf (shallow clone — fetch + reset instead of pull --rebase)
+try "fzf" git -C "$DOTFILES/fzf" fetch --depth=1 origin
+git -C "$DOTFILES/fzf" reset --hard origin/HEAD >> "$LOG" 2>&1
 try "fzf install" "$DOTFILES/fzf/install" --bin
 
 # uv
