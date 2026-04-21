@@ -24,7 +24,8 @@ if [[ "$REMOVE" == true ]]; then
         "$HOME/.pythonrc.py" "$HOME/.sbclrc" "$HOME/.tmux.conf" \
         "$HOME/.config/alacritty" "$HOME/.config/nvim" \
         "$HOME/.config/spaceship.zsh" "$HOME/.tmuxp" \
-        "$HOME/.claude/CLAUDE.md" "$HOME/.claude/settings.json"; do
+        "$HOME/.claude/CLAUDE.md" "$HOME/.claude/settings.json" \
+        "$HOME/.claude/keybindings.json"; do
         [[ -L "$path" ]] && rip "$path" && echo "  removed $path"
     done
     echo "==> Done."
@@ -113,7 +114,8 @@ link "$DOTFILES/common/tmux.conf"          "$HOME/.tmux.conf"
 link "$DOTFILES/common/alacritty"          "$HOME/.config/alacritty"
 link "$DOTFILES/common/nvim"               "$HOME/.config/nvim"
 link "$DOTFILES/common/spaceship.zsh"      "$HOME/.config/spaceship.zsh"
-link "$DOTFILES/common/claude/CLAUDE.md"   "$HOME/.claude/CLAUDE.md"
+link "$DOTFILES/common/claude/CLAUDE.md"          "$HOME/.claude/CLAUDE.md"
+link "$DOTFILES/common/claude/keybindings.json"   "$HOME/.claude/keybindings.json"
 
 # --- Machine-specific symlinks ---
 link "$DOTFILES/machines/$MACHINE/localrc" "$HOME/.localrc"
@@ -153,6 +155,7 @@ link "$local_gitconfig" "$HOME/.gitconfig.local"
     link "$DOTFILES/machines/$MACHINE/tmuxp" "$HOME/.tmuxp"
 [[ -f "$DOTFILES/machines/$MACHINE/claude/settings.json" ]] && \
     link "$DOTFILES/machines/$MACHINE/claude/settings.json" "$HOME/.claude/settings.json"
+
 
 # --- fzf ---
 "$DOTFILES/fzf/install" --all
