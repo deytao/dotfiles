@@ -1,6 +1,6 @@
 -- Ensure lazy.nvim is installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
@@ -13,7 +13,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- LSP key mappings
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
     vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
@@ -62,7 +62,7 @@ require("lazy").setup({
             require("copilot").setup({
                 suggestion = { enabled = false },
                 panel = { enabled = false },
-                copilot_model = "claude-sonnet-4-6",
+                copilot_model = "gpt-41-copilot",
             })
         end,
     },
@@ -108,6 +108,15 @@ require("lazy").setup({
         end,
     },
 
+    -- Neovim Lua dev (fixes vim.* globals and provides API type hints)
+    {
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = {
+            library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } },
+        },
+    },
+
     -- LSP ecosystem
     {
         "mason-org/mason.nvim",
@@ -130,9 +139,6 @@ require("lazy").setup({
                             on_attach = on_attach,
                             settings = {
                                 Lua = {
-                                    runtime = { version = "LuaJIT" },
-                                    diagnostics = { globals = { "vim" } },
-                                    workspace = { library = vim.api.nvim_get_runtime_file("", true) },
                                     telemetry = { enable = false },
                                 },
                             },
@@ -171,6 +177,7 @@ require("lazy").setup({
         build = ":TSUpdate",
         event = "BufRead",
         config = function()
+            ---@diagnostic disable-next-line: missing-fields
             require("nvim-treesitter.configs").setup({
                 ensure_installed = { "lua", "python", "bash", "json", "yaml", "markdown", "html", "css", "javascript", "typescript" },
                 highlight = { enable = true },
@@ -267,6 +274,7 @@ require("lazy").setup({
     {
         "folke/tokyonight.nvim",
         config = function()
+            ---@diagnostic disable-next-line: missing-fields
             require("tokyonight").setup({
                 style = "moon",  -- Options: storm, night, or day
                 transparent = false,
