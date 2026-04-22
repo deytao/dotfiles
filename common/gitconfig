@@ -28,7 +28,7 @@
     sweep = "!f() { \
         git remote update -p; \
         git purr; \
-        git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D; \
+        git branch -vv | awk '/: gone]/{print $1}' | xargs -r git branch -D; \
     }; f"
     upush = "!git push -u origin `git rev-parse --abbrev-ref HEAD`"
     wync = "!git stash && git purr && git stash pop && git push"
